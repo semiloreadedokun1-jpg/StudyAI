@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- NEXA AI PWA -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#2563eb">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="NEXA AI">
 
     <title>NEXA AI — Your AI Study Assistant</title>
 
@@ -201,6 +197,7 @@
         }
 
         @media (max-width: 600px) {
+
             header h1 {
                 font-size: 32px;
             }
@@ -246,11 +243,17 @@
             placeholder="Type your question here..."
         ></textarea>
 
-        <button id="askButton" onclick="askQuestion()">
+        <button
+            id="askButton"
+            onclick="askQuestion()"
+        >
             Ask NEXA AI
         </button>
 
-        <div id="responseBox" class="response">
+        <div
+            id="responseBox"
+            class="response"
+        >
             Your answer will appear here.
         </div>
 
@@ -293,28 +296,60 @@
     <div class="features">
 
         <div class="feature">
-            <div class="feature-icon">📚</div>
-            <strong>Learn</strong>
-            <span>Understand topics</span>
+
+            <div class="feature-icon">
+                📚
+            </div>
+
+            <strong>
+                Learn
+            </strong>
+
+            <span>
+                Understand topics
+            </span>
+
         </div>
 
         <div class="feature">
-            <div class="feature-icon">🧮</div>
-            <strong>Practice</strong>
-            <span>Improve your skills</span>
+
+            <div class="feature-icon">
+                🧮
+            </div>
+
+            <strong>
+                Practice
+            </strong>
+
+            <span>
+                Improve your skills
+            </span>
+
         </div>
 
         <div class="feature">
-            <div class="feature-icon">💡</div>
-            <strong>Understand</strong>
-            <span>Get clear explanations</span>
+
+            <div class="feature-icon">
+                💡
+            </div>
+
+            <strong>
+                Understand
+            </strong>
+
+            <span>
+                Get clear explanations
+            </span>
+
         </div>
 
     </div>
 
     <div class="about">
 
-        <h2>About NEXA AI</h2>
+        <h2>
+            About NEXA AI
+        </h2>
 
         <p>
             NEXA AI is an intelligent study assistant designed
@@ -332,19 +367,30 @@
 </div>
 
 <footer>
+
     NEXA AI © 2026<br>
+
     Your AI study companion
+
 </footer>
+
 
 <script>
 
 async function askQuestion() {
 
-    const questionBox = document.getElementById("question");
-    const responseBox = document.getElementById("responseBox");
-    const askButton = document.getElementById("askButton");
+    const questionBox =
+        document.getElementById("question");
 
-    const question = questionBox.value.trim();
+    const responseBox =
+        document.getElementById("responseBox");
+
+    const askButton =
+        document.getElementById("askButton");
+
+    const question =
+        questionBox.value.trim();
+
 
     if (!question) {
 
@@ -354,16 +400,21 @@ async function askQuestion() {
         return;
     }
 
+
     askButton.disabled = true;
-    askButton.textContent = "Thinking...";
+
+    askButton.textContent =
+        "Thinking...";
+
 
     responseBox.textContent =
         "🤖 NEXA AI is thinking...";
 
+
     try {
 
         const response = await fetch(
-            "https://studyai-qkgp.onrender.com/api/ask",
+            "/api/ask",
             {
                 method: "POST",
 
@@ -377,23 +428,131 @@ async function askQuestion() {
             }
         );
 
-        const data = await response.json();
+
+        const rawText =
+            await response.text();
+
+
+        console.log(
+            "NEXA AI server response:",
+            rawText
+        );
+
 
         if (!response.ok) {
 
             throw new Error(
-                data.error || "Server error."
+                "Server error " +
+                response.status +
+                ": " +
+                rawText
             );
 
         }
 
+
+        let data;
+
+
+        try {
+
+            data =
+                JSON.parse(rawText);
+
+        } catch (error) {
+
+            throw new Error(
+                "The server returned an invalid response."
+            );
+
+        }
+
+
+        if (!data.answer) {
+
+            throw new Error(
+                data.error ||
+                "NEXA AI returned no answer."
+            );
+
+        }
+
+
         responseBox.textContent =
             data.answer;
 
+
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "NEXA AI error:",
+            error
+        );
+
 
         responseBox.textContent =
             "❌ NEXA AI could not answer right now.\n\n" +
-           
+            error.message;
+
+    }
+
+
+    askButton.disabled = false;
+
+    askButton.textContent =
+        "Ask NEXA AI";
+
+}
+
+
+function useExample(text) {
+
+    document.getElementById(
+        "question"
+    ).value = text;
+
+
+    document.getElementById(
+        "question"
+    ).focus();
+
+}
+
+
+/* NEXA AI PWA */
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        function () {
+
+            navigator.serviceWorker
+                .register("/sw.js")
+
+                .then(function () {
+
+                    console.log(
+                        "NEXA AI PWA ready"
+                    );
+
+                })
+
+                .catch(function (error) {
+
+                    console.error(
+                        "PWA setup failed:",
+                        error
+                    );
+
+                });
+
+        }
+    );
+
+}
+
+</script>
+
+</body>
+    </html>
