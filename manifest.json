@@ -1,0 +1,10 @@
+{
+  "name": "StudyAI",
+  "short_name": "StudyAI",
+  "description": "Your personal AI study assistant",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait"
+}
