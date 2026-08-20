@@ -8,36 +8,25 @@ const { GoogleGenAI } = require("@google/genai");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+const API_KEY = process.env.GEMINI_API_KEY;
 
-// Allow requests from your website
+if (!API_KEY) {
+    console.error("❌ GEMINI_API_KEY is missing.");
+}
+
+const ai = API_KEY
+    ? new GoogleGenAI({
+        apiKey: API_KEY
+    })
+    : null;
+
 app.use(cors());
-
-// Read JSON requests
 app.use(express.json());
-
-// Serve your website files
-app.use(express.static(path.join(__dirname)));
-
-// Gemini API
-const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY
-});
-
-
-// ================================
-// HOME PAGE
-// ================================
+app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "index.html")
-    );
+    res.sendFile(path.join(__dirname, "index.html"));
 });
-
-
-// ================================
-// HEALTH CHECK
-// ================================
 
 app.get("/api/health", (req, res) => {
     res.json({
@@ -46,146 +35,77 @@ app.get("/api/health", (req, res) => {
     });
 });
 
-
-// ================================
-// ASK NEXA AI
-// ================================
-
 app.post("/api/ask", async (req, res) => {
 
-    try {
+    const question = req.body.question;
 
-        const question =
-            typeof req.body.question === "string"
-                ? req.body.question.trim()
-                : "";
+    console.log("Question received:", question);
 
-        // Check question
-        if (!question) {
+    if (!question || !question.trim()) {
+        return res.status(400).json({
+            error: "Please enter a question."
+        });
+    }
 
-            return res.status(400).json({
-                error: "Please enter a question."
-            });
+    if (!ai) {
+        return res.status(500).json({
+            error: "Gemini API key is not configured."
+        });
+    }
 
-        }
-
-
-        // Check API key
-        if (!process.env.GEMINI_API_KEY) {
-
-            console.error(
-                "GEMINI_API_KEY is missing."
-            );
-
-            return res.status(500).json({
-                error:
-                    "NEXA AI is not configured correctly. The Gemini API key is missing."
-            });
-
-        }
-
-
-        // NEXA AI instructions
-        const prompt = `
+    const prompt = `
 You are NEXA AI, an intelligent study assistant.
 
-Answer the student's question directly.
+Help students understand school subjects clearly.
 
-IMPORTANT RESPONSE RULES:
-
-- Do NOT introduce yourself.
-- Do NOT say "I am NEXA AI."
-- Do NOT say "Hello, I am NEXA AI."
-- Do NOT start every answer with a greeting.
-- Do NOT mention your name unless the student specifically asks.
+Rules:
 - Start directly with the answer.
-- Explain difficult topics clearly and simply.
-- Use examples when helpful.
-- Show clear steps when solving calculations.
-- For practice requests, provide useful practice questions.
-- Make explanations suitable for a student.
-- Be accurate and educational.
-- Do not unnecessarily repeat the question.
+- Explain difficult topics simply.
+- Use correct academic terminology.
+- Give examples when useful.
+- For Mathematics, show calculations step by step.
+- For Economics, explain concepts using proper economic terminology.
+- For English, explain grammar clearly and give examples.
+- For practice requests, provide useful questions.
+- Do not make up facts.
+- If the question is unclear, ask for clarification.
 
 Student's question:
 
 ${question}
 `;
 
+    try {
 
-        console.log(
-            "Question received:",
-            question
-        );
+        const response = await ai.models.generateContent({
+            model: "gemini-3.7-flash",
+            contents: prompt
+        });
 
-
-        // Ask Gemini
-        const response =
-            await ai.models.generateContent({
-
-                model: "gemini-3.6-flash",
-
-                contents: prompt
-
-            });
-
-
-        // Get answer
-        const answer =
-            response.text;
-
+        const answer = response.text;
 
         if (!answer) {
-
-            console.error(
-                "Gemini returned no text."
-            );
-
             return res.status(500).json({
-                error:
-                    "NEXA AI could not generate an answer."
+                error: "NEXA AI did not return an answer."
             });
-
         }
 
+        console.log("NEXA AI answered successfully.");
 
-        console.log(
-            "Answer generated successfully."
-        );
-
-
-        // Send answer to website
         return res.json({
             answer: answer
         });
 
-
     } catch (error) {
 
-        console.error(
-            "NEXA AI error:",
-            error
-        );
-
+        console.error("NEXA AI error:", error);
 
         return res.status(500).json({
-            error:
-                "NEXA AI could not generate an answer."
+            error: "NEXA AI could not generate an answer."
         });
-
     }
-
 });
 
-
-// ================================
-// START SERVER
-// ================================
-
 app.listen(PORT, "0.0.0.0", () => {
-
-    console.log(
-        `NEXA AI server is running on port ${PORT}`
-    );
-
+    console.log(`NEXA AI server is running on port ${PORT}`);
 });
