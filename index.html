@@ -21,40 +21,45 @@
         header {
             background: #2563eb;
             color: white;
-            padding: 20px;
             text-align: center;
+            padding: 25px 15px;
         }
 
         header h1 {
             margin: 0;
-            font-size: 28px;
+            font-size: 30px;
         }
 
         header p {
-            margin: 7px 0 0;
+            margin: 8px 0 0;
+            font-size: 16px;
         }
 
         .container {
-            width: 90%;
-            max-width: 700px;
-            margin: 30px auto;
+            width: 92%;
+            max-width: 750px;
+            margin: 25px auto;
         }
 
         .card {
             background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 22px;
+            border-radius: 16px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-top: 0;
         }
 
         textarea {
             width: 100%;
-            min-height: 130px;
+            min-height: 140px;
             padding: 15px;
             border: 1px solid #ccc;
-            border-radius: 10px;
-            resize: vertical;
+            border-radius: 12px;
             font-size: 16px;
+            resize: vertical;
             outline: none;
         }
 
@@ -64,13 +69,13 @@
 
         button {
             width: 100%;
-            margin-top: 15px;
             padding: 14px;
+            margin-top: 12px;
             border: none;
             border-radius: 10px;
             background: #2563eb;
             color: white;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
         }
@@ -85,8 +90,180 @@
         }
 
         .examples {
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .examples button {
-            background: #e
+            background: #e8eefc;
+            color: #2563eb;
+            font-size: 14px;
+        }
+
+        .response {
+            margin-top: 22px;
+            padding: 18px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            min-height: 100px;
+        }
+
+        .about {
+            margin-top: 25px;
+            padding: 18px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        footer {
+            text-align: center;
+            margin: 30px 0;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📚 StudyAI</h1>
+    <p>Your personal AI study assistant</p>
+    <p>Study smarter 🚀</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>🤖 Ask StudyAI</h2>
+
+        <p>
+            Ask StudyAI questions about your courses,
+            assignments, calculations, or difficult topics.
+        </p>
+
+        <textarea
+            id="question"
+            placeholder="Enter your question below..."
+        ></textarea>
+
+        <button id="askButton" onclick="askQuestion()">
+            Ask StudyAI
+        </button>
+
+        <div id="responseBox" class="response">
+            StudyAI's answer will appear here.
+        </div>
+
+        <div class="examples">
+
+            <h3>💡 Try an example</h3>
+
+            <button onclick="useExample('What is economics?')">
+                What is economics?
+            </button>
+
+            <button onclick="useExample('Explain opportunity cost.')">
+                Explain opportunity cost.
+            </button>
+
+            <button onclick="useExample('Explain demand and supply.')">
+                Explain demand and supply.
+            </button>
+
+            <button onclick="useExample('Give me algebra practice questions.')">
+                Give me algebra practice questions.
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="about">
+
+        <h2>About StudyAI</h2>
+
+        <p>
+            StudyAI is an AI study assistant created by
+            Oluwasemilore Adedokun.
+        </p>
+
+        <p>
+            StudyAI uses Google's Gemini AI technology to
+            generate AI-powered responses.
+        </p>
+
+        <p>
+            Students can use StudyAI to understand courses,
+            explain difficult topics, solve calculations,
+            practice questions, and study more effectively.
+        </p>
+
+    </div>
+
+</div>
+
+<footer>
+    StudyAI © 2026<br>
+    Created by Oluwasemilore Adedokun
+</footer>
+
+
+<script>
+
+async function askQuestion() {
+
+    const questionBox = document.getElementById("question");
+    const responseBox = document.getElementById("responseBox");
+    const askButton = document.getElementById("askButton");
+
+    const question = questionBox.value.trim();
+
+    if (!question) {
+        responseBox.textContent =
+            "Please enter a question first.";
+        return;
+    }
+
+    askButton.disabled = true;
+    askButton.textContent = "Thinking...";
+
+    responseBox.textContent =
+        "🤖 StudyAI is thinking...";
+
+    try {
+
+        const response = await fetch(
+            "https://studyai-qkgp.onrender.com/api/ask",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    question: question
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Server error."
+            );
+        }
+
+        responseBox.textContent =
+            "📚 StudyAI:\n\n" +
+            data.answer;
+
+    } catch (error) {
+
+       
