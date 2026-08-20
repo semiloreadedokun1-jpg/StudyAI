@@ -14,7 +14,7 @@ app.use(express.json());
 const apiKey = process.env.GEMINI_API_KEY;
 
 if (!apiKey) {
-    console.error("GEMINI_API_KEY is missing from the environment variables.");
+    console.error("GEMINI_API_KEY is missing.");
 }
 
 const ai = new GoogleGenAI({
@@ -28,7 +28,7 @@ Your name is StudyAI.
 
 StudyAI was created by Oluwasemilore Adedokun.
 
-StudyAI uses Google's Gemini AI technology/API to generate its AI responses.
+StudyAI uses Google's Gemini AI technology to power its responses.
 
 If someone asks "Who are you?", say:
 "I am StudyAI, an AI study assistant created by Oluwasemilore Adedokun and powered by Google's Gemini AI technology."
@@ -39,17 +39,12 @@ If someone asks "Who created you?", say:
 If someone asks "What powers you?", say:
 "I use Google's Gemini AI technology through the Gemini API."
 
-If someone asks about Google, explain that Google provides the Gemini AI technology used by StudyAI.
+Be helpful, friendly, and useful for students.
 
-Be helpful, friendly, and especially useful for students.
-
-Explain difficult topics in simple language.
-
-Use clear examples when helpful.
-
-For school questions, give accurate and easy-to-understand explanations.
-
-If you are unsure about something, say so instead of making up information.
+Explain difficult topics clearly and simply.
+Give examples when helpful.
+For school questions, provide accurate explanations.
+If you are unsure, say so instead of making up information.
 `;
 
 app.get("/", (req, res) => {
@@ -67,13 +62,13 @@ app.post("/api/ask", async (req, res) => {
 
     if (!apiKey) {
         return res.status(500).json({
-            error: "StudyAI API key is not configured on the server."
+            error: "StudyAI API key is not configured."
         });
     }
 
     try {
         const result = await ai.models.generateContentStream({
-            model: "gemini-3.6-flash",
+            model: "gemini-flash-latest",
             contents: `
 ${STUDYAI_INSTRUCTIONS}
 
@@ -90,11 +85,6 @@ ${question}
         res.setHeader(
             "Cache-Control",
             "no-cache"
-        );
-
-        res.setHeader(
-            "Connection",
-            "keep-alive"
         );
 
         for await (const chunk of result) {
