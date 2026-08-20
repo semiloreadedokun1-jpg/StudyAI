@@ -1,12 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>NEXA AI — Your AI Study Assistant</title>
 
+    <!-- PWA SETTINGS -->
+    <link rel="manifest" href="/manifest.json">
+
+    <meta
+        name="theme-color"
+        content="#2563eb"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -19,94 +43,146 @@
         }
 
         /* HEADER */
+
         header {
-            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #4f46e5
+            );
+
             color: white;
+
             padding: 45px 20px 55px;
+
             text-align: center;
         }
 
-        /* NEXA AI LOGO */
+        /* LOGO */
+
         .logo {
             width: 78px;
             height: 78px;
+
             margin: 0 auto 16px;
+
             border-radius: 24px;
-            background: #ffffff;
+
+            background: white;
+
             color: #2563eb;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             font-size: 38px;
+
             font-weight: 900;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.2);
+
             position: relative;
         }
 
         .logo::after {
             content: "";
+
             position: absolute;
+
             width: 12px;
             height: 12px;
+
             background: #4f46e5;
+
             border-radius: 50%;
+
             top: 10px;
             right: 10px;
         }
 
         .logo span {
             position: relative;
+
             z-index: 2;
         }
 
         header h1 {
             margin: 0;
+
             font-size: 38px;
+
             letter-spacing: 1px;
         }
 
         header p {
             margin: 10px 0 0;
+
             font-size: 17px;
+
             opacity: 0.95;
         }
 
-        /* MAIN CONTAINER */
+        /* CONTAINER */
+
         .container {
             width: 92%;
+
             max-width: 800px;
+
             margin: -25px auto 40px;
         }
 
         /* MAIN CARD */
+
         .card {
             background: white;
+
             padding: 25px;
+
             border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
         .card h2 {
             margin-top: 0;
+
             font-size: 24px;
         }
 
         .subtitle {
             color: #64748b;
+
             line-height: 1.6;
         }
 
-        /* QUESTION BOX */
+        /* QUESTION */
+
         textarea {
             width: 100%;
+
             min-height: 140px;
+
             margin-top: 15px;
+
             padding: 16px;
-            border: 2px solid #e2e8f0;
+
+            border:
+                2px solid #e2e8f0;
+
             border-radius: 14px;
+
             font-size: 16px;
+
             font-family: inherit;
+
             resize: vertical;
+
             outline: none;
         }
 
@@ -115,17 +191,28 @@
         }
 
         /* ASK BUTTON */
+
         #askButton {
             width: 100%;
+
             margin-top: 14px;
+
             padding: 16px;
+
             border: none;
+
             border-radius: 14px;
+
             background: #2563eb;
+
             color: white;
+
             font-size: 17px;
+
             font-weight: bold;
+
             cursor: pointer;
+
             transition: 0.2s;
         }
 
@@ -135,22 +222,59 @@
 
         #askButton:disabled {
             background: #94a3b8;
+
             cursor: not-allowed;
         }
 
+        /* INSTALL BUTTON */
+
+        #installButton {
+            display: none;
+
+            width: 100%;
+
+            margin-top: 12px;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background: #111827;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
         /* RESPONSE */
+
         .response {
             margin-top: 20px;
+
             padding: 20px;
+
             min-height: 120px;
+
             background: #f8fafc;
-            border: 1px solid #e2e8f0;
+
+            border:
+                1px solid #e2e8f0;
+
             border-radius: 14px;
+
             white-space: pre-wrap;
+
             line-height: 1.7;
         }
 
         /* EXAMPLES */
+
         .examples {
             margin-top: 25px;
         }
@@ -161,15 +285,26 @@
 
         .example-btn {
             width: 100%;
+
             padding: 12px;
+
             margin-top: 8px;
-            border: 1px solid #dbeafe;
+
+            border:
+                1px solid #dbeafe;
+
             border-radius: 10px;
+
             background: #eff6ff;
+
             color: #2563eb;
+
             text-align: left;
+
             cursor: pointer;
+
             font-size: 14px;
+
             transition: 0.2s;
         }
 
@@ -178,19 +313,29 @@
         }
 
         /* FEATURES */
+
         .features {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
             gap: 12px;
+
             margin-top: 20px;
         }
 
         .feature {
             background: white;
+
             padding: 18px;
+
             border-radius: 15px;
+
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .feature-icon {
@@ -199,153 +344,215 @@
 
         .feature strong {
             display: block;
+
             margin-top: 8px;
         }
 
         .feature span {
             color: #64748b;
+
             font-size: 13px;
         }
 
         /* ABOUT */
+
         .about {
             margin-top: 20px;
+
             padding: 22px;
+
             background: white;
+
             border-radius: 18px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.05);
         }
 
         .about p {
             color: #64748b;
+
             line-height: 1.7;
         }
 
         /* FOOTER */
+
         footer {
             text-align: center;
+
             padding: 25px;
+
             color: #64748b;
+
             font-size: 14px;
         }
 
         /* MOBILE */
-        @media (max-width: 600px) {
 
-            header {
-                padding: 35px 15px 50px;
-            }
+        @media (max-width: 600px) {
 
             header h1 {
                 font-size: 32px;
-            }
-
-            header p {
-                font-size: 15px;
-            }
-
-            .container {
-                width: 94%;
-            }
-
-            .card {
-                padding: 20px;
             }
 
             .features {
                 grid-template-columns: 1fr;
             }
 
+            .card {
+                padding: 20px;
+            }
+
             .logo {
                 width: 70px;
+
                 height: 70px;
+
                 font-size: 34px;
             }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
     <!-- HEADER -->
+
     <header>
 
         <div class="logo">
+
             <span>N</span>
+
         </div>
 
         <h1>NEXA AI</h1>
 
-        <p>Your intelligent AI study companion</p>
+        <p>
+            Your intelligent AI study companion
+        </p>
 
     </header>
 
 
     <!-- MAIN -->
+
     <div class="container">
 
-        <!-- AI QUESTION CARD -->
+
+        <!-- AI CARD -->
+
         <div class="card">
 
-            <h2>🤖 Ask NEXA AI</h2>
+            <h2>
+                🤖 Ask NEXA AI
+            </h2>
+
 
             <p class="subtitle">
-                Ask questions about Economics, Mathematics, English,
-                assignments, calculations, or difficult topics.
+
+                Ask questions about Economics,
+                Mathematics, English, assignments,
+                calculations, or difficult topics.
+
             </p>
+
 
             <textarea
                 id="question"
                 placeholder="Type your question here..."
             ></textarea>
 
+
             <button
                 id="askButton"
                 onclick="askQuestion()"
             >
+
                 Ask NEXA AI
+
             </button>
 
-            <!-- AI RESPONSE -->
+
+            <button
+                id="installButton"
+            >
+
+                📲 Install NEXA AI
+
+            </button>
+
+
+            <!-- RESPONSE -->
+
             <div
                 id="responseBox"
                 class="response"
             >
+
                 Your answer will appear here.
+
             </div>
 
 
             <!-- EXAMPLES -->
+
             <div class="examples">
 
-                <h3>💡 Try asking</h3>
+                <h3>
+                    💡 Try asking
+                </h3>
+
 
                 <button
                     class="example-btn"
-                    onclick="useExample('What is economics?')"
+                    onclick="useExample(
+                        'What is economics?'
+                    )"
                 >
+
                     📚 What is economics?
+
                 </button>
+
 
                 <button
                     class="example-btn"
-                    onclick="useExample('Explain opportunity cost.')"
+                    onclick="useExample(
+                        'Explain opportunity cost.'
+                    )"
                 >
+
                     💰 Explain opportunity cost.
+
                 </button>
+
 
                 <button
                     class="example-btn"
-                    onclick="useExample('Explain demand and supply.')"
+                    onclick="useExample(
+                        'Explain demand and supply.'
+                    )"
                 >
+
                     📈 Explain demand and supply.
+
                 </button>
+
 
                 <button
                     class="example-btn"
-                    onclick="useExample('Give me algebra practice questions.')"
+                    onclick="useExample(
+                        'Give me algebra practice questions.'
+                    )"
                 >
+
                     🧮 Give me algebra practice questions.
+
                 </button>
 
             </div>
@@ -354,70 +561,136 @@
 
 
         <!-- FEATURES -->
+
         <div class="features">
 
-            <div class="feature">
-                <div class="feature-icon">📚</div>
-                <strong>Learn</strong>
-                <span>Understand topics</span>
-            </div>
 
             <div class="feature">
-                <div class="feature-icon">🧮</div>
-                <strong>Practice</strong>
-                <span>Improve your skills</span>
+
+                <div class="feature-icon">
+                    📚
+                </div>
+
+                <strong>
+                    Learn
+                </strong>
+
+                <span>
+                    Understand topics
+                </span>
+
             </div>
 
+
             <div class="feature">
-                <div class="feature-icon">💡</div>
-                <strong>Understand</strong>
-                <span>Get clear explanations</span>
+
+                <div class="feature-icon">
+                    🧮
+                </div>
+
+                <strong>
+                    Practice
+                </strong>
+
+                <span>
+                    Improve your skills
+                </span>
+
             </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💡
+                </div>
+
+                <strong>
+                    Understand
+                </strong>
+
+                <span>
+                    Get clear explanations
+                </span>
+
+            </div>
+
 
         </div>
 
 
         <!-- ABOUT -->
+
         <div class="about">
 
-            <h2>About NEXA AI</h2>
+            <h2>
+                About NEXA AI
+            </h2>
+
 
             <p>
-                NEXA AI is an intelligent study assistant designed
-                to help students learn, understand difficult topics,
-                practice questions, and solve calculations.
+
+                NEXA AI is an intelligent study
+                assistant designed to help students
+                learn, understand difficult topics,
+                practice questions, and solve
+                calculations.
+
             </p>
 
+
             <p>
-                Ask a question and get a clear explanation designed
-                to make learning easier.
+
+                Ask a question and get a clear
+                explanation designed to make
+                learning easier.
+
             </p>
 
         </div>
+
 
     </div>
 
 
     <!-- FOOTER -->
+
     <footer>
-        NEXA AI © 2026<br>
+
+        NEXA AI © 2026
+
+        <br>
+
         Your AI study companion
+
     </footer>
 
 
-    <!-- JAVASCRIPT -->
     <script>
+
+
+        /* ASK NEXA AI */
 
         async function askQuestion() {
 
+
             const questionBox =
-                document.getElementById("question");
+                document.getElementById(
+                    "question"
+                );
+
 
             const responseBox =
-                document.getElementById("responseBox");
+                document.getElementById(
+                    "responseBox"
+                );
+
 
             const askButton =
-                document.getElementById("askButton");
+                document.getElementById(
+                    "askButton"
+                );
+
 
             const question =
                 questionBox.value.trim();
@@ -429,6 +702,7 @@
                     "Please enter a question first.";
 
                 return;
+
             }
 
 
@@ -437,26 +711,30 @@
             askButton.textContent =
                 "Thinking...";
 
+
             responseBox.textContent =
                 "🤖 NEXA AI is thinking...";
 
 
             try {
 
-                const response = await fetch(
-                    "https://studyai-qkgp.onrender.com/api/ask",
-                    {
-                        method: "POST",
 
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
+                const response =
+                    await fetch(
+                        "https://studyai-qkgp.onrender.com/api/ask",
+                        {
+                            method: "POST",
 
-                        body: JSON.stringify({
-                            question: question
-                        })
-                    }
-                );
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                question: question
+                            })
+                        }
+                    );
 
 
                 const data =
@@ -488,14 +766,17 @@
 
             } catch (error) {
 
+
                 console.error(
                     "NEXA AI error:",
                     error
                 );
 
+
                 responseBox.textContent =
                     "❌ NEXA AI could not answer right now.\n\n" +
                     error.message;
+
 
             }
 
@@ -508,10 +789,17 @@
         }
 
 
+
+        /* EXAMPLE QUESTIONS */
+
         function useExample(text) {
 
+
             const questionBox =
-                document.getElementById("question");
+                document.getElementById(
+                    "question"
+                );
+
 
             questionBox.value = text;
 
@@ -519,7 +807,111 @@
 
         }
 
+
+
+        /* SERVICE WORKER */
+
+        if (
+            "serviceWorker" in navigator
+        ) {
+
+
+            window.addEventListener(
+                "load",
+                () => {
+
+
+                    navigator.serviceWorker
+                        .register(
+                            "/service-worker.js"
+                        )
+
+
+                        .then(() => {
+
+                            console.log(
+                                "NEXA AI service worker registered."
+                            );
+
+                        })
+
+
+                        .catch(error => {
+
+                            console.error(
+                                "Service worker error:",
+                                error
+                            );
+
+                        });
+
+                }
+            );
+
+        }
+
+
+
+        /* INSTALL APP */
+
+        let deferredPrompt;
+
+
+        const installButton =
+            document.getElementById(
+                "installButton"
+            );
+
+
+        window.addEventListener(
+            "beforeinstallprompt",
+            event => {
+
+
+                event.preventDefault();
+
+
+                deferredPrompt = event;
+
+
+                installButton.style.display =
+                    "block";
+
+            }
+        );
+
+
+        installButton.addEventListener(
+            "click",
+            async () => {
+
+
+                if (!deferredPrompt) {
+
+                    return;
+
+                }
+
+
+                deferredPrompt.prompt();
+
+
+                await deferredPrompt.userChoice;
+
+
+                deferredPrompt = null;
+
+
+                installButton.style.display =
+                    "none";
+
+            }
+        );
+
+
     </script>
 
+
 </body>
-</html>
+
+    </html>
