@@ -1,22 +1,10 @@
 {
-  "name": "NEXA AI",
-  "short_name": "NEXA AI",
-  "description": "Your intelligent AI study companion.",
-  "start_url": "/",
+  "name": "EduNova AI",
+  "short_name": "EduNova",
+  "description": "EduNova AI - Learn. Understand. Excel.",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#f5f7fb",
+  "background_color": "#ffffff",
   "theme_color": "#2563eb",
-  "orientation": "portrait",
-  "icons": [
-    {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+  "orientation": "portrait"
 }
