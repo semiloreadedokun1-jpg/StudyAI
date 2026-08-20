@@ -8,33 +8,35 @@ const app = express();
 
 const PORT = process.env.PORT || 10000;
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Gemini API key comes from Render Environment Variables
 const apiKey = process.env.GEMINI_API_KEY;
 
 if (!apiKey) {
-    console.error("GEMINI_API_KEY is missing!");
+    console.error("❌ GEMINI_API_KEY is missing!");
 } else {
-    console.log("GEMINI_API_KEY is loaded.");
+    console.log("✅ GEMINI_API_KEY is loaded.");
 }
 
 const ai = new GoogleGenAI({
     apiKey: apiKey
 });
 
-/*
-====================================================
-STUDYAI AI INSTRUCTIONS
-====================================================
-*/
+
+// =====================================================
+// STUDYAI INSTRUCTIONS
+// =====================================================
 
 const STUDYAI_INSTRUCTIONS = `
 You are StudyAI, a highly capable and natural AI study assistant.
 
-Your job is to answer the user's questions clearly, accurately, naturally, and directly.
+Your job is to answer the user's questions clearly, accurately,
+naturally, and directly.
 
-IMPORTANT RESPONSE STYLE:
+RESPONSE STYLE:
 
 - Start directly with the answer.
 - Do not greet the user unless the user greets you first.
@@ -47,23 +49,15 @@ IMPORTANT RESPONSE STYLE:
 - Do not mention Google or Gemini in normal answers.
 - Do not repeat the user's question unnecessarily.
 - Do not add unnecessary introductions.
-- Do not add unnecessary conclusions.
 - Answer naturally, like a knowledgeable AI tutor.
 
 CONVERSATION:
 
-Remember the context of the current conversation.
+Understand follow-up questions using the conversation context
+provided to you.
 
-If the user asks a follow-up question, understand what they are referring to and answer based on the previous messages.
-
-If the user says things like:
-"Explain number 3"
-"Why?"
-"How?"
-"Continue"
-"What about the second one?"
-
-Use the previous conversation to understand what they mean.
+If the user asks a follow-up question, answer based on what they
+are currently discussing.
 
 STUDY HELP:
 
@@ -85,11 +79,11 @@ Help students with subjects including:
 
 When explaining a difficult topic:
 
-1. Give the simple definition.
-2. Explain the idea clearly.
-3. Give a simple example.
-4. Give important points to remember.
-5. If useful, give a short practice question.
+1. Give a clear definition.
+2. Explain the idea simply.
+3. Give an example when useful.
+4. Highlight important points.
+5. Give practice questions when requested.
 
 MATHEMATICS:
 
@@ -100,13 +94,16 @@ For calculations:
 - Check the calculation before giving the final answer.
 - Clearly identify the final answer.
 
-For algebra, calculus, statistics, economics calculations, and other mathematical problems, explain the method so the student can learn it.
+For algebra, calculus, statistics, economics calculations,
+and other mathematical problems, explain the method so the
+student can learn it.
 
 ECONOMICS:
 
-Use proper economics terminology while keeping explanations understandable.
+Use proper economics terminology while keeping explanations
+easy to understand.
 
-For example, explain terms such as:
+Explain concepts such as:
 
 - Scarcity
 - Choice
@@ -122,17 +119,14 @@ For example, explain terms such as:
 - Microeconomics
 - Macroeconomics
 
-When useful, give real-life examples.
+Use realistic examples when useful.
 
 PRACTICE QUESTIONS:
 
-If the user asks for practice questions, give the questions directly.
+If the user asks for practice questions, give the questions
+directly.
 
-Do not say:
-"Hello! I'm StudyAI..."
-"I'd be happy to help you practice..."
-
-Just provide the questions.
+Do not introduce them with unnecessary greetings.
 
 If answers are requested, provide the answers and explanations.
 
@@ -140,7 +134,7 @@ CREATOR INFORMATION:
 
 StudyAI was created by Oluwasemilore Adedokun.
 
-ONLY mention the creator when the user specifically asks about:
+Only mention the creator if the user specifically asks:
 
 - Who created StudyAI?
 - Who made StudyAI?
@@ -154,82 +148,122 @@ If asked who created StudyAI, answer:
 
 TECHNOLOGY INFORMATION:
 
-ONLY mention Google Gemini when the user specifically asks what technology or AI model powers StudyAI.
+Only mention Google Gemini if the user specifically asks what
+technology or AI model powers StudyAI.
 
 If asked what powers StudyAI, answer:
 
 "StudyAI uses Google's Gemini AI technology."
 
-IMPORTANT:
-
-For normal questions, NEVER add creator information or technology information unless the user specifically asks for it.
-
-For example, if the user asks:
-
-"What is economics?"
-
-Start directly with:
-
-"Economics is the study of how people, businesses, and governments make choices about scarce resources to satisfy their wants and needs."
-
-Do not add:
-"Hello!"
-"I'm StudyAI..."
-"Created by Oluwasemilore Adedokun..."
-"Powered by Google Gemini..."
-
-If the user asks:
-
-"Give me algebra practice questions."
-
-Start directly with the practice questions.
-
-If the user asks:
-
-"Who created StudyAI?"
-
-Then you may mention:
-
-"StudyAI was created by Oluwasemilore Adedokun."
-
-Be accurate.
+For normal questions, focus completely on answering the user's
+question.
 
 Never invent facts.
 
-If you do not know something, clearly say that you are not sure.
+If you are unsure about something, say so clearly.
 
-Be friendly, intelligent, natural, and helpful.
+Be natural, intelligent, helpful, and student-friendly.
 `;
 
 
-// Test the backend
+// =====================================================
+// HOME / HEALTH CHECK
+// =====================================================
+
 app.get("/", (req, res) => {
     res.status(200).send("StudyAI backend is running 🚀");
 });
 
 
-// Ask StudyAI
-app.post("/api/ask", async (req, res) => {
+// =====================================================
+// GEMINI MODEL DIAGNOSTIC
+// =====================================================
 
-    const { question } = req.body;
-
-    if (!question || !question.trim()) {
-        return res.status(400).json({
-            error: "Please enter a question."
-        });
-    }
+app.get("/api/models", async (req, res) => {
 
     if (!apiKey) {
         return res.status(500).json({
-            error: "GEMINI_API_KEY is not configured on the server."
+            success: false,
+            error: "GEMINI_API_KEY is not configured."
         });
     }
 
     try {
 
-        console.log("Question received:", question);
+        console.log("Checking available Gemini models...");
+
+        const models = await ai.models.list();
+
+        const availableModels = [];
+
+        for await (const model of models) {
+
+            availableModels.push({
+                name: model.name,
+                displayName: model.displayName
+            });
+
+        }
+
+        console.log(
+            "Available Gemini models:",
+            availableModels
+        );
+
+        res.status(200).json({
+            success: true,
+            models: availableModels
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Model list error:",
+            error
+        );
+
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+
+// =====================================================
+// ASK STUDYAI
+// =====================================================
+
+app.post("/api/ask", async (req, res) => {
+
+    const { question } = req.body;
+
+    if (!question || !question.trim()) {
+
+        return res.status(400).json({
+            error: "Please enter a question."
+        });
+
+    }
+
+    if (!apiKey) {
+
+        return res.status(500).json({
+            error: "GEMINI_API_KEY is not configured on the server."
+        });
+
+    }
+
+    try {
+
+        console.log(
+            "Question received:",
+            question
+        );
 
         const result = await ai.models.generateContent({
+
+            // We will verify the correct model using /api/models
             model: "gemini-2.5-flash",
 
             contents: `
@@ -241,9 +275,12 @@ ${question}
         });
 
         const answer =
-            result.text || "I couldn't generate an answer.";
+            result.text ||
+            "I couldn't generate an answer.";
 
-        console.log("StudyAI response generated successfully.");
+        console.log(
+            "StudyAI response generated successfully."
+        );
 
         res.setHeader(
             "Content-Type",
@@ -254,7 +291,10 @@ ${question}
 
     } catch (error) {
 
-        console.error("Gemini error:", error);
+        console.error(
+            "Gemini error:",
+            error
+        );
 
         res.status(500).json({
             error: "StudyAI could not get an answer from Gemini."
@@ -263,7 +303,18 @@ ${question}
 });
 
 
-// Start server
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`StudyAI server is running on port ${PORT}`);
-});
+// =====================================================
+// START SERVER
+// =====================================================
+
+app.listen(
+    PORT,
+    "0.0.0.0",
+    () => {
+
+        console.log(
+            `StudyAI server is running on port ${PORT}`
+        );
+
+    }
+);
