@@ -1,8 +1,8 @@
 {
-  "name": "EduNova AI",
-  "short_name": "EduNova",
-  "description": "EduNova AI - Learn. Understand. Excel.",
-  "start_url": "./",
+  "name": "NEXA AI",
+  "short_name": "NEXA",
+  "description": "Your AI Study Assistant",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
