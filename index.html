@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>EduNova AI</title>
+    <title>NEXA AI</title>
 
     <style>
         * {
@@ -31,13 +31,11 @@
         }
 
         header p {
-            margin: 8px 0 0;
-            font-size: 16px;
+            margin: 8px 0;
         }
 
         .tagline {
             font-weight: bold;
-            margin-top: 14px;
         }
 
         .container {
@@ -51,7 +49,7 @@
             background: white;
             padding: 22px;
             border-radius: 16px;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
         }
 
         h2 {
@@ -92,7 +90,6 @@
 
         .ask-button:disabled {
             background: #888;
-            cursor: not-allowed;
         }
 
         .response {
@@ -118,12 +115,7 @@
             border-radius: 10px;
             background: #e8eefc;
             color: #2563eb;
-            font-size: 14px;
             cursor: pointer;
-        }
-
-        .example-button:hover {
-            background: #dbe5ff;
         }
 
         .about {
@@ -133,14 +125,8 @@
         footer {
             text-align: center;
             margin: 30px 0;
-            padding: 0 15px;
             color: #777;
             font-size: 14px;
-        }
-
-        .loading {
-            color: #2563eb;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -148,12 +134,12 @@
 <body>
 
 <header>
-    <h1>🧠 EduNova AI</h1>
+    <h1>🤖 NEXA AI</h1>
 
     <p>Your intelligent study companion</p>
 
     <p class="tagline">
-        Learn. Understand. Excel. 🚀
+        Learn Smarter. Understand More. Excel. 🚀
     </p>
 </header>
 
@@ -161,10 +147,10 @@
 
     <div class="card">
 
-        <h2>🤖 Ask EduNova AI</h2>
+        <h2>🤖 Ask NEXA AI</h2>
 
         <p>
-            Ask EduNova AI about your courses, assignments,
+            Ask NEXA AI about your courses, assignments,
             calculations, or difficult topics.
         </p>
 
@@ -178,11 +164,11 @@
             class="ask-button"
             onclick="askQuestion()"
         >
-            ✨ Ask EduNova
+            ✨ Ask NEXA AI
         </button>
 
         <div id="responseBox" class="response">
-            EduNova AI's answer will appear here.
+            NEXA AI's answer will appear here.
         </div>
 
         <div class="examples">
@@ -223,27 +209,17 @@
 
     <div class="about">
 
-        <h2>About EduNova AI</h2>
+        <h2>About NEXA AI</h2>
 
         <p>
-            EduNova AI is a student-focused AI learning assistant
-            designed to make studying easier and more understandable.
+            NEXA AI is an intelligent learning assistant
+            designed to help students learn more effectively.
         </p>
 
         <p>
-            Students can use EduNova AI to:
-        </p>
-
-        <ul>
-            <li>Understand difficult topics</li>
-            <li>Solve calculations step by step</li>
-            <li>Practice questions</li>
-            <li>Explain assignments</li>
-            <li>Review school subjects</li>
-        </ul>
-
-        <p>
-            <strong>Learn smarter. Build confidence. Keep improving. 🚀</strong>
+            NEXA AI can help students understand difficult topics,
+            solve calculations, practice questions, and study
+            different subjects.
         </p>
 
     </div>
@@ -251,8 +227,8 @@
 </div>
 
 <footer>
-    EduNova AI © 2026<br>
-    Learn. Understand. Excel.
+    NEXA AI © 2026<br>
+    Learn Smarter. Understand More. Excel.
 </footer>
 
 <script>
@@ -280,15 +256,10 @@ async function askQuestion() {
     }
 
     askButton.disabled = true;
-
-    askButton.textContent =
-        "Thinking...";
-
-    responseBox.className =
-        "response loading";
+    askButton.textContent = "Thinking...";
 
     responseBox.textContent =
-        "🤖 EduNova AI is thinking...";
+        "🤖 NEXA AI is thinking...";
 
     try {
 
@@ -310,7 +281,6 @@ async function askQuestion() {
         const data = await response.json();
 
         if (!response.ok) {
-
             throw new Error(
                 data.error ||
                 data.details ||
@@ -318,45 +288,32 @@ async function askQuestion() {
             );
         }
 
-        responseBox.className =
-            "response";
-
         responseBox.textContent =
-            "📚 EduNova AI:\n\n" +
+            "📚 NEXA AI:\n\n" +
             data.answer;
 
     } catch (error) {
 
-        console.error(
-            "EduNova AI error:",
-            error
-        );
-
-        responseBox.className =
-            "response";
+        console.error("NEXA AI error:", error);
 
         responseBox.textContent =
-            "❌ EduNova AI could not get an answer.\n\n" +
+            "❌ NEXA AI could not get an answer.\n\n" +
             error.message;
 
     } finally {
 
         askButton.disabled = false;
-
-        askButton.textContent =
-            "✨ Ask EduNova";
+        askButton.textContent = "✨ Ask NEXA AI";
     }
 }
 
-
 function useExample(text) {
 
-    document.getElementById("question").value =
-        text;
+    document.getElementById("question").value = text;
 
 }
 
 </script>
 
 </body>
-    </html>
+</html>
