@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- NEXA AI PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="NEXA AI">
+
     <title>NEXA AI — Your AI Study Assistant</title>
 
     <style>
@@ -194,7 +201,6 @@
         }
 
         @media (max-width: 600px) {
-
             header h1 {
                 font-size: 32px;
             }
@@ -331,6 +337,7 @@
 </footer>
 
 <script>
+
 async function askQuestion() {
 
     const questionBox = document.getElementById("question");
@@ -340,8 +347,10 @@ async function askQuestion() {
     const question = questionBox.value.trim();
 
     if (!question) {
+
         responseBox.textContent =
             "Please enter a question first.";
+
         return;
     }
 
@@ -357,9 +366,11 @@ async function askQuestion() {
             "https://studyai-qkgp.onrender.com/api/ask",
             {
                 method: "POST",
+
                 headers: {
                     "Content-Type": "application/json"
                 },
+
                 body: JSON.stringify({
                     question: question
                 })
@@ -369,12 +380,15 @@ async function askQuestion() {
         const data = await response.json();
 
         if (!response.ok) {
+
             throw new Error(
                 data.error || "Server error."
             );
+
         }
 
-        responseBox.textContent = data.answer;
+        responseBox.textContent =
+            data.answer;
 
     } catch (error) {
 
@@ -382,20 +396,4 @@ async function askQuestion() {
 
         responseBox.textContent =
             "❌ NEXA AI could not answer right now.\n\n" +
-            error.message;
-    }
-
-    askButton.disabled = false;
-    askButton.textContent = "Ask NEXA AI";
-}
-
-function useExample(text) {
-
-    document.getElementById("question").value = text;
-
-    document.getElementById("question").focus();
-}
-</script>
-
-</body>
-</html>
+           
