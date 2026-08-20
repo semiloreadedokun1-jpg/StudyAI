@@ -5,20 +5,26 @@ require("dotenv").config();
 const { GoogleGenAI } = require("@google/genai");
 
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 
-// CORS
-app.use(cors());
+// ===============================
+// MIDDLEWARE
+// ===============================
 
-// JSON requests
+app.use(cors());
 app.use(express.json());
 
-// Gemini
+// Serve index.html, CSS, JS and other frontend files
+app.use(express.static(__dirname));
+
+// ===============================
+// GEMINI AI
+// ===============================
+
 const apiKey = process.env.GEMINI_API_KEY;
 
 if (!apiKey) {
-    console.error("GEMINI_API_KEY is not set.");
+    console.error("ERROR: GEMINI_API_KEY is not set.");
 }
 
 const ai = apiKey
@@ -27,26 +33,29 @@ const ai = apiKey
     })
     : null;
 
+// ===============================
+// HOME PAGE
+// ===============================
 
-// HOME
 app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/index.html");
+});
+
+// ===============================
+// HEALTH CHECK
+// ===============================
+
+app.get("/health", (req, res) => {
     res.json({
         status: "ok",
         message: "NEXA AI server is running"
     });
 });
 
-
-// HEALTH CHECK
-app.get("/health", (req, res) => {
-    res.json({
-        status: "ok",
-        message: "NEXA AI server is healthy"
-    });
-});
-
-
+// ===============================
 // ASK NEXA AI
+// ===============================
+
 app.post("/api/ask", async (req, res) => {
 
     try {
@@ -55,51 +64,58 @@ app.post("/api/ask", async (req, res) => {
 
         console.log("Question received:", question);
 
+        // Check question
         if (!question || !question.trim()) {
             return res.status(400).json({
                 error: "Please enter a question."
             });
         }
 
+        // Check API key
         if (!ai) {
             return res.status(500).json({
                 error: "Gemini API key is not configured."
             });
         }
 
+        // ===============================
+        // NEXA AI INSTRUCTIONS
+        // ===============================
 
-        // AI instructions
         const prompt = `
 You are NEXA AI, an intelligent study assistant.
 
 Answer the student's question directly.
 
-IMPORTANT RESPONSE RULES:
+IMPORTANT RULES:
 
 - Do NOT introduce yourself.
 - Do NOT say "I am NEXA AI."
 - Do NOT say "Hello, I am NEXA AI."
-- Do NOT start every answer with greetings.
-- Do NOT mention your name unless the student specifically asks for it.
+- Do NOT start every answer with a greeting.
+- Do NOT mention your name unless the student specifically asks.
 - Start directly with the answer.
-- Explain difficult topics clearly and simply.
-- Show steps when solving calculations.
-- Give examples when helpful.
-- For practice requests, provide useful practice questions.
-- Be accurate, educational, and easy for a student to understand.
+- Explain difficult topics in simple language.
+- Give clear examples when useful.
+- Show steps when solving mathematics or calculations.
+- Help with Economics, Mathematics, English, and other school subjects.
+- When asked for practice questions, provide useful practice questions.
+- Keep explanations suitable for students.
+- Be accurate and educational.
 
 Student's question:
 
 ${question}
 `;
 
+        // ===============================
+        // SEND TO GEMINI
+        // ===============================
 
-        // Gemini request
         const result = await ai.models.generateContent({
             model: "gemini-3.6-flash",
             contents: prompt
         });
-
 
         const answer = result.text;
 
@@ -108,7 +124,6 @@ ${question}
         res.json({
             answer: answer
         });
-
 
     } catch (error) {
 
@@ -123,12 +138,10 @@ ${question}
 
 });
 
-
+// ===============================
 // START SERVER
+// ===============================
+
 app.listen(PORT, "0.0.0.0", () => {
-
-    console.log(
-        `NEXA AI server is running on port ${PORT}`
-    );
-
+    console.log(`NEXA AI server is running on port ${PORT}`);
 });
