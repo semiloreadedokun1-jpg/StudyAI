@@ -1,4 +1,5 @@
-    const express = require("express");
+const express = require("express");
+const cors = require("cors");
 const path = require("path");
 const { GoogleGenAI } = require("@google/genai");
 
@@ -7,80 +8,101 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.GEMINI_API_KEY;
 
+// ===============================
+// CORS
+// ===============================
+
+app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"]
+}));
+
+// ===============================
+// Middleware
+// ===============================
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ===============================
+// Gemini AI
+// ===============================
+
 if (!API_KEY) {
-  console.error("ERROR: GEMINI_API_KEY is not set.");
+    console.error("❌ GEMINI_API_KEY is missing.");
+} else {
+    console.log("✅ GEMINI_API_KEY detected.");
 }
 
 const ai = new GoogleGenAI({
-  apiKey: API_KEY
+    apiKey: API_KEY
 });
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname)));
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
+// ===============================
+// Health Check
+// ===============================
 
 app.get("/health", (req, res) => {
-  res.json({
-    status: "ok",
-    message: "StudyAI server is running"
-  });
+    res.json({
+        status: "ok",
+        message: "StudyAI server is running"
+    });
 });
 
+// ===============================
+// Homepage
+// ===============================
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// ===============================
+// Ask StudyAI
+// ===============================
+
 app.post("/api/ask", async (req, res) => {
-  try {
-    const question = req.body.question;
 
-    if (!question || !question.trim()) {
-      return res.status(400).json({
-        error: "Please enter a question."
-      });
-    }
+    try {
 
-    console.log("Question received:", question);
+        const question = req.body.question;
 
-    const prompt = `
+        if (!question || !question.trim()) {
+            return res.status(400).json({
+                error: "Please enter a question."
+            });
+        }
+
+        console.log("Question received:", question);
+
+        const prompt = `
 You are StudyAI, a helpful AI study assistant.
 
-Help the student understand the question clearly.
+Your job is to help students understand their school subjects.
 
-Rules:
-- Give a clear and accurate answer.
-- Explain difficult ideas in simple language.
-- For mathematics, show the steps.
-- For Economics, use correct economic terminology and explain each term.
-- If the question is asking for practice questions, provide useful practice questions.
-- Do not pretend to know something if you are unsure.
+Instructions:
+- Give clear and accurate answers.
+- Explain difficult topics in simple language.
+- For mathematics, show the solution step by step.
+- For Economics, use correct economic terminology and explain the terms.
+- For practice questions, give useful questions appropriate for a student.
+- Be educational, friendly, and concise.
+- If you are unsure about something, say so instead of making up information.
 
 Student's question:
+
 ${question}
 `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
-      contents: prompt
-    });
+        const response = await ai.models.generateContent({
+            model: "gemini-3.6-flash",
+            contents: prompt
+        });
 
-    const answer = response.text;
+        const answer = response.text;
 
-    console.log("Gemini answered successfully.");
+        console.log("Gemini answered successfully.");
 
-    res.json({
-      answer: answer
-    });
-
-  } catch (error) {
-    console.error("Gemini error:", error);
-
-    res.status(500).json({
-      error: "Sorry, StudyAI could not answer right now.",
-      details: error.message
-    });
-  }
-});
-
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`StudyAI server running on port ${PORT}`);
-});
+        return res.json({
+            answer
