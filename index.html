@@ -1,258 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="theme-color" content="#4f46e5">
-  <meta name="description" content="StudyAI - Your AI study assistant">
+    <title>StudyAI</title>
 
-  <title>StudyAI</title>
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    body {
-      background: #f4f7fb;
-      color: #172033;
-      min-height: 100vh;
-    }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #111827;
+        }
 
-    header {
-      padding: 22px 18px;
-      background: white;
-      border-bottom: 1px solid #e5e9f0;
-    }
+        header {
+            background: #2563eb;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
 
-    header h1 {
-      font-size: 28px;
-    }
+        header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
 
-    header p {
-      margin-top: 6px;
-      color: #687386;
-      font-size: 14px;
-    }
+        header p {
+            margin: 8px 0 0;
+            font-size: 15px;
+        }
 
-    main {
-      max-width: 600px;
-      margin: auto;
-      padding: 20px 16px 40px;
-    }
+        main {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 20px;
+        }
 
-    .welcome {
-      margin-bottom: 20px;
-    }
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
 
-    .welcome h2 {
-      font-size: 24px;
-      margin-bottom: 6px;
-    }
+        textarea {
+            width: 100%;
+            min-height: 130px;
+            padding: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            font-size: 16px;
+            resize: vertical;
+            outline: none;
+        }
 
-    .welcome p {
-      color: #687386;
-      line-height: 1.5;
-    }
+        textarea:focus {
+            border-color: #2563eb;
+        }
 
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 14px;
-      border: 1px solid #e5e9f0;
-    }
+        button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-    .card h3 {
-      margin-bottom: 8px;
-    }
+        button:active {
+            transform: scale(0.98);
+        }
 
-    .card p {
-      color: #687386;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+        #response {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            background: #f0f4ff;
+            border-radius: 12px;
+            line-height: 1.6;
+            white-space: normal;
+            word-wrap: break-word;
+        }
 
-    textarea {
-      width: 100%;
-      min-height: 130px;
-      margin-top: 14px;
-      padding: 14px;
-      border: 1px solid #d9dee8;
-      border-radius: 12px;
-      resize: vertical;
-      outline: none;
-      font-size: 15px;
-      color: #172033;
-      background: white;
-    }
+        .examples {
+            margin-top: 25px;
+        }
 
-    textarea:focus {
-      border-color: #4f46e5;
-    }
+        .examples p {
+            margin: 8px 0;
+            padding: 10px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 12px;
-      background: #4f46e5;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:active {
-      transform: scale(0.98);
-    }
-
-    #response {
-      display: none;
-      margin-top: 14px;
-      background: #f8f9fc;
-      border: 1px solid #e5e9f0;
-      border-radius: 14px;
-      padding: 16px;
-      line-height: 1.6;
-      font-size: 15px;
-      white-space: normal;
-      overflow-wrap: break-word;
-    }
-
-    .examples {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .example {
-      background: #f4f7fb;
-      border: 1px solid #e5e9f0;
-      border-radius: 12px;
-      padding: 12px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .example:active {
-      background: #e9ecff;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #8a94a6;
-      font-size: 13px;
-    }
-
-    @media (max-width: 400px) {
-      header h1 {
-        font-size: 24px;
-      }
-
-      .welcome h2 {
-        font-size: 21px;
-      }
-
-      main {
-        padding: 16px 12px 30px;
-      }
-    }
-  </style>
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
 
-  <header>
+<header>
     <h1>📚 StudyAI</h1>
     <p>Your personal AI study assistant</p>
-  </header>
+</header>
 
-  <main>
+<main>
+    <div class="card">
 
-    <section class="welcome">
-      <h2>Study smarter 🚀</h2>
-      <p>
-        Ask StudyAI questions about your courses, assignments,
-        calculations, or difficult topics.
-      </p>
-    </section>
+        <h2>Study smarter 🚀</h2>
 
-    <section class="card">
-      <h3>🤖 Ask StudyAI</h3>
+        <p>
+            Ask StudyAI questions about your courses,
+            assignments, calculations, or difficult topics.
+        </p>
 
-      <p>
-        Enter your question below and StudyAI will help explain it.
-      </p>
+        <h3>🤖 Ask StudyAI</h3>
 
-      <textarea
-        id="question"
-        placeholder="Example: Explain opportunity cost in simple terms..."
-      ></textarea>
+        <p>
+            Enter your question below and StudyAI will help explain it.
+        </p>
 
-      <button onclick="askAI()">
-        Ask StudyAI
-      </button>
+        <textarea
+            id="question"
+            placeholder="Example: What is economics?"
+        ></textarea>
 
-      <div id="response"></div>
-    </section>
+        <button onclick="askAI()">
+            Ask StudyAI
+        </button>
 
-    <section class="card">
-      <h3>💡 Try an example</h3>
+        <div id="response"></div>
 
-      <div class="examples">
+        <div class="examples">
+            <h3>💡 Try an example</h3>
 
-        <div
-          class="example"
-          onclick="useExample('What is economics?')"
-        >
-          What is economics?
+            <p onclick="useExample('What is economics?')">
+                What is economics?
+            </p>
+
+            <p onclick="useExample('Explain opportunity cost.')">
+                Explain opportunity cost.
+            </p>
+
+            <p onclick="useExample('Explain demand and supply.')">
+                Explain demand and supply.
+            </p>
+
+            <p onclick="useExample('Give me algebra practice questions.')">
+                Give me algebra practice questions.
+            </p>
         </div>
 
-        <div
-          class="example"
-          onclick="useExample('Explain opportunity cost in simple terms.')"
-        >
-          Explain opportunity cost.
-        </div>
+    </div>
+</main>
 
-        <div
-          class="example"
-          onclick="useExample('Explain demand and supply with examples.')"
-        >
-          Explain demand and supply.
-        </div>
-
-        <div
-          class="example"
-          onclick="useExample('Give me 5 practice questions on algebra.')"
-        >
-          Give me algebra practice questions.
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
+<footer>
     StudyAI © 2026
-  </footer>
+</footer>
 
-  <script src="app.js"></script>
+<script>
+async function askAI() {
+    const question =
+        document.getElementById("question").value.trim();
 
-  <script>
-    function useExample(text) {
-      document.getElementById("question").value = text;
-      document.getElementById("question").focus();
+    const responseBox =
+        document.getElementById("response");
+
+    if (!question) {
+        alert("Please enter a question first.");
+        return;
     }
-  </script>
+
+    responseBox.style.display = "block";
+    responseBox.innerHTML =
+        "🤖 StudyAI is thinking...";
+
+    try {
+        const response = await fetch(
+            "https://studyai-qkgp.onrender.com/api/ask",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    question: question
+                })
+            }
+        );
+
+        if (!response.ok) {
+            let errorMessage =
+                "Something went wrong.";
+
+            try {
+                const errorData =
+                    await response.json();
+
+                errorMessage =
+                    errorData.error || errorMessage;
+
+            } catch {
+                // Keep default message
+            }
+
+            throw new Error(errorMessage);
+        }
+
+        if (!response.body) {
+            throw new Error(
+                "No response received from StudyAI."
+            );
+        }
+
+        const reader =
+            response.body.getReader();
+
+        const decoder =
+            new TextDecoder();
+
+        let answer = "";
+
+        responseBox.innerHTML =
+            "<strong>StudyAI:</strong><br><br>";
+
+        while (true) {
+
+            const {
+                value,
+                done
+            } = await reader.read();
+
+            if (done) break;
+
+            const text =
+                decoder.decode(value, {
+                    stream: true
+                });
+
+            answer += text;
+
+            responseBox.innerHTML =
+                "<strong>StudyAI:</strong><br><br>" +
+                answer.replace(/\n/g, "<br>");
+        }
+
+    } catch (error) {
+
+        console.error(
+            "StudyAI error:",
+            error
+        );
+
+        responseBox.innerHTML =
+            "❌ I couldn't connect to the StudyAI server.<br><br>" +
+            error.message;
+    }
+}
+
+function useExample(text) {
+    document.getElementById("question").value = text;
+}
+</script>
 
 </body>
 </html>
