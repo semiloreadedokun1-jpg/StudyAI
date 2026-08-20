@@ -18,6 +18,7 @@
             color: #172033;
         }
 
+        /* HEADER */
         header {
             background: linear-gradient(135deg, #2563eb, #4f46e5);
             color: white;
@@ -25,24 +26,43 @@
             text-align: center;
         }
 
+        /* NEXA AI LOGO */
         .logo {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 15px;
-            border-radius: 22px;
-            background: white;
+            width: 78px;
+            height: 78px;
+            margin: 0 auto 16px;
+            border-radius: 24px;
+            background: #ffffff;
             color: #2563eb;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            font-weight: bold;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+            font-size: 38px;
+            font-weight: 900;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .logo::after {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #4f46e5;
+            border-radius: 50%;
+            top: 10px;
+            right: 10px;
+        }
+
+        .logo span {
+            position: relative;
+            z-index: 2;
         }
 
         header h1 {
             margin: 0;
             font-size: 38px;
+            letter-spacing: 1px;
         }
 
         header p {
@@ -51,17 +71,19 @@
             opacity: 0.95;
         }
 
+        /* MAIN CONTAINER */
         .container {
             width: 92%;
             max-width: 800px;
             margin: -25px auto 40px;
         }
 
+        /* MAIN CARD */
         .card {
             background: white;
             padding: 25px;
             border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
         .card h2 {
@@ -74,6 +96,7 @@
             line-height: 1.6;
         }
 
+        /* QUESTION BOX */
         textarea {
             width: 100%;
             min-height: 140px;
@@ -91,6 +114,7 @@
             border-color: #2563eb;
         }
 
+        /* ASK BUTTON */
         #askButton {
             width: 100%;
             margin-top: 14px;
@@ -102,6 +126,7 @@
             font-size: 17px;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         #askButton:hover {
@@ -113,6 +138,7 @@
             cursor: not-allowed;
         }
 
+        /* RESPONSE */
         .response {
             margin-top: 20px;
             padding: 20px;
@@ -124,6 +150,7 @@
             line-height: 1.7;
         }
 
+        /* EXAMPLES */
         .examples {
             margin-top: 25px;
         }
@@ -143,12 +170,14 @@
             text-align: left;
             cursor: pointer;
             font-size: 14px;
+            transition: 0.2s;
         }
 
         .example-btn:hover {
             background: #dbeafe;
         }
 
+        /* FEATURES */
         .features {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -161,7 +190,7 @@
             padding: 18px;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .feature-icon {
@@ -173,12 +202,18 @@
             margin-top: 8px;
         }
 
+        .feature span {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* ABOUT */
         .about {
             margin-top: 20px;
             padding: 22px;
             background: white;
             border-radius: 18px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
         }
 
         .about p {
@@ -186,6 +221,7 @@
             line-height: 1.7;
         }
 
+        /* FOOTER */
         footer {
             text-align: center;
             padding: 25px;
@@ -193,18 +229,37 @@
             font-size: 14px;
         }
 
+        /* MOBILE */
         @media (max-width: 600px) {
+
+            header {
+                padding: 35px 15px 50px;
+            }
 
             header h1 {
                 font-size: 32px;
+            }
+
+            header p {
+                font-size: 15px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .card {
+                padding: 20px;
             }
 
             .features {
                 grid-template-columns: 1fr;
             }
 
-            .card {
-                padding: 20px;
+            .logo {
+                width: 70px;
+                height: 70px;
+                font-size: 34px;
             }
         }
     </style>
@@ -212,218 +267,259 @@
 
 <body>
 
-<header>
+    <!-- HEADER -->
+    <header>
 
-    <div class="logo">
-        N
-    </div>
-
-    <h1>NEXA AI</h1>
-
-    <p>Your intelligent AI study companion</p>
-
-</header>
-
-
-<div class="container">
-
-    <div class="card">
-
-        <h2>🤖 Ask NEXA AI</h2>
-
-        <p class="subtitle">
-            Ask questions about Economics, Mathematics, English,
-            assignments, calculations, or any difficult topic.
-        </p>
-
-
-        <textarea
-            id="question"
-            placeholder="Type your question here..."
-        ></textarea>
-
-
-        <button id="askButton" onclick="askQuestion()">
-            Ask NEXA AI
-        </button>
-
-
-        <div id="responseBox" class="response">
-            Your answer will appear here.
+        <div class="logo">
+            <span>N</span>
         </div>
 
+        <h1>NEXA AI</h1>
 
-        <div class="examples">
+        <p>Your intelligent AI study companion</p>
 
-            <h3>💡 Try asking</h3>
+    </header>
+
+
+    <!-- MAIN -->
+    <div class="container">
+
+        <!-- AI QUESTION CARD -->
+        <div class="card">
+
+            <h2>🤖 Ask NEXA AI</h2>
+
+            <p class="subtitle">
+                Ask questions about Economics, Mathematics, English,
+                assignments, calculations, or difficult topics.
+            </p>
+
+            <textarea
+                id="question"
+                placeholder="Type your question here..."
+            ></textarea>
 
             <button
-                class="example-btn"
-                onclick="useExample('What is economics?')"
+                id="askButton"
+                onclick="askQuestion()"
             >
-                📚 What is economics?
+                Ask NEXA AI
             </button>
 
-            <button
-                class="example-btn"
-                onclick="useExample('Explain opportunity cost.')"
+            <!-- AI RESPONSE -->
+            <div
+                id="responseBox"
+                class="response"
             >
-                💰 Explain opportunity cost.
-            </button>
+                Your answer will appear here.
+            </div>
 
-            <button
-                class="example-btn"
-                onclick="useExample('Explain demand and supply.')"
-            >
-                📈 Explain demand and supply.
-            </button>
 
-            <button
-                class="example-btn"
-                onclick="useExample('Give me algebra practice questions.')"
-            >
-                🧮 Give me algebra practice questions.
-            </button>
+            <!-- EXAMPLES -->
+            <div class="examples">
+
+                <h3>💡 Try asking</h3>
+
+                <button
+                    class="example-btn"
+                    onclick="useExample('What is economics?')"
+                >
+                    📚 What is economics?
+                </button>
+
+                <button
+                    class="example-btn"
+                    onclick="useExample('Explain opportunity cost.')"
+                >
+                    💰 Explain opportunity cost.
+                </button>
+
+                <button
+                    class="example-btn"
+                    onclick="useExample('Explain demand and supply.')"
+                >
+                    📈 Explain demand and supply.
+                </button>
+
+                <button
+                    class="example-btn"
+                    onclick="useExample('Give me algebra practice questions.')"
+                >
+                    🧮 Give me algebra practice questions.
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- FEATURES -->
+        <div class="features">
+
+            <div class="feature">
+                <div class="feature-icon">📚</div>
+                <strong>Learn</strong>
+                <span>Understand topics</span>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🧮</div>
+                <strong>Practice</strong>
+                <span>Improve your skills</span>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">💡</div>
+                <strong>Understand</strong>
+                <span>Get clear explanations</span>
+            </div>
+
+        </div>
+
+
+        <!-- ABOUT -->
+        <div class="about">
+
+            <h2>About NEXA AI</h2>
+
+            <p>
+                NEXA AI is an intelligent study assistant designed
+                to help students learn, understand difficult topics,
+                practice questions, and solve calculations.
+            </p>
+
+            <p>
+                Ask a question and get a clear explanation designed
+                to make learning easier.
+            </p>
 
         </div>
 
     </div>
 
 
-    <div class="features">
-
-        <div class="feature">
-            <div class="feature-icon">📚</div>
-            <strong>Learn</strong>
-            <span>Understand topics</span>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">🧮</div>
-            <strong>Practice</strong>
-            <span>Improve your skills</span>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">💡</div>
-            <strong>Understand</strong>
-            <span>Get clear explanations</span>
-        </div>
-
-    </div>
+    <!-- FOOTER -->
+    <footer>
+        NEXA AI © 2026<br>
+        Your AI study companion
+    </footer>
 
 
-    <div class="about">
+    <!-- JAVASCRIPT -->
+    <script>
 
-        <h2>About NEXA AI</h2>
+        async function askQuestion() {
 
-        <p>
-            NEXA AI is an intelligent study assistant designed
-            to help students learn, understand difficult topics,
-            practice questions, and solve calculations.
-        </p>
+            const questionBox =
+                document.getElementById("question");
 
-        <p>
-            Ask a question and get a clear explanation designed
-            to make learning easier.
-        </p>
+            const responseBox =
+                document.getElementById("responseBox");
 
-    </div>
+            const askButton =
+                document.getElementById("askButton");
 
-</div>
+            const question =
+                questionBox.value.trim();
 
 
-<footer>
-    NEXA AI © 2026<br>
-    Your AI study companion
-</footer>
+            if (!question) {
 
+                responseBox.textContent =
+                    "Please enter a question first.";
 
-<script>
-
-async function askQuestion() {
-
-    const questionBox = document.getElementById("question");
-    const responseBox = document.getElementById("responseBox");
-    const askButton = document.getElementById("askButton");
-
-    const question = questionBox.value.trim();
-
-    if (!question) {
-
-        responseBox.textContent =
-            "Please enter a question first.";
-
-        return;
-    }
-
-    askButton.disabled = true;
-    askButton.textContent = "Thinking...";
-
-    responseBox.textContent =
-        "🤖 NEXA AI is thinking...";
-
-
-    try {
-
-        const response = await fetch(
-            "https://studyai-qkgp.onrender.com/api/ask",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    question: question
-                })
+                return;
             }
-        );
 
 
-        const data = await response.json();
+            askButton.disabled = true;
+
+            askButton.textContent =
+                "Thinking...";
+
+            responseBox.textContent =
+                "🤖 NEXA AI is thinking...";
 
 
-        if (!response.ok) {
+            try {
 
-            throw new Error(
-                data.error || "Server error."
-            );
+                const response = await fetch(
+                    "https://studyai-qkgp.onrender.com/api/ask",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            question: question
+                        })
+                    }
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.error ||
+                        "Server error."
+                    );
+
+                }
+
+
+                if (!data.answer) {
+
+                    throw new Error(
+                        "NEXA AI returned no answer."
+                    );
+
+                }
+
+
+                responseBox.textContent =
+                    data.answer;
+
+
+            } catch (error) {
+
+                console.error(
+                    "NEXA AI error:",
+                    error
+                );
+
+                responseBox.textContent =
+                    "❌ NEXA AI could not answer right now.\n\n" +
+                    error.message;
+
+            }
+
+
+            askButton.disabled = false;
+
+            askButton.textContent =
+                "Ask NEXA AI";
 
         }
 
 
-        responseBox.textContent =
-            data.answer;
+        function useExample(text) {
 
+            const questionBox =
+                document.getElementById("question");
 
-    } catch (error) {
+            questionBox.value = text;
 
-        console.error(error);
+            questionBox.focus();
 
-        responseBox.textContent =
-            "❌ NEXA AI could not answer right now.\n\n" +
-            error.message;
+        }
 
-    }
-
-
-    askButton.disabled = false;
-    askButton.textContent = "Ask NEXA AI";
-
-}
-
-
-function useExample(text) {
-
-    document.getElementById("question").value = text;
-
-    document.getElementById("question").focus();
-
-}
-
-</script>
+    </script>
 
 </body>
 </html>
