@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>StudyAI</title>
+    <title>EduNova AI</title>
 
     <style>
         * {
@@ -22,17 +22,22 @@
             background: #2563eb;
             color: white;
             text-align: center;
-            padding: 25px 15px;
+            padding: 30px 15px;
         }
 
         header h1 {
             margin: 0;
-            font-size: 30px;
+            font-size: 32px;
         }
 
         header p {
             margin: 8px 0 0;
             font-size: 16px;
+        }
+
+        .tagline {
+            font-weight: bold;
+            margin-top: 14px;
         }
 
         .container {
@@ -41,7 +46,8 @@
             margin: 25px auto;
         }
 
-        .card {
+        .card,
+        .about {
             background: white;
             padding: 22px;
             border-radius: 16px;
@@ -67,7 +73,7 @@
             border-color: #2563eb;
         }
 
-        button {
+        .ask-button {
             width: 100%;
             padding: 14px;
             margin-top: 12px;
@@ -80,23 +86,13 @@
             cursor: pointer;
         }
 
-        button:hover {
+        .ask-button:hover {
             background: #1d4ed8;
         }
 
-        button:disabled {
+        .ask-button:disabled {
             background: #888;
             cursor: not-allowed;
-        }
-
-        .examples {
-            margin-top: 25px;
-        }
-
-        .examples button {
-            background: #e8eefc;
-            color: #2563eb;
-            font-size: 14px;
         }
 
         .response {
@@ -110,19 +106,41 @@
             min-height: 100px;
         }
 
+        .examples {
+            margin-top: 25px;
+        }
+
+        .example-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 10px;
+            background: #e8eefc;
+            color: #2563eb;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .example-button:hover {
+            background: #dbe5ff;
+        }
+
         .about {
             margin-top: 25px;
-            padding: 18px;
-            background: white;
-            border-radius: 14px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
         }
 
         footer {
             text-align: center;
             margin: 30px 0;
+            padding: 0 15px;
             color: #777;
             font-size: 14px;
+        }
+
+        .loading {
+            color: #2563eb;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -130,52 +148,72 @@
 <body>
 
 <header>
-    <h1>📚 StudyAI</h1>
-    <p>Your personal AI study assistant</p>
-    <p>Study smarter 🚀</p>
+    <h1>🧠 EduNova AI</h1>
+
+    <p>Your intelligent study companion</p>
+
+    <p class="tagline">
+        Learn. Understand. Excel. 🚀
+    </p>
 </header>
 
 <div class="container">
 
     <div class="card">
 
-        <h2>🤖 Ask StudyAI</h2>
+        <h2>🤖 Ask EduNova AI</h2>
 
         <p>
-            Ask StudyAI questions about your courses,
-            assignments, calculations, or difficult topics.
+            Ask EduNova AI about your courses, assignments,
+            calculations, or difficult topics.
         </p>
 
         <textarea
             id="question"
-            placeholder="Enter your question below..."
+            placeholder="Ask a question about your studies..."
         ></textarea>
 
-        <button id="askButton" onclick="askQuestion()">
-            Ask StudyAI
+        <button
+            id="askButton"
+            class="ask-button"
+            onclick="askQuestion()"
+        >
+            ✨ Ask EduNova
         </button>
 
         <div id="responseBox" class="response">
-            StudyAI's answer will appear here.
+            EduNova AI's answer will appear here.
         </div>
 
         <div class="examples">
 
             <h3>💡 Try an example</h3>
 
-            <button onclick="useExample('What is economics?')">
+            <button
+                class="example-button"
+                onclick="useExample('What is economics?')"
+            >
                 What is economics?
             </button>
 
-            <button onclick="useExample('Explain opportunity cost.')">
+            <button
+                class="example-button"
+                onclick="useExample('Explain opportunity cost.')"
+            >
                 Explain opportunity cost.
             </button>
 
-            <button onclick="useExample('Explain demand and supply.')">
+            <button
+                class="example-button"
+                onclick="useExample('Explain demand and supply.')"
+            >
                 Explain demand and supply.
             </button>
 
-            <button onclick="useExample('Give me algebra practice questions.')">
+            <button
+                class="example-button"
+                onclick="useExample('Give me algebra practice questions.')"
+            >
                 Give me algebra practice questions.
             </button>
 
@@ -185,22 +223,27 @@
 
     <div class="about">
 
-        <h2>About StudyAI</h2>
+        <h2>About EduNova AI</h2>
 
         <p>
-            StudyAI is an AI study assistant created by
-            Oluwasemilore Adedokun.
+            EduNova AI is a student-focused AI learning assistant
+            designed to make studying easier and more understandable.
         </p>
 
         <p>
-            StudyAI uses Google's Gemini AI technology to
-            generate AI-powered responses.
+            Students can use EduNova AI to:
         </p>
 
+        <ul>
+            <li>Understand difficult topics</li>
+            <li>Solve calculations step by step</li>
+            <li>Practice questions</li>
+            <li>Explain assignments</li>
+            <li>Review school subjects</li>
+        </ul>
+
         <p>
-            Students can use StudyAI to understand courses,
-            explain difficult topics, solve calculations,
-            practice questions, and study more effectively.
+            <strong>Learn smarter. Build confidence. Keep improving. 🚀</strong>
         </p>
 
     </div>
@@ -208,32 +251,44 @@
 </div>
 
 <footer>
-    StudyAI © 2026<br>
-    Created by Oluwasemilore Adedokun
+    EduNova AI © 2026<br>
+    Learn. Understand. Excel.
 </footer>
-
 
 <script>
 
 async function askQuestion() {
 
-    const questionBox = document.getElementById("question");
-    const responseBox = document.getElementById("responseBox");
-    const askButton = document.getElementById("askButton");
+    const questionBox =
+        document.getElementById("question");
 
-    const question = questionBox.value.trim();
+    const responseBox =
+        document.getElementById("responseBox");
+
+    const askButton =
+        document.getElementById("askButton");
+
+    const question =
+        questionBox.value.trim();
 
     if (!question) {
+
         responseBox.textContent =
             "Please enter a question first.";
+
         return;
     }
 
     askButton.disabled = true;
-    askButton.textContent = "Thinking...";
+
+    askButton.textContent =
+        "Thinking...";
+
+    responseBox.className =
+        "response loading";
 
     responseBox.textContent =
-        "🤖 StudyAI is thinking...";
+        "🤖 EduNova AI is thinking...";
 
     try {
 
@@ -255,15 +310,53 @@ async function askQuestion() {
         const data = await response.json();
 
         if (!response.ok) {
+
             throw new Error(
-                data.error || "Server error."
+                data.error ||
+                data.details ||
+                "Server error."
             );
         }
 
+        responseBox.className =
+            "response";
+
         responseBox.textContent =
-            "📚 StudyAI:\n\n" +
+            "📚 EduNova AI:\n\n" +
             data.answer;
 
     } catch (error) {
 
-       
+        console.error(
+            "EduNova AI error:",
+            error
+        );
+
+        responseBox.className =
+            "response";
+
+        responseBox.textContent =
+            "❌ EduNova AI could not get an answer.\n\n" +
+            error.message;
+
+    } finally {
+
+        askButton.disabled = false;
+
+        askButton.textContent =
+            "✨ Ask EduNova";
+    }
+}
+
+
+function useExample(text) {
+
+    document.getElementById("question").value =
+        text;
+
+}
+
+</script>
+
+</body>
+    </html>
