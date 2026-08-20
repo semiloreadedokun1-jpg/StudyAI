@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="description" content="StudyAI - Your AI study assistant">
+
+  <title>StudyAI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #172033;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 22px 18px;
+      background: white;
+      border-bottom: 1px solid #e5e9f0;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    header p {
+      margin-top: 6px;
+      color: #687386;
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px 16px 40px;
+    }
+
+    .welcome {
+      margin-bottom: 20px;
+    }
+
+    .welcome h2 {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .welcome p {
+      color: #687386;
+      line-height: 1.5;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 14px;
+      border: 1px solid #e5e9f0;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #687386;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid #d9dee8;
+      border-radius: 12px;
+      resize: vertical;
+      outline: none;
+      font-size: 15px;
+      color: #172033;
+      background: white;
+    }
+
+    textarea:focus {
+      border-color: #4f46e5;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 12px;
+      background: #4f46e5;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    #response {
+      display: none;
+      margin-top: 14px;
+      background: #f8f9fc;
+      border: 1px solid #e5e9f0;
+      border-radius: 14px;
+      padding: 16px;
+      line-height: 1.6;
+      font-size: 15px;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    .examples {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .example {
+      background: #f4f7fb;
+      border: 1px solid #e5e9f0;
+      border-radius: 12px;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .example:active {
+      background: #e9ecff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #8a94a6;
+      font-size: 13px;
+    }
+
+    @media (max-width: 400px) {
+      header h1 {
+        font-size: 24px;
+      }
+
+      .welcome h2 {
+        font-size: 21px;
+      }
+
+      main {
+        padding: 16px 12px 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>📚 StudyAI</h1>
+    <p>Your personal AI study assistant</p>
+  </header>
+
+  <main>
+
+    <section class="welcome">
+      <h2>Study smarter 🚀</h2>
+      <p>
+        Ask StudyAI questions about your courses, assignments,
+        calculations, or difficult topics.
+      </p>
+    </section>
+
+    <section class="card">
+      <h3>🤖 Ask StudyAI</h3>
+
+      <p>
+        Enter your question below and StudyAI will help explain it.
+      </p>
+
+      <textarea
+        id="question"
+        placeholder="Example: Explain opportunity cost in simple terms..."
+      ></textarea>
+
+      <button onclick="askAI()">
+        Ask StudyAI
+      </button>
+
+      <div id="response"></div>
+    </section>
+
+    <section class="card">
+      <h3>💡 Try an example</h3>
+
+      <div class="examples">
+
+        <div
+          class="example"
+          onclick="useExample('What is economics?')"
+        >
+          What is economics?
+        </div>
+
+        <div
+          class="example"
+          onclick="useExample('Explain opportunity cost in simple terms.')"
+        >
+          Explain opportunity cost.
+        </div>
+
+        <div
+          class="example"
+          onclick="useExample('Explain demand and supply with examples.')"
+        >
+          Explain demand and supply.
+        </div>
+
+        <div
+          class="example"
+          onclick="useExample('Give me 5 practice questions on algebra.')"
+        >
+          Give me algebra practice questions.
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    StudyAI © 2026
+  </footer>
+
+  <script src="app.js"></script>
+
+  <script>
+    function useExample(text) {
+      document.getElementById("question").value = text;
+      document.getElementById("question").focus();
+    }
+  </script>
+
+</body>
+</html>
