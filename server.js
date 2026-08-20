@@ -1,106 +1,86 @@
-require("dotenv").config();
-
 const express = require("express");
-const cors = require("cors");
+const path = require("path");
 const { GoogleGenAI } = require("@google/genai");
 
 const app = express();
-const PORT = process.env.PORT || 10000;
 
-app.use(cors());
-app.use(express.json());
+const PORT = process.env.PORT || 3000;
+const API_KEY = process.env.GEMINI_API_KEY;
 
-const apiKey = process.env.GEMINI_API_KEY;
-
-if (!apiKey) {
-    console.error("❌ GEMINI_API_KEY is missing");
-    process.exit(1);
+if (!API_KEY) {
+  console.error("ERROR: GEMINI_API_KEY is not set.");
 }
 
 const ai = new GoogleGenAI({
-    apiKey: apiKey
+  apiKey: API_KEY
 });
 
-const STUDYAI_INSTRUCTIONS = `
-You are StudyAI, a natural and helpful AI study assistant.
-
-Answer the user's question directly.
-
-Do not greet the user unless they greet you first.
-Do not introduce yourself.
-Do not say "I am StudyAI."
-Do not mention the creator in normal answers.
-Do not mention Oluwasemilore Adedokun unless the user specifically asks who created StudyAI.
-Do not mention Google or Gemini unless the user specifically asks what powers StudyAI.
-
-For normal questions, go straight to the answer.
-
-Explain difficult topics clearly and simply.
-Use examples when useful.
-For mathematics, show working step by step.
-For economics, use correct economics terminology and simple examples.
-For practice questions, give the questions directly.
-
-If the user asks who created StudyAI, answer:
-"StudyAI was created by Oluwasemilore Adedokun."
-
-If the user asks what powers StudyAI, answer:
-"StudyAI uses Google's Gemini AI technology."
-
-Never invent facts.
-`;
+app.use(express.json());
+app.use(express.static(path.join(__dirname)));
 
 app.get("/", (req, res) => {
-    res.status(200).send("StudyAI backend is running 🚀");
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.get("/health", (req, res) => {
+  res.json({
+    status: "ok",
+    message: "StudyAI server is running"
+  });
 });
 
 app.post("/api/ask", async (req, res) => {
-    const question = String(req.body?.question || "").trim();
+  try {
+    const question = req.body.question;
 
-    if (!question) {
-        return res.status(400).json({
-            error: "Please enter a question."
-        });
+    if (!question || !question.trim()) {
+      return res.status(400).json({
+        error: "Please enter a question."
+      });
     }
 
-    try {
-        console.log("📚 Question:", question);
+    console.log("Question received:", question);
 
-        const response = await ai.models.generateContent({
-            model: "gemini-3.7-flash",
-            contents: question,
-            config: {
-                systemInstruction: STUDYAI_INSTRUCTIONS
-            }
-        });
+    const prompt = `
+You are StudyAI, a helpful AI study assistant.
 
-        const answer = response.text?.trim();
+Help the student understand the question clearly.
 
-        if (!answer) {
-            console.error("❌ Gemini returned no text:", response);
+Rules:
+- Give a clear and accurate answer.
+- Explain difficult ideas in simple language.
+- For mathematics, show the steps.
+- For Economics, use correct economic terminology and explain each term.
+- If the question is asking for practice questions, provide useful practice questions.
+- Do not pretend to know something if you are unsure.
 
-            return res.status(502).json({
-                error: "Gemini returned an empty response."
-            });
-        }
+Student's question:
+${question}
+`;
 
-        console.log("✅ Gemini answered successfully");
+    const response = await ai.models.generateContent({
+      model: "gemini-3.6-flash",
+      contents: prompt
+    });
 
-        res.status(200).type("text/plain").send(answer);
+    const answer = response.text;
 
-    } catch (error) {
-        console.error("❌ GEMINI ERROR");
-        console.error("Message:", error?.message);
-        console.error("Status:", error?.status);
-        console.error("Code:", error?.code);
+    console.log("Gemini answered successfully.");
 
-        return res.status(502).json({
-            error: "Gemini request failed.",
-            details: error?.message || "Unknown Gemini error"
-        });
-    }
+    res.json({
+      answer: answer
+    });
+
+  } catch (error) {
+    console.error("Gemini error:", error);
+
+    res.status(500).json({
+      error: "Sorry, StudyAI could not answer right now.",
+      details: error.message
+    });
+  }
 });
 
 app.listen(PORT, "0.0.0.0", () => {
-    console.log(`🚀 StudyAI server is running on port ${PORT}`);
+  console.log(`StudyAI server running on port ${PORT}`);
 });
