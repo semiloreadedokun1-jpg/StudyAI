@@ -4,18 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>StudyAI - AI Study Assistant</title>
-
-    <meta
-        name="description"
-        content="StudyAI is an AI study assistant created by Oluwasemilore Adedokun and powered by Google's Gemini AI technology."
-    >
-
-    <meta name="author" content="Oluwasemilore Adedokun">
-
-    <meta name="theme-color" content="#2563eb">
-
-    <link rel="manifest" href="manifest.json">
+    <title>StudyAI</title>
 
     <style>
         * {
@@ -26,55 +15,59 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f4f7fb;
-            color: #111827;
+            color: #222;
         }
 
         header {
             background: #2563eb;
             color: white;
-            padding: 25px 20px;
+            padding: 20px;
             text-align: center;
         }
 
         header h1 {
             margin: 0;
-            font-size: 32px;
+            font-size: 28px;
         }
 
         header p {
-            margin-top: 8px;
+            margin: 7px 0 0;
         }
 
-        main {
-            max-width: 750px;
+        .container {
+            width: 90%;
+            max-width: 700px;
             margin: 30px auto;
-            padding: 20px;
         }
 
-        .card,
-        .about {
+        .card {
             background: white;
-            border-radius: 18px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
         textarea {
             width: 100%;
-            min-height: 140px;
+            min-height: 130px;
             padding: 15px;
-            border: 1px solid #d1d5db;
-            border-radius: 12px;
-            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
             resize: vertical;
+            font-size: 16px;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #2563eb;
         }
 
         button {
             width: 100%;
             margin-top: 15px;
-            padding: 15px;
+            padding: 14px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             background: #2563eb;
             color: white;
             font-size: 17px;
@@ -82,203 +75,18 @@
             cursor: pointer;
         }
 
-        #response {
-            display: none;
-            margin-top: 20px;
-            padding: 18px;
-            background: #f0f4ff;
-            border-radius: 12px;
-            line-height: 1.6;
-            white-space: pre-wrap;
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+            background: #888;
+            cursor: not-allowed;
         }
 
         .examples {
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
-        .examples p {
-            padding: 12px;
-            background: #f3f4f6;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .about {
-            margin-top: 30px;
-        }
-
-        .about h2 {
-            color: #2563eb;
-        }
-
-        .about p {
-            line-height: 1.7;
-        }
-
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #6b7280;
-        }
-    </style>
-</head>
-
-<body>
-
-<header>
-    <h1>📚 StudyAI</h1>
-    <p>Your personal AI study assistant</p>
-</header>
-
-<main>
-
-    <div class="card">
-
-        <h2>Study smarter 🚀</h2>
-
-        <p>
-            Ask StudyAI questions about your courses,
-            assignments, calculations, or difficult topics.
-        </p>
-
-        <h3>🤖 Ask StudyAI</h3>
-
-        <p>
-            Enter your question below and StudyAI will help explain it.
-        </p>
-
-        <textarea
-            id="question"
-            placeholder="Example: What is economics?"
-        ></textarea>
-
-        <button onclick="askAI()">
-            Ask StudyAI
-        </button>
-
-        <div id="response"></div>
-
-        <div class="examples">
-
-            <h3>💡 Try an example</h3>
-
-            <p onclick="useExample('What is economics?')">
-                What is economics?
-            </p>
-
-            <p onclick="useExample('Explain opportunity cost.')">
-                Explain opportunity cost.
-            </p>
-
-            <p onclick="useExample('Explain demand and supply.')">
-                Explain demand and supply.
-            </p>
-
-            <p onclick="useExample('Give me algebra practice questions.')">
-                Give me algebra practice questions.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <section class="about">
-
-        <h2>About StudyAI</h2>
-
-        <p>
-            <strong>StudyAI</strong> is an AI study assistant
-            created by <strong>Oluwasemilore Adedokun</strong>.
-        </p>
-
-        <p>
-            StudyAI uses
-            <strong>Google's Gemini AI technology</strong>
-            to generate AI-powered responses.
-        </p>
-
-        <p>
-            Students can use StudyAI to understand courses,
-            explain difficult topics, solve calculations,
-            practice questions, and study more effectively.
-        </p>
-
-    </section>
-
-</main>
-
-<footer>
-    StudyAI © 2026
-    <br>
-    Created by Oluwasemilore Adedokun
-</footer>
-
-
-<script>
-
-async function askAI() {
-
-    const question =
-        document.getElementById("question").value.trim();
-
-    const responseBox =
-        document.getElementById("response");
-
-    if (!question) {
-        alert("Please enter a question first.");
-        return;
-    }
-
-    responseBox.style.display = "block";
-
-    responseBox.textContent =
-        "🤖 StudyAI is thinking...";
-
-    try {
-
-        const response = await fetch(
-            "https://studyai-qkgp.onrender.com/api/ask",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    question: question
-                })
-            }
-        );
-
-        const text = await response.text();
-
-        if (!response.ok) {
-            throw new Error(text || "Server error.");
-        }
-
-        responseBox.textContent =
-            "StudyAI:\n\n" + text;
-
-    } catch (error) {
-
-        console.error("StudyAI error:", error);
-
-        responseBox.textContent =
-            "❌ StudyAI could not get an answer.\n\n" +
-            error.message;
-    }
-}
-
-
-function useExample(text) {
-
-    document.getElementById("question").value = text;
-
-}
-
-</script>
-
-</body>
-</html>
+        .examples button {
+            background: #e
