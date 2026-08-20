@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 const { GoogleGenAI } = require("@google/genai");
 
 const app = express();
@@ -8,41 +7,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.GEMINI_API_KEY;
 
-// ===============================
-// CORS
-// ===============================
-
-app.use(cors({
-    origin: "*",
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type"]
-}));
-
-// ===============================
-// Middleware
-// ===============================
-
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// ===============================
-// Gemini AI
-// ===============================
 
 if (!API_KEY) {
     console.error("❌ GEMINI_API_KEY is missing.");
-} else {
-    console.log("✅ GEMINI_API_KEY detected.");
 }
 
 const ai = new GoogleGenAI({
     apiKey: API_KEY
 });
 
-// ===============================
-// Health Check
-// ===============================
-
+// Health check
 app.get("/health", (req, res) => {
     res.json({
         status: "ok",
@@ -50,22 +26,9 @@ app.get("/health", (req, res) => {
     });
 });
 
-// ===============================
-// Homepage
-// ===============================
-
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-});
-
-// ===============================
-// Ask StudyAI
-// ===============================
-
+// Main AI endpoint
 app.post("/api/ask", async (req, res) => {
-
     try {
-
         const question = req.body.question;
 
         if (!question || !question.trim()) {
@@ -79,19 +42,17 @@ app.post("/api/ask", async (req, res) => {
         const prompt = `
 You are StudyAI, a helpful AI study assistant.
 
-Your job is to help students understand their school subjects.
+Help the student understand their question clearly.
 
-Instructions:
-- Give clear and accurate answers.
-- Explain difficult topics in simple language.
+Rules:
+- Give accurate and easy-to-understand answers.
+- Explain difficult topics simply.
 - For mathematics, show the solution step by step.
-- For Economics, use correct economic terminology and explain the terms.
-- For practice questions, give useful questions appropriate for a student.
-- Be educational, friendly, and concise.
-- If you are unsure about something, say so instead of making up information.
+- For Economics, use correct economic terminology.
+- For practice questions, provide useful practice questions.
+- Keep answers educational and student-friendly.
 
-Student's question:
-
+Student question:
 ${question}
 `;
 
@@ -104,5 +65,21 @@ ${question}
 
         console.log("Gemini answered successfully.");
 
-        return res.json({
-            answer
+        res.json({
+            answer: answer
+        });
+
+    } catch (error) {
+        console.error("Gemini error:", error);
+
+        res.status(500).json({
+            error: "StudyAI could not generate an answer.",
+            details: error.message
+        });
+    }
+});
+
+// Start server
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`StudyAI server running on port ${PORT}`);
+});
