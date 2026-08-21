@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#ffffff">
-
+  <meta name="description" content="EduNova AI — Learn. Understand. Excel.">
   <title>EduNova AI — Learn. Understand. Excel.</title>
 
   <style>
@@ -23,6 +23,8 @@
       --input: #f7f7f8;
       --user: #f3f4f6;
       --hover: #eeeeef;
+      --accent: #111827;
+      --danger: #dc2626;
     }
 
     body.dark {
@@ -34,6 +36,7 @@
       --input: #2f2f2f;
       --user: #343434;
       --hover: #3a3a3a;
+      --accent: #ffffff;
     }
 
     html,
@@ -94,7 +97,8 @@
       padding: 14px;
 
       transition: left 0.25s ease;
-      z-index: 50;
+
+      z-index: 100;
     }
 
     .sidebar-top {
@@ -184,9 +188,7 @@
 
     .history {
       flex: 1;
-
       overflow-y: auto;
-
       scrollbar-width: thin;
     }
 
@@ -289,6 +291,10 @@
       justify-content: space-between;
 
       padding: 0 18px;
+
+      background: var(--bg);
+
+      z-index: 20;
     }
 
     .topbar-left {
@@ -344,7 +350,7 @@
 
       overflow-y: auto;
 
-      padding-bottom: 170px;
+      padding-bottom: 180px;
 
       scroll-behavior: smooth;
 
@@ -392,6 +398,40 @@
       font-size: 15px;
     }
 
+    .suggestions {
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 10px;
+
+      max-width: 650px;
+
+      margin: 28px auto 0;
+    }
+
+    .suggestion {
+      padding: 13px;
+
+      border: 1px solid var(--border);
+
+      background: var(--bg);
+
+      color: var(--text);
+
+      border-radius: 12px;
+
+      cursor: pointer;
+
+      text-align: left;
+
+      font-size: 13px;
+    }
+
+    .suggestion:hover {
+      background: var(--input);
+    }
+
     .messages {
       max-width: 850px;
 
@@ -403,7 +443,7 @@
     .message {
       display: flex;
 
-      margin: 20px 0;
+      margin: 22px 0;
 
       gap: 13px;
 
@@ -439,9 +479,13 @@
       display: none;
     }
 
-    .bubble {
-      max-width: 75%;
+    .message-content {
+      max-width: 78%;
 
+      min-width: 0;
+    }
+
+    .bubble {
       white-space: pre-wrap;
 
       overflow-wrap: anywhere;
@@ -459,64 +503,81 @@
       color: var(--muted);
     }
 
+    .message-actions {
+      display: flex;
+
+      gap: 5px;
+
+      margin-top: 7px;
+    }
+
+    .message-action {
+      border: none;
+
+      background: transparent;
+
+      color: var(--muted);
+
+      padding: 5px 7px;
+
+      border-radius: 7px;
+
+      cursor: pointer;
+
+      font-size: 12px;
+    }
+
+    .message-action:hover {
+      background: var(--hover);
+
+      color: var(--text);
+    }
+
     /* =========================
-       SCROLL DOWN BUTTON
+       SCROLL BUTTON
     ========================= */
 
-    .scroll-down-btn {
+    .scroll-bottom {
       position: absolute;
 
       bottom: 135px;
+
       left: 50%;
 
       transform: translateX(-50%);
 
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
 
       border-radius: 50%;
 
       border: 1px solid var(--border);
 
       background: var(--bg);
+
       color: var(--text);
 
       box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.15);
+        0 3px 12px rgba(0, 0, 0, 0.12);
+
+      cursor: pointer;
 
       display: none;
 
       align-items: center;
       justify-content: center;
 
-      cursor: pointer;
+      font-size: 20px;
 
-      z-index: 20;
-
-      font-size: 21px;
-      font-weight: 700;
-
-      transition:
-        transform 0.15s ease,
-        background 0.15s ease;
+      z-index: 10;
     }
 
-    .scroll-down-btn.show {
+    .scroll-bottom.show {
       display: flex;
     }
 
-    .scroll-down-btn:hover {
+    .scroll-bottom:hover {
       background: var(--input);
-
-      transform:
-        translateX(-50%)
-        scale(1.05);
-    }
-
-    .scroll-down-btn:active {
-      transform:
-        translateX(-50%)
-        scale(0.95);
     }
 
     /* =========================
@@ -538,7 +599,7 @@
           var(--bg) 28%
         );
 
-      z-index: 10;
+      z-index: 15;
     }
 
     .composer {
@@ -560,7 +621,7 @@
 
       border-radius: 17px;
 
-      padding: 9px 10px 9px 15px;
+      padding: 9px 10px 9px 12px;
 
       box-shadow:
         0 1px 5px rgba(0, 0, 0, 0.05);
@@ -592,6 +653,47 @@
       color: var(--muted);
     }
 
+    .composer-tools {
+      display: flex;
+
+      align-items: center;
+
+      gap: 5px;
+
+      padding-bottom: 2px;
+    }
+
+    .tool-btn {
+      width: 36px;
+      height: 36px;
+
+      border: none;
+
+      border-radius: 10px;
+
+      background: transparent;
+
+      color: var(--text);
+
+      cursor: pointer;
+
+      font-size: 18px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tool-btn:hover {
+      background: var(--hover);
+    }
+
+    .tool-btn.listening {
+      background: var(--text);
+      color: var(--bg);
+    }
+
     .send-btn {
       width: 36px;
       height: 36px;
@@ -620,6 +722,32 @@
       cursor: not-allowed;
     }
 
+    .stop-btn {
+      display: none;
+
+      width: 36px;
+      height: 36px;
+
+      border: none;
+
+      border-radius: 10px;
+
+      background: var(--danger);
+
+      color: white;
+
+      cursor: pointer;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 14px;
+    }
+
+    .stop-btn.show {
+      display: flex;
+    }
+
     .limit {
       text-align: center;
 
@@ -631,7 +759,7 @@
     }
 
     /* =========================
-       PREMIUM MODAL
+       MODAL
     ========================= */
 
     .modal {
@@ -643,7 +771,7 @@
 
       background: rgba(0, 0, 0, 0.55);
 
-      z-index: 100;
+      z-index: 200;
 
       align-items: center;
       justify-content: center;
@@ -726,6 +854,26 @@
       font-size: 13px;
     }
 
+    .price {
+      font-size: 22px;
+
+      font-weight: 800;
+
+      margin-top: 8px;
+    }
+
+    .premium-features {
+      margin: 12px 0;
+
+      padding-left: 18px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+
+      line-height: 1.8;
+    }
+
     .coming-soon {
       margin-top: 18px;
 
@@ -741,6 +889,49 @@
       border-radius: 10px;
 
       font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    .toast {
+      position: fixed;
+
+      left: 50%;
+      bottom: 25px;
+
+      transform:
+        translate(-50%, 20px);
+
+      background: var(--text);
+
+      color: var(--bg);
+
+      padding: 10px 15px;
+
+      border-radius: 9px;
+
+      font-size: 13px;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition:
+        opacity 0.2s,
+        transform 0.2s;
+
+      z-index: 500;
+    }
+
+    .toast.show {
+      opacity: 1;
+
+      transform:
+        translate(-50%, 0);
     }
 
     /* =========================
@@ -773,18 +964,22 @@
       }
 
       .welcome {
-        margin-top: 70px;
+        margin-top: 60px;
       }
 
       .welcome h1 {
         font-size: 25px;
       }
 
+      .suggestions {
+        grid-template-columns: 1fr;
+      }
+
       .messages {
         padding: 12px;
       }
 
-      .bubble {
+      .message-content {
         max-width: 88%;
       }
 
@@ -792,8 +987,12 @@
         padding: 14px 10px 9px;
       }
 
-      .scroll-down-btn {
+      .scroll-bottom {
         bottom: 125px;
+      }
+
+      .premium-card {
+        padding: 23px;
       }
     }
   </style>
@@ -811,9 +1010,7 @@
 
       <div class="logo-area">
 
-        <div class="logo">
-          E
-        </div>
+        <div class="logo">E</div>
 
         <div>
 
@@ -831,6 +1028,7 @@
 
     </div>
 
+
     <button
       class="new-chat"
       onclick="newChat()"
@@ -838,14 +1036,17 @@
       ＋ New chat
     </button>
 
+
     <div class="sidebar-title">
       Recent chats
     </div>
+
 
     <div
       class="history"
       id="history"
     ></div>
+
 
     <div class="sidebar-bottom">
 
@@ -853,8 +1054,9 @@
         class="premium-small"
         onclick="openPremium()"
       >
-        ✦ Upgrade to Premium
+        ✦ Nexa Plus
       </button>
+
 
       <button
         class="settings-btn"
@@ -890,6 +1092,7 @@
 
       </div>
 
+
       <button
         class="premium-btn"
         onclick="openPremium()"
@@ -916,27 +1119,67 @@
           E
         </div>
 
+
         <h1>
           What do you want to learn?
         </h1>
+
 
         <p>
           Ask EduNova AI anything about your studies.
         </p>
 
+
+        <div class="suggestions">
+
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Explain economics to me like I am a beginner.')"
+          >
+            📚 Explain a topic
+          </button>
+
+
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Give me 5 practice questions and answers on this topic.')"
+          >
+            📝 Practice questions
+          </button>
+
+
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Help me understand this difficult calculation step by step.')"
+          >
+            🧮 Solve a calculation
+          </button>
+
+
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Create a simple study plan for me.')"
+          >
+            🎯 Create a study plan
+          </button>
+
+        </div>
+
       </div>
+
 
       <div
         class="messages"
         id="messages"
       ></div>
 
-      <!-- SCROLL DOWN BUTTON -->
+
+      <!-- JUMP TO BOTTOM -->
 
       <button
-        class="scroll-down-btn"
-        id="scrollDownBtn"
-        type="button"
+        class="scroll-bottom"
+        id="scrollBottom"
+        onclick="scrollToBottom(true)"
         aria-label="Go to latest message"
         title="Go to latest message"
       >
@@ -965,17 +1208,54 @@
             aria-label="Message EduNova AI"
           ></textarea>
 
-          <button
-            class="send-btn"
-            id="sendBtn"
-            type="submit"
-            disabled
-            aria-label="Send message"
-          >
-            ↑
-          </button>
+
+          <div class="composer-tools">
+
+            <!-- VOICE -->
+
+            <button
+              class="tool-btn"
+              id="voiceBtn"
+              type="button"
+              onclick="toggleVoice()"
+              aria-label="Voice input"
+              title="Voice input"
+            >
+              🎤
+            </button>
+
+
+            <!-- STOP -->
+
+            <button
+              class="stop-btn"
+              id="stopBtn"
+              type="button"
+              onclick="stopResponse()"
+              aria-label="Stop response"
+              title="Stop response"
+            >
+              ■
+            </button>
+
+
+            <!-- SEND -->
+
+            <button
+              class="send-btn"
+              id="sendBtn"
+              type="submit"
+              disabled
+              aria-label="Send message"
+              title="Send"
+            >
+              ↑
+            </button>
+
+          </div>
 
         </form>
+
 
         <div
           class="limit"
@@ -1010,13 +1290,16 @@
       ×
     </button>
 
+
     <h2>
-      EduNova Premium
+      ✦ Nexa Plus
     </h2>
 
+
     <p>
-      Unlock more powerful studying with EduNova AI.
+      Unlock a better EduNova AI study experience.
     </p>
+
 
     <div class="plan">
 
@@ -1030,22 +1313,35 @@
 
     </div>
 
+
     <div class="plan">
 
       <strong>
         Nexa Plus
       </strong>
 
+      <div class="price">
+        ₦20,000
+      </div>
+
       <span>
-        ₦20,000 — More messages, advanced study tools
-        and future premium features.
+        Premium access
       </span>
+
+      <ul class="premium-features">
+        <li>More AI messages</li>
+        <li>Advanced study tools</li>
+        <li>Better learning assistance</li>
+        <li>Priority premium features</li>
+        <li>Future EduNova AI upgrades</li>
+      </ul>
 
     </div>
 
+
     <button
       class="coming-soon"
-      type="button"
+      onclick="premiumComingSoon()"
     >
       Nexa Plus coming soon
     </button>
@@ -1055,10 +1351,18 @@
 </div>
 
 
+<!-- TOAST -->
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
 <script>
 
   /* =========================
-     API CONFIGURATION
+     CONFIGURATION
   ========================= */
 
   const API_URL = "/api/ask";
@@ -1067,7 +1371,63 @@
 
 
   /* =========================
-     DAILY MESSAGE LIMIT
+     ELEMENTS
+  ========================= */
+
+  const form =
+    document.getElementById("chatForm");
+
+  const input =
+    document.getElementById("messageInput");
+
+  const sendBtn =
+    document.getElementById("sendBtn");
+
+  const stopBtn =
+    document.getElementById("stopBtn");
+
+  const voiceBtn =
+    document.getElementById("voiceBtn");
+
+  const messages =
+    document.getElementById("messages");
+
+  const welcome =
+    document.getElementById("welcome");
+
+  const limitText =
+    document.getElementById("limitText");
+
+  const sidebar =
+    document.getElementById("sidebar");
+
+  const chat =
+    document.getElementById("chat");
+
+  const scrollBottomBtn =
+    document.getElementById("scrollBottom");
+
+  const toast =
+    document.getElementById("toast");
+
+
+  /* =========================
+     STATE
+  ========================= */
+
+  let controller = null;
+
+  let isGenerating = false;
+
+  let lastQuestion = "";
+
+  let recognition = null;
+
+  let isListening = false;
+
+
+  /* =========================
+     DAILY LIMIT
   ========================= */
 
   let messagesUsed = parseInt(
@@ -1077,10 +1437,12 @@
     10
   );
 
+
   let savedDate =
     localStorage.getItem(
       "edunova_message_date"
     );
+
 
   const today =
     new Date().toISOString().split("T")[0];
@@ -1104,85 +1466,31 @@
 
 
   /* =========================
-     ELEMENTS
+     TOAST
   ========================= */
 
-  const form =
-    document.getElementById("chatForm");
-
-  const input =
-    document.getElementById("messageInput");
-
-  const sendBtn =
-    document.getElementById("sendBtn");
-
-  const messages =
-    document.getElementById("messages");
-
-  const welcome =
-    document.getElementById("welcome");
-
-  const limitText =
-    document.getElementById("limitText");
-
-  const sidebar =
-    document.getElementById("sidebar");
-
-  const chat =
-    document.getElementById("chat");
-
-  const scrollDownBtn =
-    document.getElementById("scrollDownBtn");
+  let toastTimer = null;
 
 
-  /* =========================
-     SCROLL DOWN BUTTON
-  ========================= */
+  function showToast(text) {
 
-  function updateScrollButton() {
+    toast.textContent = text;
 
-    const distanceFromBottom =
-      chat.scrollHeight -
-      chat.scrollTop -
-      chat.clientHeight;
+    toast.classList.add("show");
 
-    if (distanceFromBottom > 180) {
+    clearTimeout(toastTimer);
 
-      scrollDownBtn.classList.add("show");
+    toastTimer = setTimeout(() => {
 
-    } else {
+      toast.classList.remove("show");
 
-      scrollDownBtn.classList.remove("show");
-
-    }
+    }, 2200);
 
   }
 
 
-  function goToBottom() {
-
-    chat.scrollTo({
-      top: chat.scrollHeight,
-      behavior: "smooth"
-    });
-
-  }
-
-
-  scrollDownBtn.addEventListener(
-    "click",
-    goToBottom
-  );
-
-
-  chat.addEventListener(
-    "scroll",
-    updateScrollButton
-  );
-
-
   /* =========================
-     UPDATE LIMIT
+     LIMIT
   ========================= */
 
   function updateLimit() {
@@ -1197,7 +1505,7 @@
     if (remaining === 0) {
 
       limitText.textContent =
-        "Daily free message limit reached. Upgrade to Premium.";
+        "Daily free limit reached. Upgrade to Nexa Plus.";
 
       input.disabled = true;
 
@@ -1207,16 +1515,19 @@
       sendBtn.disabled = true;
 
       return;
+
     }
 
 
     limitText.textContent =
       `${remaining} free message${remaining === 1 ? "" : "s"} remaining today`;
 
+
     input.disabled = false;
 
     input.placeholder =
       "Message EduNova AI...";
+
 
     updateSendButton();
 
@@ -1231,7 +1542,8 @@
 
     sendBtn.disabled =
       !input.value.trim() ||
-      messagesUsed >= DAILY_LIMIT;
+      messagesUsed >= DAILY_LIMIT ||
+      isGenerating;
 
   }
 
@@ -1286,6 +1598,29 @@
 
 
   /* =========================
+     SUGGESTIONS
+  ========================= */
+
+  function useSuggestion(text) {
+
+    input.value = text;
+
+    input.style.height = "auto";
+
+    input.style.height =
+      Math.min(
+        input.scrollHeight,
+        150
+      ) + "px";
+
+    updateSendButton();
+
+    input.focus();
+
+  }
+
+
+  /* =========================
      ADD MESSAGE
   ========================= */
 
@@ -1301,6 +1636,7 @@
     const message =
       document.createElement("div");
 
+
     message.className =
       `message ${type}`;
 
@@ -1309,13 +1645,38 @@
 
       message.innerHTML = `
         <div class="avatar">E</div>
-        <div class="bubble"></div>
+
+        <div class="message-content">
+
+          <div class="bubble"></div>
+
+          <div class="message-actions">
+
+            <button
+              class="message-action"
+              onclick="copyMessage(this)"
+            >
+              Copy
+            </button>
+
+            <button
+              class="message-action"
+              onclick="regenerate()"
+            >
+              Regenerate
+            </button>
+
+          </div>
+
+        </div>
       `;
 
     } else {
 
       message.innerHTML = `
-        <div class="bubble"></div>
+        <div class="message-content">
+          <div class="bubble"></div>
+        </div>
       `;
 
     }
@@ -1326,6 +1687,7 @@
         ".bubble"
       );
 
+
     bubble.textContent =
       text;
 
@@ -1335,7 +1697,7 @@
     );
 
 
-    scrollToBottom();
+    scrollToBottom(true);
 
 
     return message;
@@ -1356,14 +1718,20 @@
     const message =
       document.createElement("div");
 
+
     message.className =
       "message assistant";
 
 
     message.innerHTML = `
       <div class="avatar">E</div>
-      <div class="bubble typing">
-        EduNova AI is thinking...
+
+      <div class="message-content">
+
+        <div class="bubble typing">
+          EduNova AI is thinking...
+        </div>
+
       </div>
     `;
 
@@ -1373,7 +1741,7 @@
     );
 
 
-    scrollToBottom();
+    scrollToBottom(true);
 
 
     return message;
@@ -1385,18 +1753,90 @@
      SCROLL
   ========================= */
 
-  function scrollToBottom() {
+  function scrollToBottom(force = false) {
 
-    chat.scrollTo({
-      top: chat.scrollHeight,
-      behavior: "smooth"
-    });
+    if (force) {
+
+      chat.scrollTo({
+        top: chat.scrollHeight,
+        behavior: "smooth"
+      });
+
+      return;
+
+    }
 
 
-    setTimeout(
-      updateScrollButton,
-      100
-    );
+    chat.scrollTop =
+      chat.scrollHeight;
+
+  }
+
+
+  chat.addEventListener(
+    "scroll",
+    () => {
+
+      const distance =
+        chat.scrollHeight -
+        chat.scrollTop -
+        chat.clientHeight;
+
+
+      if (distance > 250) {
+
+        scrollBottomBtn.classList.add(
+          "show"
+        );
+
+      } else {
+
+        scrollBottomBtn.classList.remove(
+          "show"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     COPY MESSAGE
+  ========================= */
+
+  async function copyMessage(button) {
+
+    const content =
+      button
+        .closest(".message-content")
+        .querySelector(".bubble")
+        .textContent;
+
+
+    try {
+
+      await navigator.clipboard.writeText(
+        content
+      );
+
+      button.textContent =
+        "Copied";
+
+      setTimeout(() => {
+
+        button.textContent =
+          "Copy";
+
+      }, 1500);
+
+    } catch {
+
+      showToast(
+        "Could not copy message."
+      );
+
+    }
 
   }
 
@@ -1433,6 +1873,15 @@
       }
 
 
+      if (isGenerating) {
+        return;
+      }
+
+
+      lastQuestion =
+        text;
+
+
       /* USER MESSAGE */
 
       addMessage(
@@ -1448,9 +1897,6 @@
       input.style.height =
         "auto";
 
-      sendBtn.disabled =
-        true;
-
 
       /* COUNT MESSAGE */
 
@@ -1462,6 +1908,7 @@
         messagesUsed.toString()
       );
 
+
       localStorage.setItem(
         "edunova_message_date",
         today
@@ -1471,15 +1918,26 @@
       updateLimit();
 
 
-      /* TYPING INDICATOR */
+      /* SHOW TYPING */
 
       const typing =
         showTyping();
 
 
-      try {
+      isGenerating = true;
 
-        /* CALL SERVER */
+      sendBtn.disabled = true;
+
+      stopBtn.classList.add(
+        "show"
+      );
+
+
+      controller =
+        new AbortController();
+
+
+      try {
 
         const response =
           await fetch(
@@ -1494,7 +1952,10 @@
 
               body: JSON.stringify({
                 question: text
-              })
+              }),
+
+              signal:
+                controller.signal
             }
           );
 
@@ -1516,12 +1977,8 @@
         }
 
 
-        /* REMOVE TYPING */
-
         typing.remove();
 
-
-        /* SERVER ERROR */
 
         if (!response.ok) {
 
@@ -1536,8 +1993,6 @@
         }
 
 
-        /* AI ANSWER */
-
         const reply =
           data.answer ||
           "I couldn't generate a response.";
@@ -1548,8 +2003,6 @@
           "assistant"
         );
 
-
-        /* SAVE HISTORY */
 
         saveHistory(text);
 
@@ -1565,47 +2018,97 @@
         typing.remove();
 
 
-        addMessage(
-          "I'm having trouble connecting right now. Please try again.",
-          "assistant"
+        if (
+          error.name ===
+          "AbortError"
+        ) {
+
+          addMessage(
+            "Response stopped.",
+            "assistant"
+          );
+
+        } else {
+
+          addMessage(
+            "I'm having trouble connecting right now. Please try again.",
+            "assistant"
+          );
+
+        }
+
+      } finally {
+
+        isGenerating =
+          false;
+
+        controller =
+          null;
+
+        stopBtn.classList.remove(
+          "show"
         );
 
+        updateLimit();
+
       }
-
-
-      updateLimit();
-
-      updateScrollButton();
 
     }
   );
 
 
   /* =========================
-     NEW CHAT
+     STOP RESPONSE
   ========================= */
 
-  function newChat() {
+  function stopResponse() {
 
-    messages.innerHTML =
-      "";
+    if (controller) {
 
-    welcome.style.display =
-      "block";
+      controller.abort();
+
+    }
+
+  }
+
+
+  /* =========================
+     REGENERATE
+  ========================= */
+
+  function regenerate() {
+
+    if (!lastQuestion) {
+
+      showToast(
+        "There is no response to regenerate."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      messagesUsed >=
+      DAILY_LIMIT
+    ) {
+
+      showToast(
+        "Daily limit reached."
+      );
+
+      return;
+
+    }
+
 
     input.value =
-      "";
-
-    input.style.height =
-      "auto";
+      lastQuestion;
 
     updateSendButton();
 
-    updateScrollButton();
-
-    closeSidebar();
-
-    input.focus();
+    form.requestSubmit();
 
   }
 
@@ -1636,6 +2139,10 @@
 
 
     history.unshift(text);
+
+
+    history =
+      [...new Set(history)];
 
 
     history =
@@ -1730,6 +2237,204 @@
 
 
   /* =========================
+     NEW CHAT
+  ========================= */
+
+  function newChat() {
+
+    messages.innerHTML =
+      "";
+
+
+    welcome.style.display =
+      "block";
+
+
+    input.value =
+      "";
+
+
+    input.style.height =
+      "auto";
+
+
+    lastQuestion =
+      "";
+
+
+    updateSendButton();
+
+    closeSidebar();
+
+    input.focus();
+
+    scrollToBottom(true);
+
+  }
+
+
+  /* =========================
+     VOICE INPUT
+  ========================= */
+
+  function setupVoice() {
+
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+
+    if (!SpeechRecognition) {
+
+      voiceBtn.disabled =
+        true;
+
+      voiceBtn.title =
+        "Voice input is not supported by this browser";
+
+      return;
+
+    }
+
+
+    recognition =
+      new SpeechRecognition();
+
+
+    recognition.continuous =
+      false;
+
+
+    recognition.interimResults =
+      true;
+
+
+    recognition.lang =
+      "en-US";
+
+
+    recognition.onstart =
+      () => {
+
+        isListening =
+          true;
+
+        voiceBtn.classList.add(
+          "listening"
+        );
+
+        showToast(
+          "Listening..."
+        );
+
+      };
+
+
+    recognition.onresult =
+      event => {
+
+        let transcript = "";
+
+
+        for (
+          let i = event.resultIndex;
+          i < event.results.length;
+          i++
+        ) {
+
+          transcript +=
+            event.results[i][0].transcript;
+
+        }
+
+
+        input.value =
+          transcript;
+
+
+        input.style.height =
+          "auto";
+
+
+        input.style.height =
+          Math.min(
+            input.scrollHeight,
+            150
+          ) + "px";
+
+
+        updateSendButton();
+
+      };
+
+
+    recognition.onerror =
+      event => {
+
+        console.error(
+          "Voice error:",
+          event.error
+        );
+
+
+        showToast(
+          "Voice input could not be used."
+        );
+
+      };
+
+
+    recognition.onend =
+      () => {
+
+        isListening =
+          false;
+
+        voiceBtn.classList.remove(
+          "listening"
+        );
+
+      };
+
+  }
+
+
+  function toggleVoice() {
+
+    if (!recognition) {
+
+      showToast(
+        "Voice input is not supported on this browser."
+      );
+
+      return;
+
+    }
+
+
+    if (isListening) {
+
+      recognition.stop();
+
+      return;
+
+    }
+
+
+    try {
+
+      recognition.start();
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  /* =========================
      PREMIUM
   ========================= */
 
@@ -1759,6 +2464,15 @@
   }
 
 
+  function premiumComingSoon() {
+
+    showToast(
+      "Nexa Plus payment will be added soon."
+    );
+
+  }
+
+
   document
     .getElementById(
       "premiumModal"
@@ -1778,6 +2492,29 @@
 
       }
     );
+
+
+  /* =========================
+     ESCAPE KEY
+  ========================= */
+
+  document.addEventListener(
+    "keydown",
+    event => {
+
+      if (
+        event.key ===
+        "Escape"
+      ) {
+
+        closePremium();
+
+        closeSidebar();
+
+      }
+
+    }
+  );
 
 
   /* =========================
@@ -1840,11 +2577,11 @@
      INITIALIZE
   ========================= */
 
+  setupVoice();
+
   renderHistory();
 
   updateLimit();
-
-  updateScrollButton();
 
 </script>
 
