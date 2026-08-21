@@ -13,15 +13,18 @@ const PORT = process.env.PORT || 10000;
 
 const DAILY_MESSAGE_LIMIT = 10;
 
-// Gemini model
-const MODEL = "gemini-2.5-flash";
+// Use reliable Gemini models with fallback.
+const MODELS = [
+  "gemini-2.5-flash",
+  "gemini-2.0-flash"
+];
 
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY
 });
 
 // Simple in-memory usage tracker.
-// This resets whenever the Render service restarts.
+// Resets when the Render service restarts.
 const usage = new Map();
 
 // ======================================================
@@ -76,30 +79,78 @@ function cleanAnswer(text) {
 }
 
 // ======================================================
+// ERROR CLASSIFICATION
+// ======================================================
+
+function getGeminiErrorMessage(error) {
+  const status = error?.status;
+  const message = String(error?.message || "").toLowerCase();
+
+  if (status === 404 || message.includes("not found")) {
+    return "The AI model is temporarily unavailable. Please try again.";
+  }
+
+  if (
+    status === 401 ||
+    status === 403 ||
+    message.includes("api key") ||
+    message.includes("permission")
+  ) {
+    return "EduNova AI is temporarily unavailable because the AI service needs configuration.";
+  }
+
+  if (
+    status === 429 ||
+    message.includes("quota") ||
+    message.includes("rate limit")
+  ) {
+    return "EduNova AI is busy right now. Please try again in a moment.";
+  }
+
+  if (
+    message.includes("timeout") ||
+    message.includes("aborted") ||
+    message.includes("deadline")
+  ) {
+    return "The AI took too long to respond. Please try again.";
+  }
+
+  return "EduNova AI couldn't generate a response right now. Please try again.";
+}
+
+// ======================================================
 // GENERATE AI ANSWER
 // ======================================================
 
 async function generateAnswer(question) {
   if (!process.env.GEMINI_API_KEY) {
-    throw new Error("GEMINI_API_KEY is not configured.");
+    const error = new Error("GEMINI_API_KEY is not configured.");
+    error.code = "NO_API_KEY";
+    throw error;
   }
 
-  const controller = new AbortController();
+  let lastError = null;
 
-  const timeout = setTimeout(() => {
-    controller.abort();
-  }, 20000);
+  for (const model of MODELS) {
+    const controller = new AbortController();
 
-  try {
-    const response = await ai.models.generateContent({
-      model: MODEL,
+    // 45 seconds instead of 20.
+    const timeout = setTimeout(() => {
+      controller.abort();
+    }, 45000);
 
-      contents: [
-        {
-          role: "user",
-          parts: [
-            {
-              text: `
+    try {
+      console.log(`Trying Gemini model: ${model}`);
+
+      const response = await ai.models.generateContent({
+        model,
+
+        contents: [
+          {
+            role: "user",
+            parts: [
+              {
+                text: `
 You are EduNova AI.
 
 Tagline:
@@ -109,7 +160,7 @@ You are a fast, friendly educational AI assistant.
 
 Your main purpose is helping students understand school subjects.
 
-Follow these rules:
+RULES:
 
 1. Explain concepts clearly and simply.
 2. Use student-friendly language.
@@ -123,61 +174,65 @@ Follow these rules:
 10. Stay focused on the student's request.
 11. If the student asks a simple question, give a direct answer.
 12. If the student asks for detailed teaching, explain thoroughly.
-13. For Economics, use correct economic terminology and explain the meaning of the terminology.
+13. For Economics, use correct economic terminology and explain difficult terminology.
 14. Help the student learn rather than simply giving unexplained answers.
+15. Do not end your answer with suggested questions.
+16. Do not create a "Related questions" section.
+17. Keep answers natural and useful.
+18. For calculations, show clear working and the final answer.
+19. If the student appears confused, explain the topic another way.
+20. Never claim to have done something you have not done.
 
 Student's question:
 
 ${question}
-              `.trim()
-            }
-          ]
+                `.trim()
+              }
+            ]
+          }
+        ],
+
+        config: {
+          temperature: 0.7,
+          maxOutputTokens: 1200
         }
-      ],
+      });
 
-      config: {
-        temperature: 0.7,
-        maxOutputTokens: 1200
+      const answer = cleanAnswer(response?.text);
+
+      if (answer) {
+        console.log(`Answer generated using: ${model}`);
+
+        return answer;
       }
-    });
 
-    return cleanAnswer(response.text);
+      throw new Error("Gemini returned an empty response.");
 
-  } finally {
-    clearTimeout(timeout);
+    } catch (error) {
+      lastError = error;
+
+      console.error(
+        `Gemini model ${model} failed:`,
+        error?.status || error?.message || error
+      );
+
+      // If this was a timeout, try the next model.
+      // If it was a model-not-found error, also try the next model.
+      continue;
+
+    } finally {
+      clearTimeout(timeout);
+    }
   }
+
+  throw lastError || new Error("All Gemini models failed.");
 }
 
 // ======================================================
-// HOME
+// COMMON CHAT HANDLER
 // ======================================================
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
-// ======================================================
-// HEALTH CHECK
-// ======================================================
-
-app.get("/api/health", (req, res) => {
-  res.json({
-    success: true,
-    status: "ok",
-    app: "EduNova AI",
-    tagline: "Learn. Understand. Excel.",
-    model: MODEL
-  });
-});
-
-// ======================================================
-// CHAT API
-// ======================================================
-// IMPORTANT:
-// Your index.html uses /api/ask
-// ======================================================
-
-app.post("/api/ask", async (req, res) => {
+async function handleChat(req, res) {
   try {
     const question = req.body?.question?.trim();
 
@@ -199,11 +254,10 @@ app.post("/api/ask", async (req, res) => {
     // ------------------------------
 
     const userId = getUserId(req);
-
     const userUsage = getUsage(userId);
 
     // ------------------------------
-    // Daily limit
+    // Daily free limit
     // ------------------------------
 
     if (userUsage.count >= DAILY_MESSAGE_LIMIT) {
@@ -211,7 +265,7 @@ app.post("/api/ask", async (req, res) => {
         success: false,
         limitReached: true,
         error:
-          "You've reached your 10 free messages for today. Come back tomorrow or upgrade to Nexa Plus."
+          "You've reached your 10 free messages for today. Come back tomorrow or upgrade to Premium."
       });
     }
 
@@ -251,92 +305,59 @@ app.post("/api/ask", async (req, res) => {
   } catch (error) {
     console.error("EduNova AI error:", error);
 
-    if (error?.name === "AbortError") {
-      return res.status(504).json({
-        success: false,
-        error:
-          "The AI took too long to respond. Please try again."
-      });
-    }
-
+    // API key problem
     if (
-      error?.message?.includes("API key") ||
+      error?.code === "NO_API_KEY" ||
       error?.message?.includes("GEMINI_API_KEY")
     ) {
       return res.status(500).json({
         success: false,
         error:
-          "EduNova AI is not configured correctly on the server."
+          "EduNova AI is temporarily unavailable. The server AI configuration needs attention."
       });
     }
 
-    return res.status(500).json({
+    // Gemini-specific error
+    return res.status(502).json({
       success: false,
-      error:
-        "I'm having trouble connecting right now. Please try again."
+      error: getGeminiErrorMessage(error)
     });
   }
+}
+
+// ======================================================
+// HOME
+// ======================================================
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
+
+// ======================================================
+// HEALTH CHECK
+// ======================================================
+
+app.get("/api/health", (req, res) => {
+  res.json({
+    success: true,
+    status: "ok",
+    app: "EduNova AI",
+    tagline: "Learn. Understand. Excel.",
+    models: MODELS
+  });
+});
+
+// ======================================================
+// MAIN CHAT ENDPOINT
+// ======================================================
+
+app.post("/api/chat", handleChat);
 
 // ======================================================
 // BACKWARD COMPATIBILITY
 // ======================================================
-// /api/chat will also work if you use it later.
-// ======================================================
 
-app.post("/api/chat", async (req, res) => {
-  req.url = "/api/ask";
-
-  // Reuse the same handler logic by forwarding internally.
-  try {
-    const question = req.body?.question?.trim();
-
-    if (!question) {
-      return res.status(400).json({
-        success: false,
-        error: "Please enter a question."
-      });
-    }
-
-    const userId = getUserId(req);
-    const userUsage = getUsage(userId);
-
-    if (userUsage.count >= DAILY_MESSAGE_LIMIT) {
-      return res.status(429).json({
-        success: false,
-        limitReached: true,
-        error:
-          "You've reached your 10 free messages for today. Come back tomorrow or upgrade to Nexa Plus."
-      });
-    }
-
-    const answer = await generateAnswer(question);
-
-    userUsage.count += 1;
-
-    return res.json({
-      success: true,
-      answer,
-      usage: {
-        used: userUsage.count,
-        limit: DAILY_MESSAGE_LIMIT,
-        remaining: Math.max(
-          DAILY_MESSAGE_LIMIT - userUsage.count,
-          0
-        )
-      }
-    });
-
-  } catch (error) {
-    console.error("EduNova AI error:", error);
-
-    return res.status(500).json({
-      success: false,
-      error:
-        "I'm having trouble connecting right now. Please try again."
-    });
-  }
-});
+app.post("/api/ask", handleChat);
 
 // ======================================================
 // USAGE
