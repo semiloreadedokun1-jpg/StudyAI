@@ -24,17 +24,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-
 /*
 ========================================
-HOME PAGE
+HOME
 ========================================
 */
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });
-
 
 /*
 ========================================
@@ -45,24 +43,39 @@ HEALTH CHECK
 app.get("/api/health", (req, res) => {
     res.json({
         status: "ok",
-        message: "NEXA AI server is running"
+        message: "EduNova AI server is running"
     });
 });
 
-
 /*
 ========================================
-GENERATE FAST ANSWER
+GENERATE ANSWER
 ========================================
 */
 
-async function generateAnswer(prompt) {
+async function generateAnswer(question) {
 
-    /*
-    Try the fastest model first.
-    If it is temporarily unavailable,
-    use the fallback model.
-    */
+    const prompt = `
+You are EduNova AI, a fast and helpful study assistant.
+
+The student's question is:
+
+${question}
+
+Instructions:
+
+- Answer directly.
+- Do not say "I am EduNova AI" unless asked.
+- Use simple language that a student can understand.
+- For Mathematics, show the calculation steps clearly.
+- For Economics, use correct economic terminology and explain the terms.
+- For English, explain grammar clearly and give examples when useful.
+- For science subjects, explain concepts step by step.
+- If the question is simple, keep the answer reasonably short.
+- Do not add unnecessary "related questions" underneath the answer.
+- Do not repeat the student's question.
+- Be accurate and educational.
+`;
 
     const models = [
         "gemini-3.7-flash",
@@ -76,31 +89,24 @@ async function generateAnswer(prompt) {
 
         try {
 
-            console.log(
-                "Trying model:",
-                model
-            );
+            console.log("Trying model:", model);
 
             const response =
                 await ai.models.generateContent({
-                    model: model,
+                    model,
                     contents: prompt
                 });
 
-            const answer =
-                response.text;
+            const answer = response.text;
 
-            if (
-                answer &&
-                answer.trim()
-            ) {
+            if (answer && answer.trim()) {
 
                 console.log(
                     "Answer generated using:",
                     model
                 );
 
-                return answer;
+                return answer.trim();
             }
 
         } catch (error) {
@@ -108,45 +114,32 @@ async function generateAnswer(prompt) {
             lastError = error;
 
             console.error(
-                model,
-                "failed:",
-                error.message || error
+                `${model} failed:`,
+                error?.message || error
             );
-
-            /*
-            Move immediately to the next
-            model instead of waiting through
-            multiple retries.
-            */
 
             continue;
         }
     }
 
     throw lastError ||
-        new Error(
-            "All Gemini models failed."
-        );
+        new Error("All Gemini models failed.");
 }
-
 
 /*
 ========================================
-ASK NEXA AI
+ASK EDUNOVA AI
 ========================================
 */
 
 app.post("/api/ask", async (req, res) => {
 
-    const question =
-        req.body.question;
-
+    const question = req.body.question;
 
     console.log(
         "Question received:",
         question
     );
-
 
     if (
         !question ||
@@ -155,110 +148,63 @@ app.post("/api/ask", async (req, res) => {
     ) {
 
         return res.status(400).json({
-            error:
-                "Please enter a question."
+            error: "Please enter a question."
         });
-
     }
-
 
     if (!ai) {
 
         return res.status(500).json({
             error:
-                "Gemini API key is not configured."
+                "Gemini API key is not configured on the server."
         });
-
     }
-
-
-    /*
-    ========================================
-    SHORT, FAST PROMPT
-    ========================================
-    */
-
-    const prompt = `
-You are NEXA AI, a fast and helpful study assistant.
-
-Answer the student's question clearly and accurately.
-
-Rules:
-- Start directly with the answer.
-- Use simple student-friendly language.
-- Explain difficult ideas clearly.
-- For Mathematics, show steps.
-- For Economics, use correct economic terminology.
-- For English, explain grammar with examples.
-- Give examples when useful.
-- Do not introduce yourself unless asked.
-- Do not unnecessarily repeat the question.
-- Keep the answer focused.
-
-Student question:
-
-${question}
-`;
-
 
     try {
 
         const answer =
-            await generateAnswer(prompt);
-
-
-        console.log(
-            "Answer generated successfully."
-        );
-
+            await generateAnswer(
+                question.trim()
+            );
 
         return res.json({
-            answer: answer
+            answer
         });
-
 
     } catch (error) {
 
         console.error(
-            "NEXA AI final error:",
+            "EduNova AI error:",
             error
         );
-
 
         const status =
             error?.status ||
             error?.code ||
             error?.error?.code;
 
-
         if (status === 429) {
 
             return res.status(429).json({
                 error:
-                    "NEXA AI is temporarily busy. Please try again."
+                    "EduNova AI is temporarily busy. Please try again shortly."
             });
-
         }
-
 
         if (status === 503) {
 
             return res.status(503).json({
                 error:
-                    "Gemini is temporarily busy. Please try again shortly."
+                    "The AI model is temporarily busy. Please try again shortly."
             });
-
         }
-
 
         return res.status(500).json({
             error:
-                "NEXA AI could not generate an answer."
+                "EduNova AI could not generate an answer right now."
         });
-
     }
 });
-
 
 /*
 ========================================
@@ -272,7 +218,7 @@ app.listen(
     () => {
 
         console.log(
-            `NEXA AI server is running on port ${PORT}`
+            `EduNova AI server is running on port ${PORT}`
         );
 
     }
