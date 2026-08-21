@@ -1,1333 +1,1272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#2563eb">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduNova AI — Learn. Understand. Excel.</title>
 
-    <title>NEXA AI — Your AI Study Assistant</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    :root {
+      --bg: #ffffff;
+      --sidebar: #f7f7f8;
+      --text: #202123;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --input: #f7f7f8;
+      --accent: #111827;
+      --user: #f3f4f6;
+    }
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100%;
-        }
+    body.dark {
+      --bg: #212121;
+      --sidebar: #171717;
+      --text: #ececec;
+      --muted: #a1a1aa;
+      --border: #333333;
+      --input: #2f2f2f;
+      --accent: #ffffff;
+      --user: #2f2f2f;
+    }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f5f7fb;
-            color: #172033;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      overflow: hidden;
+    }
 
-        header {
-            background: linear-gradient(135deg, #2563eb, #4f46e5);
-            color: white;
-            text-align: center;
-            padding: 42px 20px 55px;
-        }
+    /* APP */
 
-        .logo {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 14px;
-            border-radius: 20px;
-            background: white;
-            color: #2563eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            font-weight: bold;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
+    .app {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 38px;
-        }
+    /* SIDEBAR */
 
-        header p {
-            margin: 9px 0 0;
-            font-size: 16px;
-            opacity: 0.95;
-        }
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 14px;
+      transition: 0.25s ease;
+      z-index: 20;
+    }
 
-        .container {
-            width: 92%;
-            max-width: 820px;
-            margin: -25px auto 40px;
-        }
+    .sidebar-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
 
-        .card {
-            background: white;
-            padding: 24px;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
-            margin-bottom: 20px;
-        }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        h2 {
-            margin-top: 0;
-            margin-bottom: 8px;
-        }
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: #111827;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 17px;
+    }
 
-        .subtitle {
-            color: #64748b;
-            line-height: 1.6;
-            margin-top: 0;
-        }
+    body.dark .logo {
+      background: white;
+      color: #111;
+    }
 
-        .usage {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #eff6ff;
-            border-radius: 12px;
-            padding: 12px 14px;
-            margin: 16px 0;
-            color: #1d4ed8;
-            font-size: 14px;
-            font-weight: bold;
-        }
+    .brand {
+      font-size: 16px;
+      font-weight: 700;
+    }
 
-        textarea {
-            display: block;
-            width: 100%;
-            min-height: 145px;
-            padding: 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 14px;
-            outline: none;
-            resize: vertical;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
-            color: #172033;
-            background: white;
-        }
+    .tagline {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
 
-        textarea:focus {
-            border-color: #2563eb;
-        }
+    .new-chat {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      padding: 11px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 14px;
+      margin-bottom: 18px;
+      transition: 0.2s;
+    }
 
-        .primary-btn {
-            width: 100%;
-            margin-top: 14px;
-            padding: 16px;
-            border: none;
-            border-radius: 14px;
-            background: #2563eb;
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    .new-chat:hover {
+      background: var(--input);
+    }
 
-        .primary-btn:hover {
-            background: #1d4ed8;
-        }
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 8px 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-        .primary-btn:disabled {
-            background: #94a3b8;
-            cursor: not-allowed;
-        }
+    .history {
+      flex: 1;
+      overflow-y: auto;
+    }
 
-        .response {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            line-height: 1.7;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
-        }
+    .history-item {
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
 
-        .response.show {
-            display: block;
-        }
+    .history-item:hover {
+      background: var(--input);
+    }
 
-        .loading {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .sidebar-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
 
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #2563eb;
-            animation: pulse 0.8s infinite alternate;
-        }
+    .premium-small {
+      width: 100%;
+      border: none;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 10px;
+      padding: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 9px;
+    }
 
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
+    .settings-btn {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      text-align: left;
+      padding: 9px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
 
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+    .settings-btn:hover {
+      background: var(--input);
+    }
 
-        @keyframes pulse {
-            from {
-                opacity: 0.3;
-                transform: translateY(2px);
-            }
+    /* MAIN */
 
-            to {
-                opacity: 1;
-                transform: translateY(-2px);
-            }
-        }
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      position: relative;
+    }
 
-        .image-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-        }
+    .topbar {
+      height: 58px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+    }
 
-        .image-btn {
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            background: #eff6ff;
-            color: #2563eb;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    .mobile-menu {
+      display: none;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 22px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
 
-        .image-btn:hover {
-            background: #dbeafe;
-        }
+    .model-name {
+      font-weight: 650;
+      font-size: 15px;
+    }
 
-        .preview-container {
-            display: none;
-            margin-top: 20px;
-        }
+    .premium-btn {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      padding: 8px 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+    }
 
-        .preview-container.show {
-            display: block;
-        }
+    .premium-btn:hover {
+      background: var(--input);
+    }
 
-        #imagePreview {
-            display: block;
-            width: 100%;
-            max-height: 400px;
-            object-fit: contain;
-            border-radius: 14px;
-            background: #e2e8f0;
-        }
+    /* CHAT */
 
-        .edit-controls {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-top: 10px;
-        }
+    .chat {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 170px;
+    }
 
-        .edit-btn {
-            padding: 10px 5px;
-            border: 1px solid #dbeafe;
-            border-radius: 9px;
-            background: white;
-            color: #2563eb;
-            cursor: pointer;
-        }
+    .welcome {
+      max-width: 760px;
+      margin: 100px auto 0;
+      padding: 20px;
+      text-align: center;
+    }
 
-        .remove-btn {
-            width: 100%;
-            margin-top: 10px;
-            padding: 11px;
-            border: none;
-            border-radius: 9px;
-            background: #fee2e2;
-            color: #b91c1c;
-            cursor: pointer;
-        }
+    .welcome-logo {
+      width: 58px;
+      height: 58px;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto auto 20px;
+      font-weight: 800;
+      font-size: 24px;
+    }
 
-        .premium {
-            background: linear-gradient(135deg, #111827, #312e81);
-            color: white;
-        }
+    .welcome h1 {
+      font-size: 30px;
+      margin-bottom: 9px;
+    }
 
-        .premium p {
-            line-height: 1.7;
-        }
+    .welcome p {
+      color: var(--muted);
+      font-size: 15px;
+    }
 
-        .premium-list {
-            padding-left: 20px;
-            line-height: 2;
-        }
+    .messages {
+      max-width: 850px;
+      margin: auto;
+      padding: 20px;
+    }
 
-        .premium-btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            background: white;
-            color: #312e81;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 8px;
-        }
+    .message {
+      display: flex;
+      margin: 20px 0;
+      gap: 13px;
+      line-height: 1.6;
+      font-size: 15px;
+    }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+    .message.user {
+      justify-content: flex-end;
+    }
 
-        .feature {
-            background: white;
-            padding: 18px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
+    .avatar {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--text);
+      color: var(--bg);
+    }
 
-        .feature-icon {
-            font-size: 25px;
-        }
+    .message.user .avatar {
+      display: none;
+    }
 
-        .feature strong {
-            display: block;
-            margin-top: 8px;
-        }
+    .bubble {
+      max-width: 75%;
+      white-space: pre-wrap;
+    }
 
-        .about {
-            background: white;
-            padding: 22px;
-            border-radius: 18px;
-        }
+    .message.user .bubble {
+      background: var(--user);
+      padding: 10px 14px;
+      border-radius: 15px;
+    }
 
-        .about p {
-            color: #64748b;
-            line-height: 1.7;
-        }
+    .typing {
+      color: var(--muted);
+      font-size: 14px;
+    }
 
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #64748b;
-            font-size: 14px;
-        }
+    /* INPUT AREA */
 
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 32px;
-            }
+    .composer-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 20px 12px;
+      background: linear-gradient(
+        transparent,
+        var(--bg) 28%
+      );
+    }
 
-            .features {
-                grid-template-columns: 1fr;
-            }
+    .composer {
+      max-width: 820px;
+      margin: auto;
+      position: relative;
+    }
 
-            .image-actions {
-                grid-template-columns: 1fr;
-            }
+    .input-box {
+      display: flex;
+      align-items: flex-end;
+      background: var(--input);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 9px 10px 9px 15px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+    }
 
-            .edit-controls {
-                grid-template-columns: repeat(2, 1fr);
-            }
+    textarea {
+      flex: 1;
+      border: none;
+      outline: none;
+      resize: none;
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 22px;
+      max-height: 150px;
+      padding: 7px 5px;
+    }
 
-            .card {
-                padding: 20px;
-            }
+    textarea::placeholder {
+      color: var(--muted);
+    }
 
-            .usage {
-                align-items: flex-start;
-                gap: 8px;
-                flex-direction: column;
-            }
-        }
-    </style>
+    .send-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 10px;
+      background: var(--text);
+      color: var(--bg);
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .send-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .limit {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* PREMIUM MODAL */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .premium-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg);
+      color: var(--text);
+      border-radius: 20px;
+      padding: 28px;
+      position: relative;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.25);
+    }
+
+    .close {
+      position: absolute;
+      right: 16px;
+      top: 14px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .premium-card h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .premium-card > p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .plan {
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 13px;
+      margin: 10px 0;
+    }
+
+    .plan strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .plan span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .coming-soon {
+      margin-top: 18px;
+      width: 100%;
+      border: none;
+      background: var(--text);
+      color: var(--bg);
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+      .sidebar {
+        position: fixed;
+        left: -270px;
+        top: 0;
+        bottom: 0;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.15);
+      }
+
+      .sidebar.open {
+        left: 0;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .topbar {
+        padding: 0 12px;
+      }
+
+      .welcome {
+        margin-top: 70px;
+      }
+
+      .welcome h1 {
+        font-size: 25px;
+      }
+
+      .messages {
+        padding: 12px;
+      }
+
+      .bubble {
+        max-width: 88%;
+      }
+
+      .composer-wrapper {
+        padding: 14px 10px 9px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">N</div>
+<div class="app">
 
-    <h1>NEXA AI</h1>
+  <!-- SIDEBAR -->
 
-    <p>Your intelligent AI study companion</p>
-</header>
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-top">
+      <div class="logo-area">
+        <div class="logo">E</div>
+
+        <div>
+          <div class="brand">EduNova AI</div>
+          <div class="tagline">Learn. Understand. Excel.</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="new-chat" onclick="newChat()">
+      ＋ New chat
+    </button>
+
+    <div class="sidebar-title">Recent chats</div>
+
+    <div class="history" id="history"></div>
+
+    <div class="sidebar-bottom">
+
+      <button class="premium-small" onclick="openPremium()">
+        ✦ Upgrade to Premium
+      </button>
+
+      <button class="settings-btn" onclick="toggleDarkMode()">
+        ◐ Appearance
+      </button>
+
+    </div>
+
+  </aside>
 
 
-<main class="container">
+  <!-- MAIN -->
 
-    <!-- AI QUESTION CARD -->
-    <section class="card">
+  <main class="main">
 
-        <h2>🤖 Ask NEXA AI</h2>
+    <header class="topbar">
 
-        <p class="subtitle">
-            Ask questions about Economics, Mathematics,
-            English, assignments, calculations, and difficult topics.
-        </p>
+      <div style="display:flex;align-items:center;">
+        <button class="mobile-menu" onclick="toggleSidebar()">
+          ☰
+        </button>
+
+        <span class="model-name">
+          EduNova AI
+        </span>
+      </div>
+
+      <button class="premium-btn" onclick="openPremium()">
+        Upgrade
+      </button>
+
+    </header>
 
 
-        <div class="usage">
+    <!-- CHAT -->
 
-            <span id="usageText">
-                Free messages: loading...
-            </span>
+    <section class="chat" id="chat">
 
-            <span id="planText">
-                🆓 Free Plan
-            </span>
+      <div class="welcome" id="welcome">
 
+        <div class="welcome-logo">
+          E
         </div>
 
+        <h1>What do you want to learn?</h1>
 
-        <textarea
-            id="question"
-            placeholder="Type your question here..."
+        <p>
+          Ask EduNova AI anything about your studies.
+        </p>
+
+      </div>
+
+      <div class="messages" id="messages"></div>
+
+    </section>
+
+
+    <!-- COMPOSER -->
+
+    <div class="composer-wrapper">
+
+      <div class="composer">
+
+        <form class="input-box" id="chatForm">
+
+          <textarea
+            id="messageInput"
+            rows="1"
+            placeholder="Message EduNova AI..."
             autocomplete="off"
-        ></textarea>
+          ></textarea>
 
+          <button
+            class="send-btn"
+            id="sendBtn"
+            type="submit"
+            disabled
+          >
+            ↑
+          </button>
 
-        <button
-            id="askButton"
-            class="primary-btn"
-            type="button"
-        >
-            Ask NEXA AI
-        </button>
+        </form>
 
-
-        <div
-            id="responseBox"
-            class="response"
-        ></div>
-
-    </section>
-
-
-    <!-- IMAGE CARD -->
-    <section class="card">
-
-        <h2>📸 NEXA Vision</h2>
-
-        <p class="subtitle">
-            Take a photo or upload an image of a question,
-            note, diagram, or document.
-        </p>
-
-
-        <div class="image-actions">
-
-            <button
-                id="cameraButton"
-                class="image-btn"
-                type="button"
-            >
-                📷 Take Photo
-            </button>
-
-
-            <button
-                id="uploadButton"
-                class="image-btn"
-                type="button"
-            >
-                🖼️ Upload Image
-            </button>
-
+        <div class="limit" id="limitText">
+          10 free messages per day
         </div>
 
+      </div>
 
-        <input
-            id="cameraInput"
-            type="file"
-            accept="image/*"
-            capture="environment"
-            hidden
-        >
+    </div>
 
+  </main>
 
-        <input
-            id="imageInput"
-            type="file"
-            accept="image/*"
-            hidden
-        >
+</div>
 
 
-        <div
-            id="previewContainer"
-            class="preview-container"
-        >
+<!-- PREMIUM MODAL -->
 
-            <img
-                id="imagePreview"
-                alt="Selected study image"
-            >
+<div class="modal" id="premiumModal">
 
+  <div class="premium-card">
 
-            <div class="edit-controls">
+    <button class="close" onclick="closePremium()">
+      ×
+    </button>
 
-                <button
-                    id="rotateLeft"
-                    class="edit-btn"
-                    type="button"
-                >
-                    ↩ Rotate
-                </button>
+    <h2>EduNova Premium</h2>
 
+    <p>
+      Unlock more powerful studying with EduNova AI.
+    </p>
 
-                <button
-                    id="rotateRight"
-                    class="edit-btn"
-                    type="button"
-                >
-                    ↪ Rotate
-                </button>
+    <div class="plan">
+      <strong>Free</strong>
+      <span>10 AI messages every day</span>
+    </div>
 
+    <div class="plan">
+      <strong>Premium</strong>
+      <span>
+        More messages, advanced study tools and future
+        premium features.
+      </span>
+    </div>
 
-                <button
-                    id="zoomIn"
-                    class="edit-btn"
-                    type="button"
-                >
-                    🔍 Zoom +
-                </button>
+    <button class="coming-soon">
+      Premium coming soon
+    </button>
 
+  </div>
 
-                <button
-                    id="zoomOut"
-                    class="edit-btn"
-                    type="button"
-                >
-                    🔎 Zoom -
-                </button>
-
-            </div>
-
-
-            <button
-                id="removeImage"
-                class="remove-btn"
-                type="button"
-            >
-                Remove Image
-            </button>
-
-
-            <button
-                id="askImageButton"
-                class="primary-btn"
-                type="button"
-            >
-                🧠 Ask NEXA About This Image
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- PREMIUM -->
-    <section class="card premium">
-
-        <h2>⭐ NEXA AI Premium</h2>
-
-        <p>
-            Unlock more powerful study tools and higher usage limits.
-        </p>
-
-        <ul class="premium-list">
-            <li>⚡ Higher AI message limits</li>
-            <li>📸 More image analysis</li>
-            <li>🧮 Solve questions from photos</li>
-            <li>📝 Summarize study notes</li>
-            <li>✏️ Advanced image tools</li>
-        </ul>
-
-
-        <button
-            id="premiumButton"
-            class="premium-btn"
-            type="button"
-        >
-            ⭐ Premium Coming Soon
-        </button>
-
-    </section>
-
-
-    <!-- FEATURES -->
-    <section class="features">
-
-        <div class="feature">
-            <div class="feature-icon">📚</div>
-            <strong>Learn</strong>
-            <span>Understand topics</span>
-        </div>
-
-
-        <div class="feature">
-            <div class="feature-icon">🧮</div>
-            <strong>Practice</strong>
-            <span>Improve your skills</span>
-        </div>
-
-
-        <div class="feature">
-            <div class="feature-icon">📸</div>
-            <strong>Vision</strong>
-            <span>Learn from images</span>
-        </div>
-
-    </section>
-
-
-    <!-- ABOUT -->
-    <section class="about">
-
-        <h2>About NEXA AI</h2>
-
-        <p>
-            NEXA AI is an intelligent study assistant
-            designed to help students learn, understand
-            difficult topics, practice questions, and
-            solve calculations.
-        </p>
-
-    </section>
-
-</main>
-
-
-<footer>
-    NEXA AI © 2026
-    <br>
-    Your AI study companion
-</footer>
+</div>
 
 
 <script>
 
-/*
-==================================================
-ELEMENTS
-==================================================
-*/
+  /* =========================
+     SETTINGS
+  ========================= */
 
-const questionBox =
-    document.getElementById("question");
+  const API_URL = "/api/chat";
 
-const responseBox =
-    document.getElementById("responseBox");
+  const DAILY_LIMIT = 10;
 
-const askButton =
-    document.getElementById("askButton");
+  let messagesUsed =
+    parseInt(localStorage.getItem("edunova_messages_used") || "0");
 
-const usageText =
-    document.getElementById("usageText");
+  let savedDate =
+    localStorage.getItem("edunova_message_date");
 
-const planText =
-    document.getElementById("planText");
+  const today =
+    new Date().toISOString().split("T")[0];
 
-const cameraButton =
-    document.getElementById("cameraButton");
+  if (savedDate !== today) {
+    messagesUsed = 0;
 
-const uploadButton =
-    document.getElementById("uploadButton");
+    localStorage.setItem(
+      "edunova_messages_used",
+      "0"
+    );
 
-const cameraInput =
-    document.getElementById("cameraInput");
-
-const imageInput =
-    document.getElementById("imageInput");
-
-const previewContainer =
-    document.getElementById("previewContainer");
-
-const imagePreview =
-    document.getElementById("imagePreview");
-
-const askImageButton =
-    document.getElementById("askImageButton");
-
-const removeImage =
-    document.getElementById("removeImage");
-
-const rotateLeft =
-    document.getElementById("rotateLeft");
-
-const rotateRight =
-    document.getElementById("rotateRight");
-
-const zoomIn =
-    document.getElementById("zoomIn");
-
-const zoomOut =
-    document.getElementById("zoomOut");
-
-const premiumButton =
-    document.getElementById("premiumButton");
+    localStorage.setItem(
+      "edunova_message_date",
+      today
+    );
+  }
 
 
-let selectedImage = null;
+  /* =========================
+     ELEMENTS
+  ========================= */
 
-let rotation = 0;
+  const form =
+    document.getElementById("chatForm");
 
-let zoom = 1;
+  const input =
+    document.getElementById("messageInput");
+
+  const sendBtn =
+    document.getElementById("sendBtn");
+
+  const messages =
+    document.getElementById("messages");
+
+  const welcome =
+    document.getElementById("welcome");
+
+  const limitText =
+    document.getElementById("limitText");
+
+  const sidebar =
+    document.getElementById("sidebar");
 
 
-/*
-==================================================
-LOADING DISPLAY
-==================================================
-*/
+  /* =========================
+     LIMIT DISPLAY
+  ========================= */
 
-function showLoading() {
+  function updateLimit() {
 
-    responseBox.classList.add("show");
+    const remaining =
+      Math.max(0, DAILY_LIMIT - messagesUsed);
 
-    responseBox.innerHTML = `
-        <div class="loading">
-            <span>🤖 NEXA AI is thinking</span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-        </div>
+    if (remaining === 0) {
+
+      limitText.textContent =
+        "Daily free message limit reached. Upgrade to Premium.";
+
+      input.disabled = true;
+
+      input.placeholder =
+        "Daily limit reached";
+
+      sendBtn.disabled = true;
+
+    } else {
+
+      limitText.textContent =
+        `${remaining} free message${remaining === 1 ? "" : "s"} remaining today`;
+
+      input.disabled = false;
+
+      input.placeholder =
+        "Message EduNova AI...";
+
+      updateSendButton();
+    }
+  }
+
+
+  /* =========================
+     SEND BUTTON
+  ========================= */
+
+  function updateSendButton() {
+
+    sendBtn.disabled =
+      !input.value.trim() ||
+      messagesUsed >= DAILY_LIMIT;
+
+  }
+
+
+  input.addEventListener(
+    "input",
+    () => {
+
+      input.style.height = "auto";
+
+      input.style.height =
+        Math.min(input.scrollHeight, 150) + "px";
+
+      updateSendButton();
+
+    }
+  );
+
+
+  /* =========================
+     ENTER TO SEND
+  ========================= */
+
+  input.addEventListener(
+    "keydown",
+    event => {
+
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+
+        event.preventDefault();
+
+        if (!sendBtn.disabled) {
+          form.requestSubmit();
+        }
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     ADD MESSAGE
+  ========================= */
+
+  function addMessage(
+    text,
+    type
+  ) {
+
+    welcome.style.display = "none";
+
+    const message =
+      document.createElement("div");
+
+    message.className =
+      `message ${type}`;
+
+    if (type === "assistant") {
+
+      message.innerHTML = `
+        <div class="avatar">E</div>
+        <div class="bubble"></div>
+      `;
+
+      message
+        .querySelector(".bubble")
+        .textContent = text;
+
+    } else {
+
+      message.innerHTML = `
+        <div class="bubble"></div>
+      `;
+
+      message
+        .querySelector(".bubble")
+        .textContent = text;
+
+    }
+
+    messages.appendChild(message);
+
+    scrollToBottom();
+
+    return message;
+  }
+
+
+  /* =========================
+     TYPING INDICATOR
+  ========================= */
+
+  function showTyping() {
+
+    welcome.style.display = "none";
+
+    const message =
+      document.createElement("div");
+
+    message.className =
+      "message assistant";
+
+    message.innerHTML = `
+      <div class="avatar">E</div>
+      <div class="bubble typing">
+        EduNova AI is thinking...
+      </div>
     `;
 
-}
+    messages.appendChild(message);
+
+    scrollToBottom();
+
+    return message;
+  }
 
 
-/*
-==================================================
-UPDATE USAGE
-==================================================
-*/
+  /* =========================
+     SCROLL
+  ========================= */
 
-async function updateUsage() {
+  function scrollToBottom() {
 
-    try {
+    const chat =
+      document.getElementById("chat");
 
-        const response =
-            await fetch(
-                "/api/usage",
-                {
-                    method: "GET",
-                    cache: "no-store"
-                }
-            );
+    chat.scrollTo({
+      top: chat.scrollHeight,
+      behavior: "smooth"
+    });
+
+  }
 
 
-        if (!response.ok) {
-            throw new Error(
-                "Usage request failed"
-            );
-        }
+  /* =========================
+     SEND MESSAGE
+  ========================= */
 
+  form.addEventListener(
+    "submit",
+    async event => {
 
-        const data =
-            await response.json();
+      event.preventDefault();
 
+      const text =
+        input.value.trim();
 
-        if (data.premium) {
+      if (!text) return;
 
-            usageText.textContent =
-                "⭐ Premium messages";
+      if (messagesUsed >= DAILY_LIMIT) {
 
-            planText.textContent =
-                "⭐ Premium Plan";
-
-            return;
-
-        }
-
-
-        usageText.textContent =
-            `Free messages remaining: ${
-                data.messagesRemaining
-            }/${data.dailyLimit}`;
-
-
-        planText.textContent =
-            "🆓 Free Plan";
-
-    }
-
-    catch (error) {
-
-        usageText.textContent =
-            "Free plan";
-
-    }
-
-}
-
-
-/*
-==================================================
-ASK NORMAL QUESTION
-==================================================
-*/
-
-async function askQuestion() {
-
-    const question =
-        questionBox.value.trim();
-
-
-    if (!question) {
-
-        responseBox.classList.add("show");
-
-        responseBox.textContent =
-            "Please enter a question first.";
+        updateLimit();
 
         return;
 
-    }
+      }
 
 
-    askButton.disabled = true;
+      /* USER MESSAGE */
 
-    askButton.textContent =
-        "Thinking...";
+      addMessage(
+        text,
+        "user"
+      );
 
 
-    showLoading();
+      input.value = "";
+
+      input.style.height = "auto";
+
+      sendBtn.disabled = true;
 
 
-    try {
+      /* INCREASE LIMIT */
+
+      messagesUsed++;
+
+      localStorage.setItem(
+        "edunova_messages_used",
+        messagesUsed.toString()
+      );
+
+      localStorage.setItem(
+        "edunova_message_date",
+        today
+      );
+
+      updateLimit();
+
+
+      /* TYPING */
+
+      const typing =
+        showTyping();
+
+
+      try {
 
         const response =
-            await fetch(
-                "/api/ask",
-                {
-                    method: "POST",
+          await fetch(API_URL, {
 
-                    headers: {
-                        "Content-Type":
-                            "application/json",
+            method: "POST",
 
-                        "Accept":
-                            "application/json"
-                    },
+            headers: {
+              "Content-Type": "application/json"
+            },
 
-                    body:
-                        JSON.stringify({
-                            question:
-                                question
-                        })
-                }
-            );
+            body: JSON.stringify({
+              message: text
+            })
+
+          });
 
 
-        const text =
-            await response.text();
-
-
-        let data = null;
-
+        let data;
 
         try {
 
-            data =
-                JSON.parse(text);
+          data =
+            await response.json();
+
+        } catch {
+
+          throw new Error(
+            "Invalid server response."
+          );
 
         }
 
-        catch (error) {
 
-            throw new Error(
-                "The server returned an invalid response."
-            );
-
-        }
+        typing.remove();
 
 
         if (!response.ok) {
 
-            throw new Error(
-                data.error ||
-                "NEXA AI could not answer."
-            );
+          addMessage(
+            data.error ||
+            "Something went wrong. Please try again.",
+            "assistant"
+          );
+
+          return;
 
         }
 
 
-        if (!data.answer) {
-
-            throw new Error(
-                "NEXA AI returned no answer."
-            );
-
-        }
+        const reply =
+          data.reply ||
+          data.response ||
+          data.message ||
+          "I couldn't generate a response.";
 
 
-        responseBox.textContent =
-            data.answer;
+        addMessage(
+          reply,
+          "assistant"
+        );
 
 
-        await updateUsage();
+        saveHistory(text);
 
-    }
 
-    catch (error) {
+      } catch (error) {
+
+        typing.remove();
+
+        addMessage(
+          "I'm having trouble connecting right now. Please try again.",
+          "assistant"
+        );
 
         console.error(error);
 
+      }
 
-        responseBox.textContent =
-            "❌ " +
-            error.message;
-
-    }
-
-    finally {
-
-        askButton.disabled =
-            false;
-
-        askButton.textContent =
-            "Ask NEXA AI";
+      updateLimit();
 
     }
+  );
 
-}
 
+  /* =========================
+     NEW CHAT
+  ========================= */
 
-/*
-==================================================
-CAMERA
-==================================================
-*/
+  function newChat() {
 
-cameraButton.addEventListener(
-    "click",
-    () => {
+    messages.innerHTML = "";
 
-        cameraInput.click();
+    welcome.style.display = "block";
 
-    }
-);
+    input.value = "";
 
+    input.style.height = "auto";
 
-/*
-==================================================
-UPLOAD
-==================================================
-*/
+    updateSendButton();
 
-uploadButton.addEventListener(
-    "click",
-    () => {
+    closeSidebar();
 
-        imageInput.click();
+  }
 
-    }
-);
 
+  /* =========================
+     HISTORY
+  ========================= */
 
-/*
-==================================================
-PROCESS IMAGE
-==================================================
-*/
+  function saveHistory(text) {
 
-function processImage(file) {
+    let history =
+      JSON.parse(
+        localStorage.getItem(
+          "edunova_history"
+        ) || "[]"
+      );
 
-    if (!file) {
-        return;
-    }
+    history.unshift(text);
 
+    history =
+      history.slice(0, 15);
 
-    if (!file.type.startsWith("image/")) {
+    localStorage.setItem(
+      "edunova_history",
+      JSON.stringify(history)
+    );
 
-        alert(
-            "Please choose an image."
-        );
+    renderHistory();
 
-        return;
+  }
 
-    }
 
+  function renderHistory() {
 
-    selectedImage =
-        file;
+    const historyContainer =
+      document.getElementById("history");
 
+    historyContainer.innerHTML = "";
 
-    rotation =
-        0;
+    const history =
+      JSON.parse(
+        localStorage.getItem(
+          "edunova_history"
+        ) || "[]"
+      );
 
-    zoom =
-        1;
+    history.forEach(item => {
 
+      const div =
+        document.createElement("div");
 
-    const reader =
-        new FileReader();
+      div.className =
+        "history-item";
 
+      div.textContent =
+        item;
 
-    reader.onload =
-        (event) => {
+      div.onclick = () => {
 
-            imagePreview.src =
-                event.target.result;
+        input.value = item;
 
+        input.focus();
 
-            updateImageTransform();
+        updateSendButton();
 
+        closeSidebar();
 
-            previewContainer
-                .classList
-                .add("show");
+      };
 
-        };
+      historyContainer.appendChild(div);
 
+    });
 
-    reader.readAsDataURL(file);
+  }
 
-}
 
+  /* =========================
+     PREMIUM
+  ========================= */
 
-/*
-==================================================
-INPUT EVENTS
-==================================================
-*/
+  function openPremium() {
 
-cameraInput.addEventListener(
-    "change",
-    () => {
+    document
+      .getElementById("premiumModal")
+      .classList.add("active");
 
-        processImage(
-            cameraInput.files[0]
-        );
+  }
 
-    }
-);
 
+  function closePremium() {
 
-imageInput.addEventListener(
-    "change",
-    () => {
+    document
+      .getElementById("premiumModal")
+      .classList.remove("active");
 
-        processImage(
-            imageInput.files[0]
-        );
+  }
 
-    }
-);
 
-
-/*
-==================================================
-IMAGE TRANSFORM
-==================================================
-*/
-
-function updateImageTransform() {
-
-    imagePreview.style.transform =
-        `rotate(${rotation}deg) scale(${zoom})`;
-
-}
-
-
-/*
-==================================================
-ROTATE
-==================================================
-*/
-
-rotateLeft.addEventListener(
-    "click",
-    () => {
-
-        rotation -= 90;
-
-        updateImageTransform();
-
-    }
-);
-
-
-rotateRight.addEventListener(
-    "click",
-    () => {
-
-        rotation += 90;
-
-        updateImageTransform();
-
-    }
-);
-
-
-/*
-==================================================
-ZOOM
-==================================================
-*/
-
-zoomIn.addEventListener(
-    "click",
-    () => {
-
-        zoom =
-            Math.min(
-                2,
-                zoom + 0.1
-            );
-
-        updateImageTransform();
-
-    }
-);
-
-
-zoomOut.addEventListener(
-    "click",
-    () => {
-
-        zoom =
-            Math.max(
-                0.5,
-                zoom - 0.1
-            );
-
-        updateImageTransform();
-
-    }
-);
-
-
-/*
-==================================================
-REMOVE IMAGE
-==================================================
-*/
-
-removeImage.addEventListener(
-    "click",
-    () => {
-
-        selectedImage =
-            null;
-
-        cameraInput.value =
-            "";
-
-        imageInput.value =
-            "";
-
-        imagePreview.src =
-            "";
-
-        previewContainer
-            .classList
-            .remove("show");
-
-    }
-);
-
-
-/*
-==================================================
-ASK ABOUT IMAGE
-==================================================
-*/
-
-askImageButton.addEventListener(
-    "click",
-    async () => {
-
-        if (!selectedImage) {
-
-            alert(
-                "Please take or upload an image first."
-            );
-
-            return;
-
-        }
-
-
-        askImageButton.disabled =
-            true;
-
-        askImageButton.textContent =
-            "Analyzing...";
-
-
-        showLoading();
-
-
-        try {
-
-            const formData =
-                new FormData();
-
-
-            formData.append(
-                "image",
-                selectedImage
-            );
-
-
-            formData.append(
-                "question",
-                questionBox.value.trim() ||
-                "Explain this image and answer any question shown in it."
-            );
-
-
-            const response =
-                await fetch(
-                    "/api/ask-image",
-                    {
-                        method: "POST",
-                        body: formData
-                    }
-                );
-
-
-            const text =
-                await response.text();
-
-
-            let data;
-
-
-            try {
-
-                data =
-                    JSON.parse(text);
-
-            }
-
-            catch (error) {
-
-                throw new Error(
-                    "The server returned an invalid response."
-                );
-
-            }
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    data.error ||
-                    "Image analysis failed."
-                );
-
-            }
-
-
-            if (!data.answer) {
-
-                throw new Error(
-                    "NEXA AI returned no image answer."
-                );
-
-            }
-
-
-            responseBox.textContent =
-                data.answer;
-
-
-            await updateUsage();
-
-        }
-
-        catch (error) {
-
-            console.error(error);
-
-
-            responseBox.textContent =
-                "❌ " +
-                error.message;
-
-        }
-
-        finally {
-
-            askImageButton.disabled =
-                false;
-
-            askImageButton.textContent =
-                "🧠 Ask NEXA About This Image";
-
-        }
-
-    }
-);
-
-
-/*
-==================================================
-PREMIUM BUTTON
-==================================================
-*/
-
-premiumButton.addEventListener(
-    "click",
-    () => {
-
-        alert(
-            "⭐ NEXA AI Premium is coming soon."
-        );
-
-    }
-);
-
-
-/*
-==================================================
-ENTER / CTRL + ENTER
-==================================================
-*/
-
-questionBox.addEventListener(
-    "keydown",
-    (event) => {
+  document
+    .getElementById("premiumModal")
+    .addEventListener(
+      "click",
+      event => {
 
         if (
-            event.key === "Enter" &&
-            event.ctrlKey
+          event.target.id ===
+          "premiumModal"
         ) {
 
-            event.preventDefault();
-
-            askQuestion();
+          closePremium();
 
         }
 
-    }
-);
+      }
+    );
 
 
-/*
-==================================================
-INITIAL USAGE CHECK
-==================================================
-*/
+  /* =========================
+     DARK MODE
+  ========================= */
 
-updateUsage();
+  function toggleDarkMode() {
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+      "edunova_dark",
+      document.body.classList.contains("dark")
+    );
+
+  }
+
+
+  if (
+    localStorage.getItem(
+      "edunova_dark"
+    ) === "true"
+  ) {
+
+    document.body.classList.add("dark");
+
+  }
+
+
+  /* =========================
+     MOBILE SIDEBAR
+  ========================= */
+
+  function toggleSidebar() {
+
+    sidebar.classList.toggle("open");
+
+  }
+
+
+  function closeSidebar() {
+
+    sidebar.classList.remove("open");
+
+  }
+
+
+  /* =========================
+     INITIALIZE
+  ========================= */
+
+  renderHistory();
+
+  updateLimit();
 
 </script>
 
 </body>
-                                       </html>
+</html>
