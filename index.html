@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111318">
+  <meta name="theme-color" content="#0b0d12">
   <meta name="description" content="NOVA AI — Learn. Understand. Excel.">
   <title>NOVA AI — Learn. Understand. Excel.</title>
 
@@ -18,19 +18,18 @@
       --bg: #0b0d12;
       --panel: #11141b;
       --panel2: #171a22;
-      --border: #272b35;
+      --border: #292d38;
       --text: #f5f7fb;
       --muted: #969cab;
       --accent: #735cff;
       --accent2: #9b7cff;
-      --danger: #ff5d6c;
     }
 
     body {
       font-family: Arial, Helvetica, sans-serif;
       background: var(--bg);
       color: var(--text);
-      min-height: 100vh;
+      height: 100vh;
       overflow: hidden;
     }
 
@@ -50,10 +49,11 @@
       width: 270px;
       background: #0f1117;
       border-right: 1px solid var(--border);
+      padding: 18px;
       display: flex;
       flex-direction: column;
-      padding: 18px;
-      transition: 0.25s;
+      transition: .25s;
+      z-index: 10;
     }
 
     .brand {
@@ -67,20 +67,19 @@
       width: 46px;
       height: 46px;
       border-radius: 15px;
+      background: linear-gradient(135deg, #735cff, #a66cff);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #735cff, #a66cff);
-      color: white;
       font-size: 25px;
       font-weight: 900;
-      box-shadow: 0 8px 25px rgba(115, 92, 255, .35);
+      color: white;
+      box-shadow: 0 8px 25px rgba(115,92,255,.35);
     }
 
     .brand-name {
       font-size: 20px;
       font-weight: 800;
-      letter-spacing: .3px;
     }
 
     .tagline {
@@ -92,17 +91,16 @@
     .new-chat {
       width: 100%;
       padding: 13px;
-      border: 1px solid var(--border);
       border-radius: 12px;
+      border: 1px solid var(--border);
       background: var(--panel2);
       color: white;
       cursor: pointer;
-      font-size: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .new-chat:hover {
-      background: #1d2029;
+      background: #20232c;
     }
 
     .side-title {
@@ -110,46 +108,42 @@
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin: 12px 4px;
+      margin: 10px 4px;
     }
 
     .side-item {
       padding: 11px 12px;
       border-radius: 10px;
-      color: #cdd1dc;
+      color: #d0d3dc;
       font-size: 14px;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
     .premium {
       margin-top: auto;
       padding: 15px;
-      border: 1px solid #3b3268;
-      background: linear-gradient(
-        145deg,
-        rgba(115,92,255,.16),
-        rgba(155,124,255,.05)
-      );
       border-radius: 15px;
+      border: 1px solid #3b3268;
+      background: rgba(115,92,255,.1);
     }
 
     .premium strong {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }
 
     .premium p {
       color: var(--muted);
       font-size: 12px;
-      line-height: 1.4;
+      line-height: 1.5;
       margin-bottom: 12px;
     }
 
     .premium button {
       width: 100%;
       border: 0;
-      padding: 10px;
       border-radius: 9px;
+      padding: 10px;
       background: var(--accent);
       color: white;
       font-weight: 700;
@@ -160,33 +154,32 @@
 
     .main {
       flex: 1;
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      min-width: 0;
     }
 
     .topbar {
       height: 64px;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       padding: 0 20px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(11,13,18,.92);
+      background: #0b0d12;
     }
 
     .mobile-menu {
       display: none;
-      border: 0;
       background: transparent;
+      border: 0;
       color: white;
       font-size: 25px;
       margin-right: 12px;
-      cursor: pointer;
     }
 
     .top-title {
-      font-weight: 700;
       font-size: 15px;
+      font-weight: 700;
     }
 
     .status {
@@ -201,8 +194,8 @@
     .status-dot {
       width: 7px;
       height: 7px;
-      background: #4be982;
       border-radius: 50%;
+      background: #4be982;
     }
 
     /* CHAT */
@@ -221,19 +214,19 @@
 
     .welcome {
       text-align: center;
+      max-width: 620px;
       margin: 8vh auto 45px;
-      max-width: 600px;
     }
 
     .welcome-logo {
       width: 72px;
       height: 72px;
+      margin: auto auto 18px;
       border-radius: 23px;
+      background: linear-gradient(135deg, #735cff, #a66cff);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: auto auto 18px;
-      background: linear-gradient(135deg, #735cff, #a66cff);
       font-size: 38px;
       font-weight: 900;
       box-shadow: 0 12px 35px rgba(115,92,255,.35);
@@ -260,10 +253,10 @@
     .suggestion {
       text-align: left;
       padding: 14px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      color: #dfe2e9;
       border-radius: 13px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: #dfe2e9;
       cursor: pointer;
       font-size: 13px;
     }
@@ -281,13 +274,13 @@
     .avatar {
       width: 34px;
       height: 34px;
-      flex: 0 0 34px;
+      min-width: 34px;
       border-radius: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 12px;
       font-weight: 800;
-      font-size: 13px;
     }
 
     .user-avatar {
@@ -303,24 +296,13 @@
       line-height: 1.65;
       font-size: 15px;
       white-space: pre-wrap;
-      word-wrap: break-word;
+      word-break: break-word;
     }
 
     .user-message .message-content {
       background: var(--panel2);
       padding: 12px 15px;
       border-radius: 14px;
-    }
-
-    .copy-btn {
-      margin-top: 8px;
-      padding: 6px 9px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      border-radius: 7px;
-      cursor: pointer;
-      font-size: 11px;
     }
 
     /* INPUT */
@@ -347,7 +329,6 @@
       display: flex;
       align-items: flex-end;
       gap: 8px;
-      box-shadow: 0 -5px 30px rgba(0,0,0,.2);
     }
 
     textarea {
@@ -375,9 +356,8 @@
       border-radius: 12px;
       background: var(--accent);
       color: white;
-      font-size: 18px;
+      font-size: 19px;
       cursor: pointer;
-      flex-shrink: 0;
     }
 
     .send:hover {
@@ -393,11 +373,11 @@
       max-width: 850px;
       margin: 7px auto 0;
       text-align: center;
-      font-size: 10px;
       color: #707581;
+      font-size: 10px;
     }
 
-    /* LOADING */
+    /* TYPING */
 
     .typing {
       display: flex;
@@ -409,8 +389,8 @@
     .typing span {
       width: 7px;
       height: 7px;
-      background: #888;
       border-radius: 50%;
+      background: #888;
       animation: bounce 1.2s infinite;
     }
 
@@ -427,6 +407,7 @@
         transform: translateY(0);
         opacity: .4;
       }
+
       30% {
         transform: translateY(-5px);
         opacity: 1;
@@ -442,8 +423,8 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(0,0,0,.7);
-      z-index: 20;
+      background: rgba(0,0,0,.72);
+      z-index: 50;
     }
 
     .modal.active {
@@ -501,9 +482,9 @@
     /* MOBILE */
 
     @media (max-width: 700px) {
+
       .sidebar {
         position: fixed;
-        z-index: 15;
         left: -280px;
         top: 0;
         bottom: 0;
@@ -554,22 +535,27 @@
 <div class="app">
 
   <!-- SIDEBAR -->
+
   <aside class="sidebar" id="sidebar">
 
     <div class="brand">
+
       <div class="logo">N</div>
 
       <div>
         <div class="brand-name">NOVA AI</div>
         <div class="tagline">Learn. Understand. Excel.</div>
       </div>
+
     </div>
 
     <button class="new-chat" onclick="newChat()">
       ＋ New chat
     </button>
 
-    <div class="side-title">NOVA AI</div>
+    <div class="side-title">
+      NOVA AI
+    </div>
 
     <div class="side-item">
       📚 Study Assistant
@@ -592,7 +578,9 @@
     </div>
 
     <div class="premium">
+
       <strong>⭐ NOVA Premium</strong>
+
       <p>
         Get more messages and unlock the full NOVA AI experience.
       </p>
@@ -600,12 +588,14 @@
       <button onclick="openPremium()">
         Upgrade
       </button>
+
     </div>
 
   </aside>
 
 
   <!-- MAIN -->
+
   <main class="main">
 
     <header class="topbar">
@@ -613,7 +603,6 @@
       <button
         class="mobile-menu"
         onclick="toggleSidebar()"
-        aria-label="Menu"
       >
         ☰
       </button>
@@ -631,6 +620,7 @@
 
 
     <!-- CHAT -->
+
     <section class="chat" id="chat">
 
       <div class="chat-inner" id="chatInner">
@@ -690,6 +680,7 @@
 
 
     <!-- INPUT -->
+
     <div class="input-area">
 
       <form class="input-box" id="chatForm">
@@ -705,7 +696,6 @@
           class="send"
           id="sendButton"
           type="submit"
-          aria-label="Send"
         >
           ↑
         </button>
@@ -723,7 +713,7 @@
 </div>
 
 
-<!-- LIMIT MODAL -->
+<!-- DAILY LIMIT MODAL -->
 
 <div class="modal" id="limitModal">
 
@@ -768,16 +758,18 @@
   const input = document.getElementById("messageInput");
   const sendButton = document.getElementById("sendButton");
   const form = document.getElementById("chatForm");
-  const welcome = document.getElementById("welcome");
 
   let conversation = [];
 
-  /* MOBILE SIDEBAR */
+
+  /* SIDEBAR */
 
   function toggleSidebar() {
+
     document
       .getElementById("sidebar")
       .classList.toggle("open");
+
   }
 
 
@@ -787,67 +779,70 @@
 
     conversation = [];
 
-    chatInner.innerHTML = "";
-
-    chatInner.appendChild(createWelcome());
+    chatInner.innerHTML = createWelcomeHTML();
 
     input.value = "";
+
+    autoResize();
 
     input.focus();
 
   }
 
 
-  function createWelcome() {
+  function createWelcomeHTML() {
 
-    const div = document.createElement("div");
+    return `
+      <div class="welcome">
 
-    div.className = "welcome";
+        <div class="welcome-logo">
+          N
+        </div>
 
-    div.innerHTML = `
-      <div class="welcome-logo">N</div>
+        <h1>
+          What can NOVA AI help you learn?
+        </h1>
 
-      <h1>What can NOVA AI help you learn?</h1>
+        <p>
+          Your intelligent study assistant for understanding topics,
+          solving problems and learning faster.
+        </p>
 
-      <p>
-        Your intelligent study assistant for understanding topics,
-        solving problems and learning faster.
-      </p>
+        <div class="suggestions">
 
-      <div class="suggestions">
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Explain economics in simple terms')"
+          >
+            📈 Explain economics in simple terms
+          </button>
 
-        <button
-          class="suggestion"
-          onclick="useSuggestion('Explain economics in simple terms')"
-        >
-          📈 Explain economics in simple terms
-        </button>
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Help me solve this mathematics question')"
+          >
+            📐 Help me solve a maths question
+          </button>
 
-        <button
-          class="suggestion"
-          onclick="useSuggestion('Help me solve this mathematics question')"
-        >
-          📐 Help me solve a maths question
-        </button>
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Explain photosynthesis step by step')"
+          >
+            🧬 Explain a science topic
+          </button>
 
-        <button
-          class="suggestion"
-          onclick="useSuggestion('Explain photosynthesis step by step')"
-        >
-          🧬 Explain a science topic
-        </button>
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Help me prepare for my exam')"
+          >
+            📝 Help me prepare for an exam
+          </button>
 
-        <button
-          class="suggestion"
-          onclick="useSuggestion('Help me prepare for my exam')"
-        >
-          📝 Help me prepare for an exam
-        </button>
+        </div>
 
       </div>
     `;
 
-    return div;
   }
 
 
@@ -857,14 +852,14 @@
 
     input.value = text;
 
-    input.focus();
-
     autoResize();
+
+    input.focus();
 
   }
 
 
-  /* INPUT RESIZE */
+  /* TEXTAREA */
 
   input.addEventListener("input", autoResize);
 
@@ -878,7 +873,7 @@
   }
 
 
-  /* ENTER TO SEND */
+  /* ENTER */
 
   input.addEventListener("keydown", function(event) {
 
@@ -900,11 +895,8 @@
 
   function addMessage(type, text) {
 
-    if (welcome) {
-      welcome.remove();
-    }
-
-    const message = document.createElement("div");
+    const message =
+      document.createElement("div");
 
     message.className =
       "message " +
@@ -912,7 +904,8 @@
         ? "user-message"
         : "ai-message");
 
-    const avatar = document.createElement("div");
+    const avatar =
+      document.createElement("div");
 
     avatar.className =
       "avatar " +
@@ -921,7 +914,9 @@
         : "ai-avatar");
 
     avatar.textContent =
-      type === "user" ? "You" : "N";
+      type === "user"
+        ? "You"
+        : "N";
 
     const content =
       document.createElement("div");
@@ -937,9 +932,9 @@
 
     chatInner.appendChild(message);
 
-    chat.scrollTop = chat.scrollHeight;
+    chat.scrollTop =
+      chat.scrollHeight;
 
-    return message;
   }
 
 
@@ -947,33 +942,35 @@
 
   function addTyping() {
 
-    if (welcome) {
-      welcome.remove();
-    }
-
     const message =
       document.createElement("div");
 
     message.className =
       "message ai-message";
 
-    message.id = "typingMessage";
+    message.id =
+      "typingMessage";
 
     message.innerHTML = `
-      <div class="avatar ai-avatar">N</div>
+      <div class="avatar ai-avatar">
+        N
+      </div>
 
       <div class="message-content">
+
         <div class="typing">
           <span></span>
           <span></span>
           <span></span>
         </div>
+
       </div>
     `;
 
     chatInner.appendChild(message);
 
-    chat.scrollTop = chat.scrollHeight;
+    chat.scrollTop =
+      chat.scrollHeight;
 
   }
 
@@ -981,7 +978,9 @@
   function removeTyping() {
 
     const typing =
-      document.getElementById("typingMessage");
+      document.getElementById(
+        "typingMessage"
+      );
 
     if (typing) {
       typing.remove();
@@ -990,141 +989,167 @@
   }
 
 
-  /* SEND MESSAGE */
+  /* SEND */
 
-  form.addEventListener("submit", async function(event) {
+  form.addEventListener(
+    "submit",
+    async function(event) {
 
-    event.preventDefault();
+      event.preventDefault();
 
-    const message =
-      input.value.trim();
+      const question =
+        input.value.trim();
 
-    if (!message) return;
+      if (!question) return;
 
-    sendButton.disabled = true;
-
-    addMessage("user", message);
-
-    input.value = "";
-
-    autoResize();
-
-    conversation.push({
-      role: "user",
-      content: message
-    });
-
-    addTyping();
-
-    try {
-
-      /*
-       * Your Gemini API key should NOT be placed here.
-       * This request goes to your Render server.
-       */
-
-      const response = await fetch("/api/chat", {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-          message: message,
-          conversation: conversation
-        })
-
-      });
-
-
-      let data = {};
-
-      try {
-        data = await response.json();
-      } catch {
-        data = {};
-      }
-
-
-      removeTyping();
-
-
-      /* DAILY LIMIT */
-
-      if (
-        response.status === 429 ||
-        data.limitReached === true ||
-        data.code === "DAILY_LIMIT_REACHED"
-      ) {
-
-        openLimitModal();
-
-        return;
-      }
-
-
-      /* SERVER ERROR */
-
-      if (!response.ok) {
-
-        throw new Error(
-          data.error ||
-          data.message ||
-          "NOVA AI is temporarily unavailable."
-        );
-
-      }
-
-
-      const reply =
-        data.reply ||
-        data.response ||
-        data.text ||
-        data.message;
-
-
-      if (!reply) {
-
-        throw new Error(
-          "NOVA AI returned an empty response."
-        );
-
-      }
-
-
-      addMessage("ai", reply);
-
-      conversation.push({
-        role: "assistant",
-        content: reply
-      });
-
-
-    } catch (error) {
-
-      removeTyping();
+      sendButton.disabled = true;
 
       addMessage(
-        "ai",
-        "Sorry, NOVA AI is temporarily unavailable. Please try again."
+        "user",
+        question
       );
 
-      console.error(
-        "NOVA AI error:",
-        error
-      );
+      input.value = "";
 
-    } finally {
+      autoResize();
 
-      sendButton.disabled = false;
+      conversation.push({
+        role: "user",
+        content: question
+      });
 
-      input.focus();
+      addTyping();
+
+
+      try {
+
+        /*
+         IMPORTANT:
+         Your server expects "question",
+         NOT "message".
+        */
+
+        const response =
+          await fetch("/api/chat", {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+              question: question,
+
+              conversation:
+                conversation
+
+            })
+
+          });
+
+
+        let data = {};
+
+        try {
+
+          data =
+            await response.json();
+
+        } catch {
+
+          data = {};
+
+        }
+
+
+        removeTyping();
+
+
+        /* DAILY LIMIT */
+
+        if (
+          response.status === 429 ||
+          data.limitReached === true ||
+          data.code ===
+            "DAILY_LIMIT_REACHED"
+        ) {
+
+          openLimitModal();
+
+          return;
+
+        }
+
+
+        /* ERROR */
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.error ||
+            data.message ||
+            "NOVA AI is temporarily unavailable."
+          );
+
+        }
+
+
+        const reply =
+          data.reply ||
+          data.response ||
+          data.text ||
+          data.answer;
+
+
+        if (!reply) {
+
+          throw new Error(
+            "NOVA AI returned an empty response."
+          );
+
+        }
+
+
+        addMessage(
+          "ai",
+          reply
+        );
+
+        conversation.push({
+
+          role: "assistant",
+
+          content: reply
+
+        });
+
+
+      } catch (error) {
+
+        removeTyping();
+
+        console.error(
+          "NOVA AI error:",
+          error
+        );
+
+        addMessage(
+          "ai",
+          "The AI model is temporarily unavailable. Please try again."
+        );
+
+      } finally {
+
+        sendButton.disabled = false;
+
+        input.focus();
+
+      }
 
     }
-
-  });
+  );
 
 
   /* LIMIT MODAL */
@@ -1160,4 +1185,4 @@
 </script>
 
 </body>
-  </html>
+</html>
