@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="EduNova AI — Learn. Understand. Excel.">
-  <title>EduNova AI — Learn. Understand. Excel.</title>
+  <meta name="theme-color" content="#111318">
+  <meta name="description" content="NOVA AI — Learn. Understand. Excel.">
+  <title>NOVA AI — Learn. Understand. Excel.</title>
 
   <style>
     * {
@@ -15,48 +15,22 @@
     }
 
     :root {
-      --bg: #ffffff;
-      --sidebar: #f7f7f8;
-      --text: #202123;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --input: #f7f7f8;
-      --user: #f3f4f6;
-      --hover: #eeeeef;
-      --accent: #111827;
-      --danger: #dc2626;
-    }
-
-    body.dark {
-      --bg: #212121;
-      --sidebar: #171717;
-      --text: #ececec;
-      --muted: #a1a1aa;
-      --border: #333333;
-      --input: #2f2f2f;
-      --user: #343434;
-      --hover: #3a3a3a;
-      --accent: #ffffff;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
+      --bg: #0b0d12;
+      --panel: #11141b;
+      --panel2: #171a22;
+      --border: #272b35;
+      --text: #f5f7fb;
+      --muted: #969cab;
+      --accent: #735cff;
+      --accent2: #9b7cff;
+      --danger: #ff5d6c;
     }
 
     body {
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif;
-
+      font-family: Arial, Helvetica, sans-serif;
       background: var(--bg);
       color: var(--text);
+      min-height: 100vh;
       overflow: hidden;
     }
 
@@ -65,858 +39,474 @@
       font-family: inherit;
     }
 
-    button {
-      -webkit-tap-highlight-color: transparent;
-    }
-
     .app {
       display: flex;
-      width: 100%;
       height: 100vh;
     }
 
     /* SIDEBAR */
 
     .sidebar {
-      width: 260px;
-      min-width: 260px;
-      height: 100vh;
-
-      background: var(--sidebar);
+      width: 270px;
+      background: #0f1117;
       border-right: 1px solid var(--border);
-
       display: flex;
       flex-direction: column;
-
-      padding: 14px;
-
-      transition: left 0.25s ease;
-
-      z-index: 100;
-    }
-
-    .sidebar-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-    }
-
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo {
-      width: 36px;
-      height: 36px;
-
-      border-radius: 11px;
-
-      background: #111827;
-      color: white;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-weight: 800;
-      font-size: 17px;
-    }
-
-    body.dark .logo {
-      background: white;
-      color: #111111;
+      padding: 18px;
+      transition: 0.25s;
     }
 
     .brand {
-      font-size: 16px;
-      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #735cff, #a66cff);
+      color: white;
+      font-size: 25px;
+      font-weight: 900;
+      box-shadow: 0 8px 25px rgba(115, 92, 255, .35);
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: .3px;
     }
 
     .tagline {
-      margin-top: 2px;
       color: var(--muted);
       font-size: 10px;
+      margin-top: 3px;
     }
 
     .new-chat {
       width: 100%;
-
+      padding: 13px;
       border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-
-      padding: 11px 13px;
-
-      border-radius: 10px;
-
+      border-radius: 12px;
+      background: var(--panel2);
+      color: white;
       cursor: pointer;
-      text-align: left;
-
       font-size: 14px;
-
       margin-bottom: 18px;
-
-      transition: background 0.2s;
     }
 
     .new-chat:hover {
-      background: var(--input);
+      background: #1d2029;
     }
 
-    .sidebar-title {
-      margin: 8px 4px;
-
+    .side-title {
       color: var(--muted);
-
       font-size: 11px;
-      font-weight: 600;
-
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      margin: 12px 4px;
     }
 
-    .history {
-      flex: 1;
-      overflow-y: auto;
-      scrollbar-width: thin;
-    }
-
-    .history-item {
-      padding: 10px;
-
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      font-size: 13px;
-
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      margin-bottom: 2px;
-
-      transition: background 0.15s;
-    }
-
-    .history-item:hover {
-      background: var(--input);
-    }
-
-    .sidebar-bottom {
-      border-top: 1px solid var(--border);
-
-      padding-top: 12px;
-    }
-
-    .premium-small {
-      width: 100%;
-
-      border: none;
-
-      background: var(--text);
-      color: var(--bg);
-
+    .side-item {
+      padding: 11px 12px;
       border-radius: 10px;
-
-      padding: 11px;
-
-      font-weight: 700;
-
-      cursor: pointer;
-
-      margin-bottom: 9px;
+      color: #cdd1dc;
+      font-size: 14px;
+      margin-bottom: 5px;
     }
 
-    .settings-btn {
+    .premium {
+      margin-top: auto;
+      padding: 15px;
+      border: 1px solid #3b3268;
+      background: linear-gradient(
+        145deg,
+        rgba(115,92,255,.16),
+        rgba(155,124,255,.05)
+      );
+      border-radius: 15px;
+    }
+
+    .premium strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .premium p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .premium button {
       width: 100%;
-
-      border: none;
-
-      background: transparent;
-      color: var(--text);
-
-      text-align: left;
-
-      padding: 9px;
-
+      border: 0;
+      padding: 10px;
+      border-radius: 9px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
       cursor: pointer;
-
-      border-radius: 8px;
-    }
-
-    .settings-btn:hover {
-      background: var(--input);
     }
 
     /* MAIN */
 
     .main {
       flex: 1;
-
       display: flex;
       flex-direction: column;
-
       min-width: 0;
-      height: 100vh;
-
-      position: relative;
     }
-
-    /* TOPBAR */
 
     .topbar {
-      height: 58px;
-      min-height: 58px;
-
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
       border-bottom: 1px solid var(--border);
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 0 18px;
-
-      background: var(--bg);
-
-      z-index: 20;
-    }
-
-    .topbar-left {
-      display: flex;
-      align-items: center;
+      background: rgba(11,13,18,.92);
     }
 
     .mobile-menu {
       display: none;
-
-      border: none;
+      border: 0;
       background: transparent;
-      color: var(--text);
-
-      font-size: 22px;
-
+      color: white;
+      font-size: 25px;
+      margin-right: 12px;
       cursor: pointer;
-
-      margin-right: 10px;
     }
 
-    .model-name {
-      font-weight: 650;
+    .top-title {
+      font-weight: 700;
       font-size: 15px;
     }
 
-    .premium-btn {
-      border: 1px solid var(--border);
-
-      background: var(--bg);
-      color: var(--text);
-
-      padding: 8px 13px;
-
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      font-weight: 600;
-      font-size: 13px;
+    .status {
+      margin-left: auto;
+      color: #7fe3a4;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .premium-btn:hover {
-      background: var(--input);
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #4be982;
+      border-radius: 50%;
     }
 
     /* CHAT */
 
     .chat {
       flex: 1;
-
       overflow-y: auto;
+      padding: 30px 18px 150px;
+    }
 
-      padding-bottom: 180px;
-
-      scroll-behavior: smooth;
-
-      position: relative;
+    .chat-inner {
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
     }
 
     .welcome {
-      max-width: 760px;
-
-      margin: 100px auto 0;
-
-      padding: 20px;
-
       text-align: center;
+      margin: 8vh auto 45px;
+      max-width: 600px;
     }
 
     .welcome-logo {
-      width: 58px;
-      height: 58px;
-
-      background: var(--text);
-      color: var(--bg);
-
-      border-radius: 17px;
-
+      width: 72px;
+      height: 72px;
+      border-radius: 23px;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      margin: 0 auto 20px;
-
-      font-weight: 800;
-      font-size: 24px;
+      margin: auto auto 18px;
+      background: linear-gradient(135deg, #735cff, #a66cff);
+      font-size: 38px;
+      font-weight: 900;
+      box-shadow: 0 12px 35px rgba(115,92,255,.35);
     }
 
     .welcome h1 {
-      font-size: 30px;
-      margin-bottom: 9px;
+      font-size: 34px;
+      margin-bottom: 10px;
     }
 
     .welcome p {
       color: var(--muted);
       font-size: 15px;
+      line-height: 1.6;
     }
 
     .suggestions {
       display: grid;
-
       grid-template-columns: repeat(2, 1fr);
-
       gap: 10px;
-
-      max-width: 650px;
-
-      margin: 28px auto 0;
+      margin-top: 25px;
     }
 
     .suggestion {
-      padding: 13px;
-
-      border: 1px solid var(--border);
-
-      background: var(--bg);
-
-      color: var(--text);
-
-      border-radius: 12px;
-
-      cursor: pointer;
-
       text-align: left;
-
+      padding: 14px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: #dfe2e9;
+      border-radius: 13px;
+      cursor: pointer;
       font-size: 13px;
     }
 
     .suggestion:hover {
-      background: var(--input);
-    }
-
-    .messages {
-      max-width: 850px;
-
-      margin: auto;
-
-      padding: 20px;
+      border-color: var(--accent);
     }
 
     .message {
       display: flex;
-
-      margin: 22px 0;
-
-      gap: 13px;
-
-      line-height: 1.6;
-
-      font-size: 15px;
-    }
-
-    .message.user {
-      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 25px;
     }
 
     .avatar {
-      width: 30px;
-      height: 30px;
-
-      min-width: 30px;
-
-      border-radius: 9px;
-
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      border-radius: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      font-size: 11px;
       font-weight: 800;
-
-      background: var(--text);
-      color: var(--bg);
+      font-size: 13px;
     }
 
-    .message.user .avatar {
-      display: none;
+    .user-avatar {
+      background: #303541;
+    }
+
+    .ai-avatar {
+      background: linear-gradient(135deg, #735cff, #9b7cff);
     }
 
     .message-content {
-      max-width: 78%;
-      min-width: 0;
-    }
-
-    .bubble {
+      max-width: calc(100% - 50px);
+      line-height: 1.65;
+      font-size: 15px;
       white-space: pre-wrap;
-      overflow-wrap: anywhere;
+      word-wrap: break-word;
     }
 
-    .message.user .bubble {
-      background: var(--user);
-
-      padding: 10px 14px;
-
-      border-radius: 15px;
+    .user-message .message-content {
+      background: var(--panel2);
+      padding: 12px 15px;
+      border-radius: 14px;
     }
 
-    .typing {
-      color: var(--muted);
-    }
-
-    .message-actions {
-      display: flex;
-
-      gap: 5px;
-
-      margin-top: 7px;
-    }
-
-    .message-action {
-      border: none;
-
-      background: transparent;
-
-      color: var(--muted);
-
-      padding: 5px 7px;
-
-      border-radius: 7px;
-
-      cursor: pointer;
-
-      font-size: 12px;
-    }
-
-    .message-action:hover {
-      background: var(--hover);
-      color: var(--text);
-    }
-
-    /* SCROLL */
-
-    .scroll-bottom {
-      position: absolute;
-
-      bottom: 135px;
-
-      left: 50%;
-
-      transform: translateX(-50%);
-
-      width: 40px;
-      height: 40px;
-
-      border-radius: 50%;
-
+    .copy-btn {
+      margin-top: 8px;
+      padding: 6px 9px;
       border: 1px solid var(--border);
-
-      background: var(--bg);
-
-      color: var(--text);
-
-      box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.12);
-
+      background: transparent;
+      color: var(--muted);
+      border-radius: 7px;
       cursor: pointer;
-
-      display: none;
-
-      align-items: center;
-      justify-content: center;
-
-      font-size: 20px;
-
-      z-index: 10;
+      font-size: 11px;
     }
 
-    .scroll-bottom.show {
-      display: flex;
-    }
+    /* INPUT */
 
-    /* COMPOSER */
-
-    .composer-wrapper {
-      position: absolute;
-
+    .input-area {
+      position: fixed;
       bottom: 0;
-      left: 0;
+      left: 270px;
       right: 0;
-
-      padding: 20px 20px 12px;
-
-      background:
-        linear-gradient(
-          transparent,
-          var(--bg) 28%
-        );
-
-      z-index: 15;
-    }
-
-    .composer {
-      max-width: 820px;
-
-      margin: auto;
-
-      position: relative;
+      padding: 18px;
+      background: linear-gradient(
+        transparent,
+        var(--bg) 30%
+      );
     }
 
     .input-box {
-      display: flex;
-
-      align-items: flex-end;
-
-      background: var(--input);
-
+      max-width: 850px;
+      margin: auto;
       border: 1px solid var(--border);
-
+      background: #151820;
       border-radius: 17px;
-
-      padding: 9px 10px 9px 12px;
-
-      box-shadow:
-        0 1px 5px rgba(0, 0, 0, 0.05);
+      padding: 10px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      box-shadow: 0 -5px 30px rgba(0,0,0,.2);
     }
 
     textarea {
       flex: 1;
-
-      border: none;
-      outline: none;
-
       resize: none;
-
-      background: transparent;
-      color: var(--text);
-
-      font-size: 15px;
-
-      line-height: 22px;
-
+      min-height: 42px;
       max-height: 150px;
-
-      padding: 7px 5px;
-
-      overflow-y: auto;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      padding: 11px 8px;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     textarea::placeholder {
-      color: var(--muted);
+      color: #777c88;
     }
 
-    .composer-tools {
-      display: flex;
-
-      align-items: center;
-
-      gap: 5px;
-
-      padding-bottom: 2px;
-    }
-
-    .tool-btn {
-      width: 36px;
-      height: 36px;
-
-      border: none;
-
-      border-radius: 10px;
-
-      background: transparent;
-
-      color: var(--text);
-
-      cursor: pointer;
-
+    .send {
+      width: 43px;
+      height: 43px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
       font-size: 18px;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-    }
-
-    .tool-btn:hover {
-      background: var(--hover);
-    }
-
-    .tool-btn.listening {
-      background: var(--text);
-      color: var(--bg);
-    }
-
-    .send-btn {
-      width: 36px;
-      height: 36px;
-
-      min-width: 36px;
-
-      border: none;
-
-      border-radius: 10px;
-
-      background: var(--text);
-      color: var(--bg);
-
       cursor: pointer;
-
-      font-size: 18px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-shrink: 0;
     }
 
-    .send-btn:disabled {
-      opacity: 0.35;
+    .send:hover {
+      background: var(--accent2);
+    }
+
+    .send:disabled {
+      opacity: .5;
       cursor: not-allowed;
     }
 
-    .stop-btn {
-      display: none;
-
-      width: 36px;
-      height: 36px;
-
-      border: none;
-
-      border-radius: 10px;
-
-      background: var(--danger);
-
-      color: white;
-
-      cursor: pointer;
-
-      align-items: center;
-      justify-content: center;
-
-      font-size: 14px;
-    }
-
-    .stop-btn.show {
-      display: flex;
-    }
-
-    .limit {
+    .limit-text {
+      max-width: 850px;
+      margin: 7px auto 0;
       text-align: center;
-
-      font-size: 11px;
-
-      color: var(--muted);
-
-      margin-top: 8px;
+      font-size: 10px;
+      color: #707581;
     }
 
-    /* PREMIUM */
+    /* LOADING */
+
+    .typing {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      height: 25px;
+    }
+
+    .typing span {
+      width: 7px;
+      height: 7px;
+      background: #888;
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: .15s;
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: .3s;
+    }
+
+    @keyframes bounce {
+      0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: .4;
+      }
+      30% {
+        transform: translateY(-5px);
+        opacity: 1;
+      }
+    }
+
+    /* LIMIT MODAL */
 
     .modal {
-      display: none;
-
       position: fixed;
-
       inset: 0;
-
-      background: rgba(0, 0, 0, 0.55);
-
-      z-index: 200;
-
+      display: none;
       align-items: center;
       justify-content: center;
-
       padding: 20px;
-
-      overflow-y: auto;
+      background: rgba(0,0,0,.7);
+      z-index: 20;
     }
 
     .modal.active {
       display: flex;
     }
 
-    .premium-card {
+    .modal-card {
       width: 100%;
-
-      max-width: 440px;
-
-      background: var(--bg);
-      color: var(--text);
-
+      max-width: 390px;
+      background: #151820;
+      border: 1px solid var(--border);
       border-radius: 20px;
-
-      padding: 28px;
-
-      position: relative;
-
-      box-shadow:
-        0 20px 70px rgba(0, 0, 0, 0.25);
+      padding: 25px;
+      text-align: center;
     }
 
-    .close {
-      position: absolute;
+    .modal-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
 
-      right: 16px;
-      top: 14px;
+    .modal-card h2 {
+      margin-bottom: 9px;
+    }
 
-      border: none;
-
-      background: transparent;
-
+    .modal-card p {
       color: var(--muted);
-
-      font-size: 22px;
-
-      cursor: pointer;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 18px;
     }
 
-    .premium-card h2 {
-      font-size: 24px;
-
+    .upgrade {
+      width: 100%;
+      padding: 12px;
+      border: 0;
+      border-radius: 11px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
       margin-bottom: 8px;
     }
 
-    .premium-card > p {
-      color: var(--muted);
-
-      font-size: 14px;
-
-      margin-bottom: 20px;
-    }
-
-    .plan {
-      border: 1px solid var(--border);
-
-      padding: 16px;
-
-      border-radius: 13px;
-
-      margin: 10px 0;
-    }
-
-    .plan strong {
-      display: block;
-
-      margin-bottom: 5px;
-    }
-
-    .plan span {
-      color: var(--muted);
-
-      font-size: 13px;
-    }
-
-    .price {
-      font-size: 22px;
-
-      font-weight: 800;
-
-      margin-top: 8px;
-    }
-
-    .premium-features {
-      margin: 12px 0;
-
-      padding-left: 18px;
-
-      color: var(--muted);
-
-      font-size: 13px;
-
-      line-height: 1.8;
-    }
-
-    .coming-soon {
-      margin-top: 10px;
-
+    .close-modal {
       width: 100%;
-
-      border: none;
-
-      background: var(--text);
-      color: var(--bg);
-
-      padding: 12px;
-
-      border-radius: 10px;
-
-      font-weight: 700;
-
+      padding: 11px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: transparent;
+      color: #bbb;
       cursor: pointer;
-    }
-
-    /* TOAST */
-
-    .toast {
-      position: fixed;
-
-      left: 50%;
-      bottom: 25px;
-
-      transform:
-        translate(-50%, 20px);
-
-      background: var(--text);
-
-      color: var(--bg);
-
-      padding: 10px 15px;
-
-      border-radius: 9px;
-
-      font-size: 13px;
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      transition:
-        opacity 0.2s,
-        transform 0.2s;
-
-      z-index: 500;
-    }
-
-    .toast.show {
-      opacity: 1;
-
-      transform:
-        translate(-50%, 0);
     }
 
     /* MOBILE */
 
     @media (max-width: 700px) {
-
       .sidebar {
         position: fixed;
-
-        left: -270px;
+        z-index: 15;
+        left: -280px;
         top: 0;
         bottom: 0;
-
-        box-shadow:
-          10px 0 30px rgba(0, 0, 0, 0.15);
       }
 
       .sidebar.open {
@@ -927,40 +517,33 @@
         display: block;
       }
 
+      .input-area {
+        left: 0;
+        padding: 10px;
+      }
+
       .topbar {
-        padding: 0 12px;
+        padding: 0 14px;
+      }
+
+      .chat {
+        padding: 20px 12px 135px;
       }
 
       .welcome {
-        margin-top: 60px;
+        margin-top: 7vh;
       }
 
       .welcome h1 {
-        font-size: 25px;
+        font-size: 28px;
       }
 
       .suggestions {
         grid-template-columns: 1fr;
       }
 
-      .messages {
-        padding: 12px;
-      }
-
       .message-content {
-        max-width: 88%;
-      }
-
-      .composer-wrapper {
-        padding: 14px 10px 9px;
-      }
-
-      .scroll-bottom {
-        bottom: 125px;
-      }
-
-      .premium-card {
-        padding: 23px;
+        font-size: 14px;
       }
     }
   </style>
@@ -971,236 +554,166 @@
 <div class="app">
 
   <!-- SIDEBAR -->
-
   <aside class="sidebar" id="sidebar">
 
-    <div class="sidebar-top">
+    <div class="brand">
+      <div class="logo">N</div>
 
-      <div class="logo-area">
-
-        <div class="logo">E</div>
-
-        <div>
-          <div class="brand">
-            EduNova AI
-          </div>
-
-          <div class="tagline">
-            Learn. Understand. Excel.
-          </div>
-        </div>
-
+      <div>
+        <div class="brand-name">NOVA AI</div>
+        <div class="tagline">Learn. Understand. Excel.</div>
       </div>
-
     </div>
 
-    <button
-      class="new-chat"
-      onclick="newChat()"
-    >
+    <button class="new-chat" onclick="newChat()">
       ＋ New chat
     </button>
 
-    <div class="sidebar-title">
-      Recent chats
+    <div class="side-title">NOVA AI</div>
+
+    <div class="side-item">
+      📚 Study Assistant
     </div>
 
-    <div
-      class="history"
-      id="history"
-    ></div>
+    <div class="side-item">
+      🧠 Explain a Topic
+    </div>
 
-    <div class="sidebar-bottom">
+    <div class="side-item">
+      ✏️ Homework Help
+    </div>
 
-      <button
-        class="premium-small"
-        onclick="openPremium()"
-      >
-        ✦ Upgrade
+    <div class="side-item">
+      📐 Mathematics
+    </div>
+
+    <div class="side-item">
+      💼 Economics
+    </div>
+
+    <div class="premium">
+      <strong>⭐ NOVA Premium</strong>
+      <p>
+        Get more messages and unlock the full NOVA AI experience.
+      </p>
+
+      <button onclick="openPremium()">
+        Upgrade
       </button>
-
-      <button
-        class="settings-btn"
-        onclick="toggleDarkMode()"
-      >
-        ◐ Appearance
-      </button>
-
     </div>
 
   </aside>
 
-  <!-- MAIN -->
 
+  <!-- MAIN -->
   <main class="main">
 
     <header class="topbar">
 
-      <div class="topbar-left">
+      <button
+        class="mobile-menu"
+        onclick="toggleSidebar()"
+        aria-label="Menu"
+      >
+        ☰
+      </button>
 
-        <button
-          class="mobile-menu"
-          onclick="toggleSidebar()"
-          aria-label="Open menu"
-        >
-          ☰
-        </button>
-
-        <span class="model-name">
-          EduNova AI
-        </span>
-
+      <div class="top-title">
+        NOVA AI
       </div>
 
-      <button
-        class="premium-btn"
-        onclick="openPremium()"
-      >
-        Upgrade
-      </button>
+      <div class="status">
+        <span class="status-dot"></span>
+        Online
+      </div>
 
     </header>
 
+
     <!-- CHAT -->
+    <section class="chat" id="chat">
 
-    <section
-      class="chat"
-      id="chat"
-    >
+      <div class="chat-inner" id="chatInner">
 
-      <div
-        class="welcome"
-        id="welcome"
-      >
+        <div class="welcome" id="welcome">
 
-        <div class="welcome-logo">
-          E
-        </div>
+          <div class="welcome-logo">
+            N
+          </div>
 
-        <h1>
-          What do you want to learn?
-        </h1>
+          <h1>
+            What can NOVA AI help you learn?
+          </h1>
 
-        <p>
-          Ask EduNova AI anything about your studies.
-        </p>
+          <p>
+            Your intelligent study assistant for understanding topics,
+            solving problems and learning faster.
+          </p>
 
-        <div class="suggestions">
-
-          <button
-            class="suggestion"
-            onclick="useSuggestion('Explain economics to me like I am a beginner.')"
-          >
-            📚 Explain a topic
-          </button>
-
-          <button
-            class="suggestion"
-            onclick="useSuggestion('Give me 5 practice questions and answers on this topic.')"
-          >
-            📝 Practice questions
-          </button>
-
-          <button
-            class="suggestion"
-            onclick="useSuggestion('Help me understand this difficult calculation step by step.')"
-          >
-            🧮 Solve a calculation
-          </button>
-
-          <button
-            class="suggestion"
-            onclick="useSuggestion('Create a simple study plan for me.')"
-          >
-            🎯 Create a study plan
-          </button>
-
-        </div>
-
-      </div>
-
-      <div
-        class="messages"
-        id="messages"
-      ></div>
-
-      <button
-        class="scroll-bottom"
-        id="scrollBottom"
-        onclick="scrollToBottom(true)"
-        aria-label="Go to latest message"
-        title="Go to latest message"
-      >
-        ↓
-      </button>
-
-    </section>
-
-    <!-- COMPOSER -->
-
-    <div class="composer-wrapper">
-
-      <div class="composer">
-
-        <form
-          class="input-box"
-          id="chatForm"
-        >
-
-          <textarea
-            id="messageInput"
-            rows="1"
-            placeholder="Message EduNova AI..."
-            autocomplete="off"
-            aria-label="Message EduNova AI"
-          ></textarea>
-
-          <div class="composer-tools">
+          <div class="suggestions">
 
             <button
-              class="tool-btn"
-              id="voiceBtn"
-              type="button"
-              onclick="toggleVoice()"
-              aria-label="Voice input"
-              title="Voice input"
+              class="suggestion"
+              onclick="useSuggestion('Explain economics in simple terms')"
             >
-              🎤
+              📈 Explain economics in simple terms
             </button>
 
             <button
-              class="stop-btn"
-              id="stopBtn"
-              type="button"
-              onclick="stopResponse()"
-              aria-label="Stop response"
-              title="Stop response"
+              class="suggestion"
+              onclick="useSuggestion('Help me solve this mathematics question')"
             >
-              ■
+              📐 Help me solve a maths question
             </button>
 
             <button
-              class="send-btn"
-              id="sendBtn"
-              type="submit"
-              disabled
-              aria-label="Send message"
-              title="Send"
+              class="suggestion"
+              onclick="useSuggestion('Explain photosynthesis step by step')"
             >
-              ↑
+              🧬 Explain a science topic
+            </button>
+
+            <button
+              class="suggestion"
+              onclick="useSuggestion('Help me prepare for my exam')"
+            >
+              📝 Help me prepare for an exam
             </button>
 
           </div>
 
-        </form>
-
-        <div
-          class="limit"
-          id="limitText"
-        >
-          10 free messages per day
         </div>
 
+      </div>
+
+    </section>
+
+
+    <!-- INPUT -->
+    <div class="input-area">
+
+      <form class="input-box" id="chatForm">
+
+        <textarea
+          id="messageInput"
+          placeholder="Message NOVA AI..."
+          rows="1"
+          autocomplete="off"
+        ></textarea>
+
+        <button
+          class="send"
+          id="sendButton"
+          type="submit"
+          aria-label="Send"
+        >
+          ↑
+        </button>
+
+      </form>
+
+      <div class="limit-text">
+        NOVA AI can make mistakes. Check important information.
       </div>
 
     </div>
@@ -1209,1227 +722,442 @@
 
 </div>
 
-<!-- PREMIUM MODAL -->
 
-<div
-  class="modal"
-  id="premiumModal"
->
+<!-- LIMIT MODAL -->
 
-  <div class="premium-card">
+<div class="modal" id="limitModal">
 
-    <button
-      class="close"
-      onclick="closePremium()"
-      aria-label="Close"
-    >
-      ×
-    </button>
+  <div class="modal-card">
+
+    <div class="modal-icon">
+      ⭐
+    </div>
 
     <h2>
-      ✦ EduNova Premium
+      Daily limit reached
     </h2>
 
     <p>
-      Choose the plan that fits your learning needs.
+      You've used your free NOVA AI messages for today.
+      Upgrade to NOVA Premium for more access.
     </p>
 
-    <!-- ₦7,000 PLAN -->
+    <button
+      class="upgrade"
+      onclick="openPremium()"
+    >
+      Upgrade to Premium
+    </button>
 
-    <div class="plan">
-
-      <strong>
-        EduNova Plus
-      </strong>
-
-      <div class="price">
-        ₦7,000
-      </div>
-
-      <span>
-        Premium study access
-      </span>
-
-      <ul class="premium-features">
-        <li>More AI messages</li>
-        <li>Advanced study assistance</li>
-        <li>Better learning support</li>
-      </ul>
-
-      <button
-        class="coming-soon"
-        onclick="premiumComingSoon()"
-      >
-        Coming soon
-      </button>
-
-    </div>
-
-    <!-- ₦20,000 PLAN -->
-
-    <div class="plan">
-
-      <strong>
-        EduNova Pro
-      </strong>
-
-      <div class="price">
-        ₦20,000
-      </div>
-
-      <span>
-        Full premium experience
-      </span>
-
-      <ul class="premium-features">
-        <li>Higher AI message allowance</li>
-        <li>Advanced study tools</li>
-        <li>Priority features</li>
-        <li>Future EduNova AI upgrades</li>
-      </ul>
-
-      <button
-        class="coming-soon"
-        onclick="premiumComingSoon()"
-      >
-        Coming soon
-      </button>
-
-    </div>
+    <button
+      class="close-modal"
+      onclick="closeLimitModal()"
+    >
+      Maybe later
+    </button>
 
   </div>
 
 </div>
 
-<!-- TOAST -->
-
-<div
-  class="toast"
-  id="toast"
-></div>
 
 <script>
 
-  /* =========================
-     CONFIGURATION
-  ========================= */
+  const chat = document.getElementById("chat");
+  const chatInner = document.getElementById("chatInner");
+  const input = document.getElementById("messageInput");
+  const sendButton = document.getElementById("sendButton");
+  const form = document.getElementById("chatForm");
+  const welcome = document.getElementById("welcome");
 
-  // IMPORTANT:
-  // server.js uses /api/chat
-  const API_URL = "/api/chat";
+  let conversation = [];
 
-  const DAILY_LIMIT = 10;
+  /* MOBILE SIDEBAR */
 
-
-  /* =========================
-     ELEMENTS
-  ========================= */
-
-  const form =
-    document.getElementById("chatForm");
-
-  const input =
-    document.getElementById("messageInput");
-
-  const sendBtn =
-    document.getElementById("sendBtn");
-
-  const stopBtn =
-    document.getElementById("stopBtn");
-
-  const voiceBtn =
-    document.getElementById("voiceBtn");
-
-  const messages =
-    document.getElementById("messages");
-
-  const welcome =
-    document.getElementById("welcome");
-
-  const limitText =
-    document.getElementById("limitText");
-
-  const sidebar =
-    document.getElementById("sidebar");
-
-  const chat =
-    document.getElementById("chat");
-
-  const scrollBottomBtn =
-    document.getElementById("scrollBottom");
-
-  const toast =
-    document.getElementById("toast");
+  function toggleSidebar() {
+    document
+      .getElementById("sidebar")
+      .classList.toggle("open");
+  }
 
 
-  /* =========================
-     STATE
-  ========================= */
+  /* NEW CHAT */
 
-  let controller = null;
+  function newChat() {
 
-  let isGenerating = false;
+    conversation = [];
 
-  let lastQuestion = "";
+    chatInner.innerHTML = "";
 
-  let recognition = null;
+    chatInner.appendChild(createWelcome());
 
-  let isListening = false;
+    input.value = "";
 
-
-  /* =========================
-     DAILY LIMIT
-  ========================= */
-
-  let messagesUsed = parseInt(
-    localStorage.getItem(
-      "edunova_messages_used"
-    ) || "0",
-    10
-  );
-
-  let savedDate =
-    localStorage.getItem(
-      "edunova_message_date"
-    );
-
-  const today =
-    new Date().toISOString().split("T")[0];
-
-
-  if (savedDate !== today) {
-
-    messagesUsed = 0;
-
-    localStorage.setItem(
-      "edunova_messages_used",
-      "0"
-    );
-
-    localStorage.setItem(
-      "edunova_message_date",
-      today
-    );
+    input.focus();
 
   }
 
 
-  /* =========================
-     TOAST
-  ========================= */
+  function createWelcome() {
 
-  let toastTimer = null;
+    const div = document.createElement("div");
 
+    div.className = "welcome";
 
-  function showToast(text) {
+    div.innerHTML = `
+      <div class="welcome-logo">N</div>
 
-    toast.textContent = text;
+      <h1>What can NOVA AI help you learn?</h1>
 
-    toast.classList.add("show");
+      <p>
+        Your intelligent study assistant for understanding topics,
+        solving problems and learning faster.
+      </p>
 
-    clearTimeout(toastTimer);
+      <div class="suggestions">
 
-    toastTimer = setTimeout(() => {
+        <button
+          class="suggestion"
+          onclick="useSuggestion('Explain economics in simple terms')"
+        >
+          📈 Explain economics in simple terms
+        </button>
 
-      toast.classList.remove("show");
+        <button
+          class="suggestion"
+          onclick="useSuggestion('Help me solve this mathematics question')"
+        >
+          📐 Help me solve a maths question
+        </button>
 
-    }, 2200);
+        <button
+          class="suggestion"
+          onclick="useSuggestion('Explain photosynthesis step by step')"
+        >
+          🧬 Explain a science topic
+        </button>
 
+        <button
+          class="suggestion"
+          onclick="useSuggestion('Help me prepare for my exam')"
+        >
+          📝 Help me prepare for an exam
+        </button>
+
+      </div>
+    `;
+
+    return div;
   }
 
 
-  /* =========================
-     LIMIT
-  ========================= */
-
-  function updateLimit() {
-
-    const remaining =
-      Math.max(
-        0,
-        DAILY_LIMIT - messagesUsed
-      );
-
-    if (remaining === 0) {
-
-      limitText.textContent =
-        "Daily free limit reached. Upgrade for more.";
-
-      input.disabled = true;
-
-      input.placeholder =
-        "Daily limit reached";
-
-      sendBtn.disabled = true;
-
-      return;
-
-    }
-
-    limitText.textContent =
-      `${remaining} free message${remaining === 1 ? "" : "s"} remaining today`;
-
-    input.disabled = false;
-
-    input.placeholder =
-      "Message EduNova AI...";
-
-    updateSendButton();
-
-  }
-
-
-  /* =========================
-     SEND BUTTON
-  ========================= */
-
-  function updateSendButton() {
-
-    sendBtn.disabled =
-      !input.value.trim() ||
-      messagesUsed >= DAILY_LIMIT ||
-      isGenerating;
-
-  }
-
-
-  /* =========================
-     TEXTAREA
-  ========================= */
-
-  input.addEventListener(
-    "input",
-    () => {
-
-      input.style.height = "auto";
-
-      input.style.height =
-        Math.min(
-          input.scrollHeight,
-          150
-        ) + "px";
-
-      updateSendButton();
-
-    }
-  );
-
-
-  /* =========================
-     ENTER TO SEND
-  ========================= */
-
-  input.addEventListener(
-    "keydown",
-    event => {
-
-      if (
-        event.key === "Enter" &&
-        !event.shiftKey
-      ) {
-
-        event.preventDefault();
-
-        if (!sendBtn.disabled) {
-          form.requestSubmit();
-        }
-
-      }
-
-    }
-  );
-
-
-  /* =========================
-     SUGGESTIONS
-  ========================= */
+  /* SUGGESTION */
 
   function useSuggestion(text) {
 
     input.value = text;
 
+    input.focus();
+
+    autoResize();
+
+  }
+
+
+  /* INPUT RESIZE */
+
+  input.addEventListener("input", autoResize);
+
+  function autoResize() {
+
     input.style.height = "auto";
 
     input.style.height =
-      Math.min(
-        input.scrollHeight,
-        150
-      ) + "px";
-
-    updateSendButton();
-
-    input.focus();
+      Math.min(input.scrollHeight, 150) + "px";
 
   }
 
 
-  /* =========================
-     ADD MESSAGE
-  ========================= */
+  /* ENTER TO SEND */
 
-  function addMessage(
-    text,
-    type
-  ) {
+  input.addEventListener("keydown", function(event) {
 
-    welcome.style.display =
-      "none";
-
-    const message =
-      document.createElement("div");
-
-    message.className =
-      `message ${type}`;
-
-    if (type === "assistant") {
-
-      message.innerHTML = `
-        <div class="avatar">E</div>
-
-        <div class="message-content">
-
-          <div class="bubble"></div>
-
-          <div class="message-actions">
-
-            <button
-              class="message-action"
-              onclick="copyMessage(this)"
-            >
-              Copy
-            </button>
-
-            <button
-              class="message-action"
-              onclick="regenerate()"
-            >
-              Regenerate
-            </button>
-
-          </div>
-
-        </div>
-      `;
-
-    } else {
-
-      message.innerHTML = `
-        <div class="message-content">
-          <div class="bubble"></div>
-        </div>
-      `;
-
-    }
-
-    const bubble =
-      message.querySelector(".bubble");
-
-    bubble.textContent = text;
-
-    messages.appendChild(message);
-
-    scrollToBottom(true);
-
-    return message;
-
-  }
-
-
-  /* =========================
-     TYPING
-  ========================= */
-
-  function showTyping() {
-
-    welcome.style.display =
-      "none";
-
-    const message =
-      document.createElement("div");
-
-    message.className =
-      "message assistant";
-
-    message.innerHTML = `
-      <div class="avatar">E</div>
-
-      <div class="message-content">
-
-        <div class="bubble typing">
-          EduNova AI is thinking...
-        </div>
-
-      </div>
-    `;
-
-    messages.appendChild(message);
-
-    scrollToBottom(true);
-
-    return message;
-
-  }
-
-
-  /* =========================
-     SCROLL
-  ========================= */
-
-  function scrollToBottom(force = false) {
-
-    if (force) {
-
-      chat.scrollTo({
-        top: chat.scrollHeight,
-        behavior: "smooth"
-      });
-
-      return;
-
-    }
-
-    chat.scrollTop =
-      chat.scrollHeight;
-
-  }
-
-
-  chat.addEventListener(
-    "scroll",
-    () => {
-
-      const distance =
-        chat.scrollHeight -
-        chat.scrollTop -
-        chat.clientHeight;
-
-      if (distance > 250) {
-
-        scrollBottomBtn.classList.add(
-          "show"
-        );
-
-      } else {
-
-        scrollBottomBtn.classList.remove(
-          "show"
-        );
-
-      }
-
-    }
-  );
-
-
-  /* =========================
-     COPY
-  ========================= */
-
-  async function copyMessage(button) {
-
-    const content =
-      button
-        .closest(".message-content")
-        .querySelector(".bubble")
-        .textContent;
-
-    try {
-
-      await navigator.clipboard.writeText(
-        content
-      );
-
-      button.textContent =
-        "Copied";
-
-      setTimeout(() => {
-
-        button.textContent =
-          "Copy";
-
-      }, 1500);
-
-    } catch {
-
-      showToast(
-        "Could not copy message."
-      );
-
-    }
-
-  }
-
-
-  /* =========================
-     SEND MESSAGE
-  ========================= */
-
-  form.addEventListener(
-    "submit",
-    async event => {
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
 
       event.preventDefault();
 
-      const text =
-        input.value.trim();
+      form.requestSubmit();
 
-      if (!text) {
-        return;
-      }
+    }
 
-      if (
-        messagesUsed >=
-        DAILY_LIMIT
-      ) {
+  });
 
-        updateLimit();
 
-        return;
+  /* ADD MESSAGE */
 
-      }
+  function addMessage(type, text) {
 
-      if (isGenerating) {
-        return;
-      }
+    if (welcome) {
+      welcome.remove();
+    }
 
-      lastQuestion =
-        text;
+    const message = document.createElement("div");
 
-      addMessage(
-        text,
-        "user"
-      );
+    message.className =
+      "message " +
+      (type === "user"
+        ? "user-message"
+        : "ai-message");
 
-      input.value = "";
+    const avatar = document.createElement("div");
 
-      input.style.height =
-        "auto";
+    avatar.className =
+      "avatar " +
+      (type === "user"
+        ? "user-avatar"
+        : "ai-avatar");
 
-      const typing =
-        showTyping();
+    avatar.textContent =
+      type === "user" ? "You" : "N";
 
-      isGenerating = true;
+    const content =
+      document.createElement("div");
 
-      sendBtn.disabled = true;
+    content.className =
+      "message-content";
 
-      stopBtn.classList.add(
-        "show"
-      );
+    content.textContent = text;
 
-      controller =
-        new AbortController();
+    message.appendChild(avatar);
+
+    message.appendChild(content);
+
+    chatInner.appendChild(message);
+
+    chat.scrollTop = chat.scrollHeight;
+
+    return message;
+  }
+
+
+  /* TYPING */
+
+  function addTyping() {
+
+    if (welcome) {
+      welcome.remove();
+    }
+
+    const message =
+      document.createElement("div");
+
+    message.className =
+      "message ai-message";
+
+    message.id = "typingMessage";
+
+    message.innerHTML = `
+      <div class="avatar ai-avatar">N</div>
+
+      <div class="message-content">
+        <div class="typing">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    `;
+
+    chatInner.appendChild(message);
+
+    chat.scrollTop = chat.scrollHeight;
+
+  }
+
+
+  function removeTyping() {
+
+    const typing =
+      document.getElementById("typingMessage");
+
+    if (typing) {
+      typing.remove();
+    }
+
+  }
+
+
+  /* SEND MESSAGE */
+
+  form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const message =
+      input.value.trim();
+
+    if (!message) return;
+
+    sendButton.disabled = true;
+
+    addMessage("user", message);
+
+    input.value = "";
+
+    autoResize();
+
+    conversation.push({
+      role: "user",
+      content: message
+    });
+
+    addTyping();
+
+    try {
+
+      /*
+       * Your Gemini API key should NOT be placed here.
+       * This request goes to your Render server.
+       */
+
+      const response = await fetch("/api/chat", {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          message: message,
+          conversation: conversation
+        })
+
+      });
+
+
+      let data = {};
 
       try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
-        const response =
-          await fetch(
-            API_URL,
-            {
-              method: "POST",
 
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
+      removeTyping();
 
-              body: JSON.stringify({
-                question: text
-              }),
 
-              signal:
-                controller.signal
-            }
-          );
+      /* DAILY LIMIT */
 
-        let data;
+      if (
+        response.status === 429 ||
+        data.limitReached === true ||
+        data.code === "DAILY_LIMIT_REACHED"
+      ) {
 
-        try {
+        openLimitModal();
 
-          data =
-            await response.json();
+        return;
+      }
 
-        } catch {
 
-          throw new Error(
-            "Invalid server response."
-          );
+      /* SERVER ERROR */
 
-        }
+      if (!response.ok) {
 
-        typing.remove();
-
-        if (!response.ok) {
-
-          addMessage(
-            data.error ||
-            data.message ||
-            "Something went wrong. Please try again.",
-            "assistant"
-          );
-
-          return;
-
-        }
-
-        const reply =
-          data.answer ||
-          "I couldn't generate a response.";
-
-        addMessage(
-          reply,
-          "assistant"
+        throw new Error(
+          data.error ||
+          data.message ||
+          "NOVA AI is temporarily unavailable."
         );
-
-        /*
-          Count only after the server
-          successfully generates an answer.
-        */
-
-        messagesUsed++;
-
-        localStorage.setItem(
-          "edunova_messages_used",
-          messagesUsed.toString()
-        );
-
-        localStorage.setItem(
-          "edunova_message_date",
-          today
-        );
-
-        saveHistory(text);
-
-      } catch (error) {
-
-        console.error(
-          "EduNova connection error:",
-          error
-        );
-
-        typing.remove();
-
-        if (
-          error.name ===
-          "AbortError"
-        ) {
-
-          addMessage(
-            "Response stopped.",
-            "assistant"
-          );
-
-        } else {
-
-          addMessage(
-            "I'm having trouble connecting right now. Please try again.",
-            "assistant"
-          );
-
-        }
-
-      } finally {
-
-        isGenerating =
-          false;
-
-        controller =
-          null;
-
-        stopBtn.classList.remove(
-          "show"
-        );
-
-        updateLimit();
 
       }
 
-    }
-  );
+
+      const reply =
+        data.reply ||
+        data.response ||
+        data.text ||
+        data.message;
 
 
-  /* =========================
-     STOP
-  ========================= */
+      if (!reply) {
 
-  function stopResponse() {
-
-    if (controller) {
-      controller.abort();
-    }
-
-  }
-
-
-  /* =========================
-     REGENERATE
-  ========================= */
-
-  function regenerate() {
-
-    if (!lastQuestion) {
-
-      showToast(
-        "There is no response to regenerate."
-      );
-
-      return;
-
-    }
-
-    if (
-      messagesUsed >=
-      DAILY_LIMIT
-    ) {
-
-      showToast(
-        "Daily limit reached."
-      );
-
-      return;
-
-    }
-
-    input.value =
-      lastQuestion;
-
-    updateSendButton();
-
-    form.requestSubmit();
-
-  }
-
-
-  /* =========================
-     HISTORY
-  ========================= */
-
-  function saveHistory(text) {
-
-    let history;
-
-    try {
-
-      history =
-        JSON.parse(
-          localStorage.getItem(
-            "edunova_history"
-          ) || "[]"
-        );
-
-    } catch {
-
-      history = [];
-
-    }
-
-    history.unshift(text);
-
-    history =
-      [...new Set(history)];
-
-    history =
-      history.slice(0, 15);
-
-    localStorage.setItem(
-      "edunova_history",
-      JSON.stringify(history)
-    );
-
-    renderHistory();
-
-  }
-
-
-  function renderHistory() {
-
-    const historyContainer =
-      document.getElementById(
-        "history"
-      );
-
-    historyContainer.innerHTML =
-      "";
-
-    let history;
-
-    try {
-
-      history =
-        JSON.parse(
-          localStorage.getItem(
-            "edunova_history"
-          ) || "[]"
-        );
-
-    } catch {
-
-      history = [];
-
-    }
-
-    history.forEach(
-      item => {
-
-        const div =
-          document.createElement(
-            "div"
-          );
-
-        div.className =
-          "history-item";
-
-        div.textContent =
-          item;
-
-        div.onclick =
-          () => {
-
-            input.value =
-              item;
-
-            input.focus();
-
-            updateSendButton();
-
-            closeSidebar();
-
-          };
-
-        historyContainer.appendChild(
-          div
+        throw new Error(
+          "NOVA AI returned an empty response."
         );
 
       }
-    );
-
-  }
 
 
-  /* =========================
-     NEW CHAT
-  ========================= */
+      addMessage("ai", reply);
 
-  function newChat() {
+      conversation.push({
+        role: "assistant",
+        content: reply
+      });
 
-    messages.innerHTML =
-      "";
-
-    welcome.style.display =
-      "block";
-
-    input.value =
-      "";
-
-    input.style.height =
-      "auto";
-
-    lastQuestion =
-      "";
-
-    updateSendButton();
-
-    closeSidebar();
-
-    input.focus();
-
-    scrollToBottom(true);
-
-  }
-
-
-  /* =========================
-     VOICE
-  ========================= */
-
-  function setupVoice() {
-
-    const SpeechRecognition =
-      window.SpeechRecognition ||
-      window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-
-      voiceBtn.disabled =
-        true;
-
-      voiceBtn.title =
-        "Voice input is not supported by this browser";
-
-      return;
-
-    }
-
-    recognition =
-      new SpeechRecognition();
-
-    recognition.continuous =
-      false;
-
-    recognition.interimResults =
-      true;
-
-    recognition.lang =
-      "en-US";
-
-    recognition.onstart =
-      () => {
-
-        isListening =
-          true;
-
-        voiceBtn.classList.add(
-          "listening"
-        );
-
-        showToast(
-          "Listening..."
-        );
-
-      };
-
-    recognition.onresult =
-      event => {
-
-        let transcript = "";
-
-        for (
-          let i = event.resultIndex;
-          i < event.results.length;
-          i++
-        ) {
-
-          transcript +=
-            event.results[i][0].transcript;
-
-        }
-
-        input.value =
-          transcript;
-
-        input.style.height =
-          "auto";
-
-        input.style.height =
-          Math.min(
-            input.scrollHeight,
-            150
-          ) + "px";
-
-        updateSendButton();
-
-      };
-
-    recognition.onerror =
-      event => {
-
-        console.error(
-          "Voice error:",
-          event.error
-        );
-
-        showToast(
-          "Voice input could not be used."
-        );
-
-      };
-
-    recognition.onend =
-      () => {
-
-        isListening =
-          false;
-
-        voiceBtn.classList.remove(
-          "listening"
-        );
-
-      };
-
-  }
-
-
-  function toggleVoice() {
-
-    if (!recognition) {
-
-      showToast(
-        "Voice input is not supported on this browser."
-      );
-
-      return;
-
-    }
-
-    if (isListening) {
-
-      recognition.stop();
-
-      return;
-
-    }
-
-    try {
-
-      recognition.start();
 
     } catch (error) {
 
-      console.error(error);
+      removeTyping();
+
+      addMessage(
+        "ai",
+        "Sorry, NOVA AI is temporarily unavailable. Please try again."
+      );
+
+      console.error(
+        "NOVA AI error:",
+        error
+      );
+
+    } finally {
+
+      sendButton.disabled = false;
+
+      input.focus();
 
     }
+
+  });
+
+
+  /* LIMIT MODAL */
+
+  function openLimitModal() {
+
+    document
+      .getElementById("limitModal")
+      .classList.add("active");
 
   }
 
 
-  /* =========================
-     PREMIUM
-  ========================= */
+  function closeLimitModal() {
+
+    document
+      .getElementById("limitModal")
+      .classList.remove("active");
+
+  }
+
+
+  /* PREMIUM */
 
   function openPremium() {
 
-    document
-      .getElementById(
-        "premiumModal"
-      )
-      .classList.add(
-        "active"
-      );
-
-  }
-
-
-  function closePremium() {
-
-    document
-      .getElementById(
-        "premiumModal"
-      )
-      .classList.remove(
-        "active"
-      );
-
-  }
-
-
-  function premiumComingSoon() {
-
-    showToast(
-      "Premium payment will be added soon."
+    alert(
+      "NOVA Premium is coming soon."
     );
 
   }
-
-
-  document
-    .getElementById(
-      "premiumModal"
-    )
-    .addEventListener(
-      "click",
-      event => {
-
-        if (
-          event.target.id ===
-          "premiumModal"
-        ) {
-
-          closePremium();
-
-        }
-
-      }
-    );
-
-
-  /* =========================
-     ESCAPE
-  ========================= */
-
-  document.addEventListener(
-    "keydown",
-    event => {
-
-      if (
-        event.key ===
-        "Escape"
-      ) {
-
-        closePremium();
-
-        closeSidebar();
-
-      }
-
-    }
-  );
-
-
-  /* =========================
-     DARK MODE
-  ========================= */
-
-  function toggleDarkMode() {
-
-    document.body.classList.toggle(
-      "dark"
-    );
-
-    localStorage.setItem(
-      "edunova_dark",
-      document.body.classList.contains(
-        "dark"
-      )
-    );
-
-  }
-
-
-  if (
-    localStorage.getItem(
-      "edunova_dark"
-    ) === "true"
-  ) {
-
-    document.body.classList.add(
-      "dark"
-    );
-
-  }
-
-
-  /* =========================
-     MOBILE SIDEBAR
-  ========================= */
-
-  function toggleSidebar() {
-
-    sidebar.classList.toggle(
-      "open"
-    );
-
-  }
-
-
-  function closeSidebar() {
-
-    sidebar.classList.remove(
-      "open"
-    );
-
-  }
-
-
-  /* =========================
-     INITIALIZE
-  ========================= */
-
-  setupVoice();
-
-  renderHistory();
-
-  updateLimit();
 
 </script>
 
 </body>
-</html>
+  </html>
