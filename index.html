@@ -2,877 +2,601 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b0f">
+<meta name="description" content="NOVA AI - Learn. Understand. Excel.">
 <title>NOVA AI</title>
 
-<meta name="description"
-content="NOVA AI — Your intelligent AI assistant.">
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-:root{
-  --bg:#fff;
-  --sidebar:#f7f7f8;
-  --text:#171717;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --input:#f7f7f8;
-  --hover:#eeeeee;
-  --assistant:#f7f7f8;
-  --black:#111827;
-  --white:#fff;
+:root {
+  --bg: #0b0b0f;
+  --panel: #111116;
+  --panel2: #18181f;
+  --border: #292932;
+  --text: #f5f5f7;
+  --muted: #9999a5;
+  --accent: #ffffff;
+  --user: #27272f;
+  --danger: #ff5c5c;
 }
 
-body.dark{
-  --bg:#212121;
-  --sidebar:#171717;
-  --text:#f5f5f5;
-  --muted:#a1a1aa;
-  --border:#383838;
-  --input:#2f2f2f;
-  --hover:#333;
-  --assistant:#2a2a2a;
-  --black:#fff;
-  --white:#111;
+body {
+  font-family: Inter, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
 }
 
-html,
-body{
-  width:100%;
-  height:100%;
-}
+/* =========================
+   APP
+========================= */
 
-body{
-  font-family:
-  -apple-system,
-  BlinkMacSystemFont,
-  "Segoe UI",
-  Roboto,
-  Arial,
-  sans-serif;
-
-  background:var(--bg);
-  color:var(--text);
-  overflow:hidden;
-}
-
-button,
-input,
-textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.app{
-  width:100%;
-  height:100vh;
-  display:flex;
+.app {
+  height: 100vh;
+  display: flex;
 }
 
 /* =========================
    SIDEBAR
 ========================= */
 
-.sidebar{
-  width:270px;
-  height:100%;
-  background:var(--sidebar);
-  border-right:1px solid var(--border);
-  display:flex;
-  flex-direction:column;
-  padding:12px;
-  flex-shrink:0;
-  z-index:1000;
+.sidebar {
+  width: 270px;
+  background: #0e0e13;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  transition: .25s;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px;
-  margin-bottom:8px;
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  padding: 12px;
+  letter-spacing: -.5px;
 }
 
-.logo{
-  width:35px;
-  height:35px;
-  border-radius:10px;
-  background:#111827;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-  font-size:16px;
+.new-chat {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: white;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-size: 14px;
 }
 
-body.dark .logo{
-  background:#fff;
-  color:#111;
+.new-chat:hover {
+  background: #22222a;
 }
 
-.brand-name{
-  font-size:19px;
-  font-weight:700;
+.history-title {
+  color: var(--muted);
+  font-size: 12px;
+  padding: 10px 8px;
+  text-transform: uppercase;
 }
 
-.new-chat{
-  width:100%;
-  padding:12px;
-  border:1px solid var(--border);
-  background:transparent;
-  color:var(--text);
-  border-radius:10px;
-  text-align:left;
-  margin-bottom:10px;
+.history {
+  overflow-y: auto;
+  flex: 1;
 }
 
-.new-chat:hover{
-  background:var(--hover);
+.history-item {
+  padding: 11px;
+  border-radius: 10px;
+  color: #ddd;
+  cursor: pointer;
+  font-size: 13px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.search{
-  position:relative;
-  margin-bottom:12px;
+.history-item:hover {
+  background: #1c1c23;
 }
 
-.search input{
-  width:100%;
-  height:40px;
-  padding:0 10px 0 35px;
-  border:1px solid var(--border);
-  border-radius:9px;
-  outline:none;
-  background:var(--bg);
-  color:var(--text);
+.sidebar-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
 }
 
-.search span{
-  position:absolute;
-  left:11px;
-  top:10px;
-}
-
-.history-title{
-  font-size:11px;
-  text-transform:uppercase;
-  color:var(--muted);
-  padding:8px;
-}
-
-.history{
-  flex:1;
-  overflow-y:auto;
-}
-
-.history-item{
-  padding:10px;
-  border-radius:8px;
-  font-size:14px;
-  margin-bottom:3px;
-  cursor:pointer;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.history-item:hover{
-  background:var(--hover);
-}
-
-.sidebar-bottom{
-  border-top:1px solid var(--border);
-  padding-top:7px;
-}
-
-.side-btn{
-  width:100%;
-  padding:11px;
-  border:0;
-  border-radius:8px;
-  background:transparent;
-  color:var(--text);
-  text-align:left;
-}
-
-.side-btn:hover{
-  background:var(--hover);
+.upgrade-side {
+  width: 100%;
+  background: white;
+  color: black;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 /* =========================
    MAIN
 ========================= */
 
-.main{
-  flex:1;
-  min-width:0;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  position:relative;
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.topbar{
-  height:58px;
-  min-height:58px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 16px;
+.topbar {
+  height: 62px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
 }
 
-.top-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
+.top-title {
+  font-weight: 700;
+  font-size: 17px;
 }
 
-.menu-btn{
-  display:none;
-  width:38px;
-  height:38px;
-  border:0;
-  border-radius:8px;
-  background:transparent;
-  color:var(--text);
-  font-size:20px;
+.menu-btn {
+  display: none;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 23px;
+  cursor: pointer;
 }
 
-.menu-btn:hover{
-  background:var(--hover);
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.model-name{
-  font-weight:600;
-  font-size:16px;
-}
-
-.model-sub{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.top-actions{
-  display:flex;
-  gap:5px;
-}
-
-.top-btn{
-  width:38px;
-  height:38px;
-  border:0;
-  border-radius:8px;
-  background:transparent;
-  color:var(--text);
-  font-size:17px;
-}
-
-.top-btn:hover{
-  background:var(--hover);
+.limit {
+  color: var(--muted);
+  font-size: 12px;
 }
 
 /* =========================
    CHAT
 ========================= */
 
-.chat{
-  flex:1;
-  overflow-y:auto;
-  scroll-behavior:smooth;
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 30px 15px 160px;
 }
 
-.chat-inner{
-  width:100%;
-  max-width:850px;
-  margin:auto;
-  padding:25px 20px 170px;
+.messages {
+  width: min(850px, 100%);
+  margin: auto;
 }
 
-.welcome{
-  min-height:55vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
+.welcome {
+  text-align: center;
+  padding: 70px 15px 30px;
 }
 
-.welcome-logo{
-  width:64px;
-  height:64px;
-  border-radius:18px;
-  background:#111827;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  font-weight:800;
-  margin-bottom:20px;
+.nova-logo {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  font-weight: 900;
+  font-size: 23px;
 }
 
-body.dark .welcome-logo{
-  background:#fff;
-  color:#111;
+.welcome h1 {
+  font-size: 30px;
+  margin-bottom: 8px;
 }
 
-.welcome h1{
-  font-size:32px;
-  margin-bottom:8px;
+.welcome p {
+  color: var(--muted);
+  font-size: 14px;
 }
 
-.welcome p{
-  color:var(--muted);
-  font-size:15px;
+.message {
+  margin: 18px 0;
+  display: flex;
+  gap: 12px;
 }
 
-.message{
-  display:flex;
-  gap:13px;
-  margin:24px 0;
-  line-height:1.65;
+.message.user {
+  justify-content: flex-end;
 }
 
-.avatar{
-  width:32px;
-  height:32px;
-  min-width:32px;
-  border-radius:9px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-  font-weight:700;
+.bubble {
+  max-width: 78%;
+  padding: 13px 16px;
+  border-radius: 17px;
+  line-height: 1.55;
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
-.user .avatar{
-  background:#e5e7eb;
-  color:#111;
+.user .bubble {
+  background: var(--user);
+  border-bottom-right-radius: 5px;
 }
 
-body.dark .user .avatar{
-  background:#444;
-  color:#fff;
+.ai .bubble {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
 }
 
-.assistant .avatar{
-  background:#111827;
-  color:white;
-}
-
-body.dark .assistant .avatar{
-  background:white;
-  color:#111;
-}
-
-.message-body{
-  flex:1;
-  min-width:0;
-}
-
-.message-text{
-  white-space:pre-wrap;
-  word-wrap:break-word;
-}
-
-.message-tools{
-  display:flex;
-  gap:4px;
-  margin-top:8px;
-}
-
-.message-tools button{
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  padding:5px 7px;
-  border-radius:6px;
-  font-size:13px;
-}
-
-.message-tools button:hover{
-  background:var(--hover);
-  color:var(--text);
-}
-
-.file-card{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:10px;
-  margin-top:8px;
-  max-width:400px;
-}
-
-.file-icon{
-  font-size:23px;
-}
-
-.file-info{
-  min-width:0;
-}
-
-.file-name{
-  font-size:13px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.file-size{
-  color:var(--muted);
-  font-size:11px;
-}
-
-/* =========================
-   TYPING
-========================= */
-
-.typing{
-  display:flex;
-  gap:4px;
-  align-items:center;
-  height:25px;
-}
-
-.dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--muted);
-  animation:bounce 1.2s infinite;
-}
-
-.dot:nth-child(2){
-  animation-delay:.15s;
-}
-
-.dot:nth-child(3){
-  animation-delay:.3s;
-}
-
-@keyframes bounce{
-  0%,60%,100%{
-    transform:translateY(0);
-  }
-  30%{
-    transform:translateY(-5px);
-  }
+.avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
 }
 
 /* =========================
    COMPOSER
 ========================= */
 
-.composer-wrap{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  padding:15px 20px 18px;
-  background:linear-gradient(
-    transparent,
-    var(--bg) 30%
-  );
+.composer-area {
+  position: fixed;
+  bottom: 0;
+  left: 270px;
+  right: 0;
+  background: linear-gradient(transparent, var(--bg) 25%);
+  padding: 25px 15px 15px;
 }
 
-.composer{
-  max-width:850px;
-  margin:auto;
+.composer {
+  width: min(850px, 100%);
+  margin: auto;
 }
 
-.limit-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:7px;
-  font-size:12px;
-  color:var(--muted);
+.input-box {
+  background: #17171d;
+  border: 1px solid #30303a;
+  border-radius: 18px;
+  padding: 10px;
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  box-shadow: 0 10px 35px rgba(0,0,0,.35);
 }
 
-.limit-bar{
-  height:4px;
-  width:100%;
-  background:var(--border);
-  border-radius:20px;
-  margin-bottom:8px;
-  overflow:hidden;
+textarea {
+  flex: 1;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: white;
+  min-height: 42px;
+  max-height: 150px;
+  padding: 10px 8px;
+  font-size: 15px;
+  font-family: inherit;
 }
 
-.limit-fill{
-  height:100%;
-  width:0%;
-  background:#111827;
-  transition:.3s;
+.icon-btn,
+.send-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-body.dark .limit-fill{
-  background:white;
+.icon-btn {
+  background: transparent;
+  color: #bbb;
+  font-size: 19px;
 }
 
-.input-box{
-  border:1px solid var(--border);
-  background:var(--input);
-  border-radius:16px;
-  padding:8px;
-  box-shadow:0 2px 8px rgba(0,0,0,.04);
+.icon-btn:hover {
+  background: #25252c;
+  color: white;
 }
 
-textarea{
-  width:100%;
-  min-height:48px;
-  max-height:180px;
-  resize:none;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:var(--text);
-  padding:9px 9px 4px;
-  line-height:1.5;
+.send-btn {
+  background: white;
+  color: black;
+  font-size: 17px;
+  font-weight: bold;
 }
 
-textarea::placeholder{
-  color:var(--muted);
+.send-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
 }
 
-.composer-bottom{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-}
-
-.left-tools,
-.right-tools{
-  display:flex;
-  align-items:center;
-  gap:4px;
-}
-
-.tool{
-  width:36px;
-  height:36px;
-  border:0;
-  border-radius:9px;
-  background:transparent;
-  color:var(--text);
-  font-size:18px;
-}
-
-.tool:hover{
-  background:var(--hover);
-}
-
-.voice-active{
-  background:#ef4444 !important;
-  color:#fff !important;
-}
-
-.send{
-  width:38px;
-  height:38px;
-  border-radius:10px;
-  border:0;
-  background:#111827;
-  color:white;
-  font-size:17px;
-}
-
-body.dark .send{
-  background:white;
-  color:#111;
-}
-
-.send:disabled{
-  opacity:.4;
-  cursor:not-allowed;
-}
-
-.disclaimer{
-  text-align:center;
-  color:var(--muted);
-  font-size:10px;
-  margin-top:7px;
+.composer-note {
+  text-align: center;
+  color: #70707b;
+  font-size: 10px;
+  margin-top: 8px;
 }
 
 /* =========================
-   UPGRADE MODAL
+   UPLOAD PREVIEW
 ========================= */
 
-.modal-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:3000;
+.attachments {
+  display: none;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
 }
 
-.modal-overlay.show{
-  display:flex;
+.attachment {
+  background: #222229;
+  border: 1px solid #33333d;
+  padding: 7px 10px;
+  border-radius: 9px;
+  font-size: 12px;
+  color: #ddd;
 }
 
-.modal{
-  width:100%;
-  max-width:650px;
-  max-height:90vh;
-  overflow-y:auto;
-  background:var(--bg);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:24px;
-  position:relative;
-  box-shadow:0 20px 70px rgba(0,0,0,.3);
+.file-input {
+  display: none;
 }
 
-.close-modal{
-  position:absolute;
-  right:15px;
-  top:15px;
-  width:35px;
-  height:35px;
-  border-radius:8px;
-  background:transparent;
-  color:var(--text);
-  border:0;
-  font-size:20px;
+/* =========================
+   MODALS
+========================= */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 18px;
 }
 
-.close-modal:hover{
-  background:var(--hover);
+.overlay.show {
+  display: flex;
 }
 
-.modal h2{
-  text-align:center;
-  font-size:25px;
-  margin-bottom:7px;
+.modal {
+  width: min(600px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #15151b;
+  border: 1px solid #30303a;
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 25px 80px rgba(0,0,0,.5);
 }
 
-.modal-sub{
-  text-align:center;
-  color:var(--muted);
-  font-size:14px;
-  margin-bottom:20px;
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.plans{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
+.close {
+  border: none;
+  background: #25252d;
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-.plan{
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:20px;
-  position:relative;
+/* =========================
+   UPGRADE
+========================= */
+
+.upgrade-title {
+  font-size: 25px;
+  margin-bottom: 7px;
 }
 
-.plan.featured{
-  border:2px solid var(--text);
+.upgrade-sub {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 20px;
 }
 
-.badge{
-  position:absolute;
-  top:-10px;
-  right:15px;
-  padding:4px 8px;
-  border-radius:20px;
-  background:var(--text);
-  color:var(--bg);
-  font-size:10px;
-  font-weight:700;
+.plans {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
-.plan h3{
-  margin-bottom:5px;
+.plan {
+  border: 1px solid #33333d;
+  background: #1b1b22;
+  border-radius: 17px;
+  padding: 20px;
 }
 
-.price{
-  font-size:27px;
-  font-weight:800;
-  margin:10px 0 15px;
+.plan.featured {
+  border-color: #777;
 }
 
-.price small{
-  font-size:12px;
-  color:var(--muted);
-  font-weight:400;
+.plan h3 {
+  margin-bottom: 8px;
 }
 
-.features{
-  list-style:none;
-  margin-bottom:18px;
+.price {
+  font-size: 25px;
+  font-weight: 800;
+  margin-bottom: 14px;
 }
 
-.features li{
-  font-size:13px;
-  margin:9px 0;
+.plan ul {
+  list-style: none;
+  color: #bbb;
+  font-size: 13px;
+  line-height: 2;
+  margin-bottom: 15px;
 }
 
-.plan-btn{
-  width:100%;
-  padding:11px;
-  border-radius:9px;
-  border:1px solid var(--border);
-  background:var(--text);
-  color:var(--bg);
-  font-weight:600;
+.plan button {
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  border: none;
+  background: white;
+  color: black;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 /* =========================
    LIMIT MODAL
 ========================= */
 
-.limit-modal{
-  text-align:center;
+.limit-box {
+  text-align: center;
 }
 
-.limit-icon{
-  font-size:40px;
-  margin-bottom:10px;
+.limit-icon {
+  font-size: 38px;
+  margin-bottom: 10px;
 }
 
-.limit-modal h2{
-  margin-bottom:8px;
+.limit-box h2 {
+  margin-bottom: 8px;
 }
 
-.limit-modal p{
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.5;
-  margin-bottom:18px;
+.limit-box p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
 }
 
-.upgrade-main-btn{
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  background:var(--text);
-  color:var(--bg);
-  font-weight:700;
+.limit-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.limit-buttons button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 11px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.upgrade-btn {
+  background: white;
+  color: black;
+}
+
+.cancel-btn {
+  background: #292931;
+  color: white;
 }
 
 /* =========================
    TOAST
 ========================= */
 
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:90px;
-  transform:translateX(-50%) translateY(20px);
-  background:#111;
-  color:white;
-  padding:10px 15px;
-  border-radius:9px;
-  font-size:13px;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
-  z-index:5000;
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 90px;
+  transform: translateX(-50%) translateY(20px);
+  background: #f5f5f5;
+  color: #111;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .25s;
+  z-index: 200;
 }
 
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:750px){
+@media(max-width: 700px) {
 
-  .sidebar{
-    position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    transform:translateX(-100%);
-    box-shadow:10px 0 30px rgba(0,0,0,.2);
+  .sidebar {
+    position: fixed;
+    z-index: 50;
+    left: -280px;
+    top: 0;
+    bottom: 0;
   }
 
-  .sidebar.open{
-    transform:translateX(0);
+  .sidebar.open {
+    left: 0;
   }
 
-  .menu-btn{
-    display:block;
+  .menu-btn {
+    display: block;
   }
 
-  .topbar{
-    padding:0 10px;
+  .topbar {
+    padding: 0 12px;
   }
 
-  .chat-inner{
-    padding:20px 13px 170px;
+  .composer-area {
+    left: 0;
+    padding: 15px 10px 10px;
   }
 
-  .message{
-    gap:9px;
-    margin:20px 0;
+  .bubble {
+    max-width: 88%;
   }
 
-  .avatar{
-    width:28px;
-    height:28px;
-    min-width:28px;
+  .welcome {
+    padding-top: 55px;
   }
 
-  .composer-wrap{
-    padding:10px;
+  .welcome h1 {
+    font-size: 25px;
   }
 
-  .plans{
-    grid-template-columns:1fr;
+  .plans {
+    grid-template-columns: 1fr;
   }
 
-  .modal{
-    padding:20px 15px;
+  .limit-buttons {
+    flex-direction: column;
   }
-
-  .welcome h1{
-    font-size:27px;
-  }
-}
-
-/* =========================
-   FILE INPUT
-========================= */
-
-#fileInput{
-  display:none;
-}
-
-/* =========================
-   OVERLAY MOBILE
-========================= */
-
-.mobile-overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.35);
-  z-index:900;
-}
-
-.mobile-overlay.show{
-  display:block;
 }
 </style>
 </head>
@@ -884,120 +608,60 @@ body.dark .send{
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
 
-    <div class="brand">
-      <div class="logo">N</div>
-      <div class="brand-name">NOVA AI</div>
-    </div>
+    <div class="logo">NOVA AI</div>
 
-    <button class="new-chat" id="newChatBtn">
+    <button class="new-chat" onclick="newChat()">
       ＋ New chat
     </button>
 
-    <div class="search">
-      <span>⌕</span>
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="Search chats">
-    </div>
-
-    <div class="history-title">
-      Recent chats
-    </div>
+    <div class="history-title">History</div>
 
     <div class="history" id="history"></div>
 
     <div class="sidebar-bottom">
-
-      <button class="side-btn" id="upgradeBtn">
-        ⭐ Upgrade
+      <button class="upgrade-side" onclick="openUpgrade()">
+        Upgrade
       </button>
-
-      <button class="side-btn" id="themeBtn">
-        🌙 Dark mode
-      </button>
-
-      <button class="side-btn" id="clearHistoryBtn">
-        🗑 Clear history
-      </button>
-
     </div>
 
   </aside>
-
-  <div
-    class="mobile-overlay"
-    id="mobileOverlay">
-  </div>
 
   <!-- MAIN -->
   <main class="main">
 
     <header class="topbar">
 
-      <div class="top-left">
+      <button class="menu-btn" onclick="toggleSidebar()">
+        ☰
+      </button>
 
-        <button
-          class="menu-btn"
-          id="menuBtn">
-          ☰
-        </button>
-
-        <div>
-          <div class="model-name">
-            NOVA AI
-          </div>
-
-          <div class="model-sub">
-            Intelligent AI assistant
-          </div>
-        </div>
-
+      <div class="top-title">
+        NOVA AI
       </div>
 
       <div class="top-actions">
-
-        <button
-          class="top-btn"
-          id="topUpgrade"
-          title="Upgrade">
-          ⭐
-        </button>
-
-        <button
-          class="top-btn"
-          id="topTheme"
-          title="Theme">
-          ◐
-        </button>
-
+        <span class="limit" id="limitText">
+          10 messages left
+        </span>
       </div>
 
     </header>
 
     <!-- CHAT -->
-    <section
-      class="chat"
-      id="chat">
+    <section class="chat" id="chat">
 
-      <div
-        class="chat-inner"
-        id="chatInner">
+      <div class="messages" id="messages">
 
-        <div
-          class="welcome"
-          id="welcome">
+        <div class="welcome" id="welcome">
 
-          <div class="welcome-logo">
+          <div class="nova-logo">
             N
           </div>
 
-          <h1>
-            How can I help you?
-          </h1>
+          <h1>How can I help you?</h1>
 
           <p>
-            Ask NOVA AI anything.
+            Learn. Understand. Excel.
           </p>
 
         </div>
@@ -1007,104 +671,58 @@ body.dark .send{
     </section>
 
     <!-- COMPOSER -->
-    <div class="composer-wrap">
+    <div class="composer-area">
 
       <div class="composer">
 
-        <div class="limit-row">
+        <div class="attachments" id="attachments"></div>
 
-          <span id="limitText">
-            10 free messages remaining today
-          </span>
+        <div class="input-box">
+
+          <!-- FILE -->
+          <button
+            class="icon-btn"
+            title="Attach file"
+            onclick="document.getElementById('fileInput').click()">
+            ＋
+          </button>
+
+          <input
+            id="fileInput"
+            class="file-input"
+            type="file"
+            multiple
+            accept=".pdf,.txt,.doc,.docx,.xls,.xlsx,.csv,image/*,video/*"
+            onchange="handleFiles(event)"
+          >
+
+          <!-- VOICE -->
+          <button
+            class="icon-btn"
+            id="voiceBtn"
+            title="Voice input"
+            onclick="startVoice()">
+            🎙
+          </button>
+
+          <textarea
+            id="question"
+            placeholder="Message NOVA AI..."
+            rows="1"
+            oninput="resizeInput(this)"
+            onkeydown="handleEnter(event)">
+          </textarea>
 
           <button
-            id="smallUpgrade"
-            style="
-              background:none;
-              border:0;
-              color:var(--text);
-              font-size:12px;
-              display:none;
-            ">
-            Upgrade
+            class="send-btn"
+            id="sendBtn"
+            onclick="sendMessage()">
+            ↑
           </button>
 
         </div>
 
-        <div class="limit-bar">
-          <div
-            class="limit-fill"
-            id="limitFill">
-          </div>
-        </div>
-
-        <div class="input-box">
-
-          <textarea
-            id="messageInput"
-            rows="1"
-            placeholder="Message NOVA AI..."></textarea>
-
-          <div class="composer-bottom">
-
-            <div class="left-tools">
-
-              <button
-                class="tool"
-                id="attachBtn"
-                title="Upload file">
-                ＋
-              </button>
-
-              <button
-                class="tool"
-                id="imageBtn"
-                title="Upload image">
-                🖼
-              </button>
-
-              <button
-                class="tool"
-                id="voiceBtn"
-                title="Voice input">
-                🎙
-              </button>
-
-              <input
-                id="fileInput"
-                type="file"
-                multiple
-                accept="
-                  image/*,
-                  video/*,
-                  application/pdf,
-                  .doc,
-                  .docx,
-                  .txt,
-                  .csv,
-                  .xlsx,
-                  .ppt,
-                  .pptx
-                ">
-
-            </div>
-
-            <div class="right-tools">
-
-              <button
-                class="send"
-                id="sendBtn"
-                title="Send">
-                ↑
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="disclaimer">
+        <div class="composer-note">
           NOVA AI can make mistakes. Check important information.
         </div>
 
@@ -1116,95 +734,66 @@ body.dark .send{
 
 </div>
 
+<!-- =========================
+     UPGRADE MODAL
+========================= -->
 
-<!-- UPGRADE MODAL -->
-
-<div
-  class="modal-overlay"
-  id="upgradeModal">
+<div class="overlay" id="upgradeModal">
 
   <div class="modal">
 
-    <button
-      class="close-modal"
-      id="closeUpgrade">
-      ×
-    </button>
+    <div class="modal-head">
+      <div>
+        <div class="upgrade-title">Upgrade NOVA AI</div>
+        <div class="upgrade-sub">
+          Get more access and unlock more AI features.
+        </div>
+      </div>
 
-    <h2>
-      Upgrade NOVA AI
-    </h2>
-
-    <p class="modal-sub">
-      Get more access and advanced features.
-    </p>
+      <button class="close" onclick="closeUpgrade()">×</button>
+    </div>
 
     <div class="plans">
 
-      <!-- NOVA GO -->
+      <div class="plan featured">
 
-      <div class="plan">
-
-        <h3>
-          NOVA Go
-        </h3>
+        <h3>NOVA Go</h3>
 
         <div class="price">
           ₦7,000
-          <small>/month</small>
         </div>
 
-        <ul class="features">
-
+        <ul>
           <li>✓ More AI messages</li>
           <li>✓ Faster responses</li>
           <li>✓ Voice features</li>
-          <li>✓ File support</li>
-          <li>✓ Image tools</li>
+          <li>✓ File uploads</li>
           <li>✓ Chat history</li>
-
         </ul>
 
-        <button
-          class="plan-btn"
-          onclick="selectPlan('NOVA Go')">
+        <button onclick="selectPlan('NOVA Go')">
           Choose NOVA Go
         </button>
 
       </div>
 
+      <div class="plan">
 
-      <!-- NOVA LITE -->
-
-      <div class="plan featured">
-
-        <div class="badge">
-          POPULAR
-        </div>
-
-        <h3>
-          NOVA Lite
-        </h3>
+        <h3>NOVA Lite</h3>
 
         <div class="price">
           ₦20,000
-          <small>/month</small>
         </div>
 
-        <ul class="features">
-
-          <li>✓ Higher AI usage</li>
-          <li>✓ Priority responses</li>
-          <li>✓ Advanced voice</li>
-          <li>✓ File & PDF tools</li>
-          <li>✓ Image & video tools</li>
-          <li>✓ Persistent history</li>
-
+        <ul>
+          <li>✓ Higher AI access</li>
+          <li>✓ Faster responses</li>
+          <li>✓ Voice features</li>
+          <li>✓ File uploads</li>
+          <li>✓ Premium features</li>
         </ul>
 
-        <button
-          class="plan-btn"
-          onclick="selectPlan('NOVA Lite')">
+        <button onclick="selectPlan('NOVA Lite')">
           Choose NOVA Lite
         </button>
 
@@ -1216,1806 +805,1012 @@ body.dark .send{
 
 </div>
 
+<!-- =========================
+     LIMIT MODAL
+========================= -->
 
-<!-- LIMIT MODAL -->
+<div class="overlay" id="limitModal">
 
-<div
-  class="modal-overlay"
-  id="limitModal">
+  <div class="modal limit-box">
 
-  <div class="modal limit-modal">
+    <div class="limit-icon">⭐</div>
 
-    <button
-      class="close-modal"
-      id="closeLimit">
-      ×
-    </button>
-
-    <div class="limit-icon">
-      ⭐
-    </div>
-
-    <h2>
-      You've reached your daily limit
-    </h2>
+    <h2>You've reached your daily limit</h2>
 
     <p>
       You've used your 10 free NOVA AI messages for today.
-      Upgrade to continue with more access.
+      Upgrade to continue using NOVA AI with more access.
     </p>
 
-    <button
-      class="upgrade-main-btn"
-      id="limitUpgrade">
-      View NOVA plans
-    </button>
+    <div class="limit-buttons">
+
+      <button
+        class="upgrade-btn"
+        onclick="closeLimit(); openUpgrade()">
+        Upgrade
+      </button>
+
+      <button
+        class="cancel-btn"
+        onclick="closeLimit()">
+        Come back tomorrow
+      </button>
+
+    </div>
 
   </div>
 
 </div>
 
-
-<!-- TOAST -->
-
-<div
-  class="toast"
-  id="toast">
-</div>
-
+<div class="toast" id="toast"></div>
 
 <script>
-/* =====================================================
+
+/* ======================================================
    NOVA AI
-   Frontend
-===================================================== */
+====================================================== */
 
 const API_URL = "/api/chat";
 
 const DAILY_LIMIT = 10;
 
-let chats = [];
-let currentChatId = null;
+let messages = [];
+let attachments = [];
 
-let selectedFiles = [];
+let currentChatId =
+  localStorage.getItem("nova_current_chat") ||
+  createId();
 
-let recognition = null;
-let listening = false;
+/* ======================================================
+   ID
+====================================================== */
 
+function createId() {
+  return "chat_" + Date.now() + "_" +
+    Math.random().toString(36).slice(2);
+}
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+/* ======================================================
+   STORAGE
+====================================================== */
 
-const chatInner =
-  document.getElementById("chatInner");
+function getHistory() {
+  try {
+    return JSON.parse(
+      localStorage.getItem("nova_history") || "[]"
+    );
+  } catch {
+    return [];
+  }
+}
 
-const chat =
-  document.getElementById("chat");
+function saveHistory() {
 
-const welcome =
-  document.getElementById("welcome");
+  const history = getHistory();
 
-const messageInput =
-  document.getElementById("messageInput");
+  const existing = history.find(
+    x => x.id === currentChatId
+  );
 
-const sendBtn =
-  document.getElementById("sendBtn");
+  const title =
+    messages.find(x => x.role === "user")?.text ||
+    "New chat";
 
-const history =
-  document.getElementById("history");
+  const chat = {
+    id: currentChatId,
+    title: title.slice(0, 55),
+    messages: messages,
+    updated: Date.now()
+  };
 
-const searchInput =
-  document.getElementById("searchInput");
+  if (existing) {
+    Object.assign(existing, chat);
+  } else {
+    history.unshift(chat);
+  }
 
-const limitText =
-  document.getElementById("limitText");
+  localStorage.setItem(
+    "nova_history",
+    JSON.stringify(history.slice(0, 100))
+  );
 
-const limitFill =
-  document.getElementById("limitFill");
+  localStorage.setItem(
+    "nova_current_chat",
+    currentChatId
+  );
 
-const fileInput =
-  document.getElementById("fileInput");
+  renderHistory();
+}
 
-const sidebar =
-  document.getElementById("sidebar");
+/* ======================================================
+   HISTORY
+====================================================== */
 
-const mobileOverlay =
-  document.getElementById("mobileOverlay");
+function renderHistory() {
 
-const upgradeModal =
-  document.getElementById("upgradeModal");
+  const container =
+    document.getElementById("history");
 
-const limitModal =
-  document.getElementById("limitModal");
+  container.innerHTML = "";
 
-const toast =
-  document.getElementById("toast");
+  const history = getHistory();
 
+  history
+    .sort((a,b) => b.updated - a.updated)
+    .forEach(chat => {
 
-/* =====================================================
-   LOCAL STORAGE
-===================================================== */
+      const item =
+        document.createElement("div");
 
-function loadChats(){
+      item.className = "history-item";
 
-  try{
+      item.textContent =
+        chat.title || "New chat";
 
-    const saved =
-      localStorage.getItem("nova_chats");
+      item.onclick = () => loadChat(chat.id);
 
-    chats =
-      saved ? JSON.parse(saved) : [];
+      container.appendChild(item);
+    });
+}
 
-  }catch(error){
+function loadChat(id) {
 
-    chats = [];
+  const history = getHistory();
+
+  const chat =
+    history.find(x => x.id === id);
+
+  if (!chat) return;
+
+  currentChatId = chat.id;
+  messages = chat.messages || [];
+
+  localStorage.setItem(
+    "nova_current_chat",
+    currentChatId
+  );
+
+  renderMessages();
+
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
+}
+
+/* ======================================================
+   NEW CHAT
+====================================================== */
+
+function newChat() {
+
+  currentChatId = createId();
+
+  messages = [];
+
+  attachments = [];
+
+  localStorage.setItem(
+    "nova_current_chat",
+    currentChatId
+  );
+
+  renderMessages();
+
+  document.getElementById("question").focus();
+
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
+}
+
+/* ======================================================
+   RENDER
+====================================================== */
+
+function renderMessages() {
+
+  const container =
+    document.getElementById("messages");
+
+  container.innerHTML = "";
+
+  if (!messages.length) {
+
+    container.innerHTML = `
+      <div class="welcome">
+        <div class="nova-logo">N</div>
+        <h1>How can I help you?</h1>
+        <p>Learn. Understand. Excel.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  messages.forEach(message => {
+
+    addMessageToScreen(
+      message.role,
+      message.text
+    );
+
+  });
+
+  scrollBottom();
+}
+
+/* ======================================================
+   MESSAGE
+====================================================== */
+
+function addMessageToScreen(role, text) {
+
+  const container =
+    document.getElementById("messages");
+
+  const row =
+    document.createElement("div");
+
+  row.className =
+    "message " +
+    (role === "user" ? "user" : "ai");
+
+  if (role === "assistant") {
+
+    row.innerHTML = `
+      <div class="avatar">N</div>
+      <div class="bubble"></div>
+    `;
+
+  } else {
+
+    row.innerHTML = `
+      <div class="bubble"></div>
+    `;
 
   }
 
+  row.querySelector(".bubble").textContent = text;
+
+  container.appendChild(row);
 }
 
+/* ======================================================
+   SEND
+====================================================== */
 
-function saveChats(){
+async function sendMessage() {
 
-  try{
+  const input =
+    document.getElementById("question");
+
+  const question =
+    input.value.trim();
+
+  if (!question && !attachments.length) {
+    return;
+  }
+
+  const remaining =
+    getLocalRemaining();
+
+  if (remaining <= 0) {
+    openLimit();
+    return;
+  }
+
+  input.value = "";
+
+  resizeInput(input);
+
+  hideWelcome();
+
+  let finalQuestion = question;
+
+  if (attachments.length) {
+
+    finalQuestion +=
+      "\n\nAttached files:\n" +
+      attachments.map(x => x.name).join("\n");
+
+  }
+
+  messages.push({
+    role: "user",
+    text: finalQuestion
+  });
+
+  addMessageToScreen(
+    "user",
+    finalQuestion
+  );
+
+  saveHistory();
+
+  attachments = [];
+
+  renderAttachments();
+
+  scrollBottom();
+
+  setLoading(true);
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          question: finalQuestion,
+          userId: getUserId()
+        })
+
+      });
+
+    let data;
+
+    try {
+      data = await response.json();
+    } catch {
+      data = {};
+    }
+
+    if (
+      response.status === 429 ||
+      data.limitReached
+    ) {
+
+      setLocalRemaining(0);
+
+      updateLimitUI();
+
+      openLimit();
+
+      return;
+    }
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.error ||
+        "The AI server returned an error."
+      );
+
+    }
+
+    const answer =
+      data.answer ||
+      data.message ||
+      "I couldn't generate an answer.";
+
+    messages.push({
+      role: "assistant",
+      text: answer
+    });
+
+    addMessageToScreen(
+      "assistant",
+      answer
+    );
+
+    /*
+      If backend sends usage data,
+      use it.
+    */
+
+    if (data.usage) {
+
+      setLocalRemaining(
+        Number(data.usage.remaining)
+      );
+
+    } else {
+
+      decreaseLocalRemaining();
+
+    }
+
+    saveHistory();
+
+    scrollBottom();
+
+  } catch (error) {
+
+    console.error(error);
+
+    const errorText =
+      "I'm having trouble connecting right now. Please try again.";
+
+    messages.push({
+      role: "assistant",
+      text: errorText
+    });
+
+    addMessageToScreen(
+      "assistant",
+      errorText
+    );
+
+    saveHistory();
+
+  } finally {
+
+    setLoading(false);
+
+  }
+}
+
+/* ======================================================
+   USER ID
+====================================================== */
+
+function getUserId() {
+
+  let id =
+    localStorage.getItem("nova_user_id");
+
+  if (!id) {
+
+    id =
+      "nova_" +
+      Math.random()
+        .toString(36)
+        .slice(2) +
+      Date.now();
 
     localStorage.setItem(
-      "nova_chats",
-      JSON.stringify(chats)
+      "nova_user_id",
+      id
     );
-
-  }catch(error){
-
-    console.log(
-      "Could not save chat history."
-    );
-
   }
 
+  return id;
 }
 
+/* ======================================================
+   DAILY LIMIT
+====================================================== */
 
-/* =====================================================
-   DAILY USAGE
-===================================================== */
+function getTodayKey() {
 
-function getToday(){
+  const date =
+    new Date();
 
-  const d = new Date();
-
-  return d.toISOString().slice(0,10);
-
+  return (
+    date.getFullYear() +
+    "-" +
+    (date.getMonth() + 1) +
+    "-" +
+    date.getDate()
+  );
 }
 
+function getLimitData() {
 
-function getUsage(){
+  try {
 
-  const today = getToday();
+    const data =
+      JSON.parse(
+        localStorage.getItem(
+          "nova_daily_usage"
+        ) || "{}"
+      );
 
-  const saved =
-    localStorage.getItem("nova_usage");
-
-  if(!saved){
-
-    return {
-      date:today,
-      count:0
-    };
-
-  }
-
-  try{
-
-    const usage =
-      JSON.parse(saved);
-
-    if(usage.date !== today){
+    if (
+      data.date !== getTodayKey()
+    ) {
 
       return {
-        date:today,
-        count:0
+        date: getTodayKey(),
+        used: 0
       };
 
     }
 
-    return usage;
+    return data;
 
-  }catch{
+  } catch {
 
     return {
-      date:today,
-      count:0
+      date: getTodayKey(),
+      used: 0
     };
 
   }
-
 }
 
+function getLocalRemaining() {
 
-function saveUsage(count){
+  const data =
+    getLimitData();
 
-  localStorage.setItem(
-    "nova_usage",
-    JSON.stringify({
-      date:getToday(),
-      count
-    })
+  return Math.max(
+    DAILY_LIMIT - Number(data.used || 0),
+    0
   );
-
 }
 
+function setLocalRemaining(remaining) {
 
-function updateLimitUI(){
-
-  const usage =
-    getUsage();
-
-  const remaining =
+  const used =
     Math.max(
-      DAILY_LIMIT - usage.count,
+      DAILY_LIMIT - remaining,
       0
     );
 
-  limitText.textContent =
-    remaining +
-    " free message" +
-    (remaining === 1 ? "" : "s") +
-    " remaining today";
+  localStorage.setItem(
+    "nova_daily_usage",
+    JSON.stringify({
+      date: getTodayKey(),
+      used: used
+    })
+  );
 
-  const percentage =
+  updateLimitUI();
+}
+
+function decreaseLocalRemaining() {
+
+  const data =
+    getLimitData();
+
+  data.used =
     Math.min(
-      (usage.count / DAILY_LIMIT) * 100,
-      100
+      DAILY_LIMIT,
+      Number(data.used || 0) + 1
     );
 
-  limitFill.style.width =
-    percentage + "%";
+  data.date =
+    getTodayKey();
 
-  const smallUpgrade =
-    document.getElementById(
-      "smallUpgrade"
-    );
-
-  if(usage.count >= DAILY_LIMIT){
-
-    smallUpgrade.style.display =
-      "block";
-
-  }else{
-
-    smallUpgrade.style.display =
-      "none";
-
-  }
-
-}
-
-
-/* =====================================================
-   CHAT MANAGEMENT
-===================================================== */
-
-function createChat(){
-
-  const id =
-    Date.now().toString();
-
-  const newChat = {
-
-    id:id,
-
-    title:"New chat",
-
-    messages:[],
-
-    createdAt:
-      new Date().toISOString(),
-
-    updatedAt:
-      new Date().toISOString()
-
-  };
-
-  chats.unshift(newChat);
-
-  currentChatId = id;
-
-  saveChats();
-
-  renderHistory();
-
-  renderCurrentChat();
-
-}
-
-
-function getCurrentChat(){
-
-  return chats.find(
-    chat => chat.id === currentChatId
+  localStorage.setItem(
+    "nova_daily_usage",
+    JSON.stringify(data)
   );
 
+  updateLimitUI();
 }
 
+function updateLimitUI() {
 
-function renderHistory(filter=""){
+  const remaining =
+    getLocalRemaining();
 
-  history.innerHTML = "";
+  const element =
+    document.getElementById("limitText");
 
-  const filtered =
-    chats.filter(chat => {
+  if (remaining <= 0) {
 
-      if(!filter)
-        return true;
+    element.textContent =
+      "Daily limit reached";
 
-      return chat.title
-        .toLowerCase()
-        .includes(
-          filter.toLowerCase()
-        );
+  } else {
 
-    });
-
-  filtered.forEach(chatItem => {
-
-    const div =
-      document.createElement("div");
-
-    div.className =
-      "history-item";
-
-    div.textContent =
-      chatItem.title || "New chat";
-
-    div.title =
-      chatItem.title || "New chat";
-
-    div.onclick = () => {
-
-      currentChatId =
-        chatItem.id;
-
-      renderCurrentChat();
-
-      closeMobileSidebar();
-
-    };
-
-    history.appendChild(div);
-
-  });
-
-}
-
-
-function renderCurrentChat(){
-
-  chatInner.innerHTML = "";
-
-  const current =
-    getCurrentChat();
-
-  if(!current ||
-     current.messages.length === 0){
-
-    chatInner.appendChild(
-      createWelcome()
-    );
-
-    return;
+    element.textContent =
+      remaining +
+      " messages left";
 
   }
+}
 
-  current.messages.forEach(
-    message => {
+/* ======================================================
+   LOADING
+====================================================== */
 
-      addMessageToDOM(
-        message.role,
-        message.text,
-        false,
-        message.file
-      );
+function setLoading(loading) {
 
-    }
-  );
+  const button =
+    document.getElementById("sendBtn");
 
-  scrollBottom();
+  button.disabled =
+    loading;
+
+  button.textContent =
+    loading ? "…" : "↑";
 
 }
 
+/* ======================================================
+   TEXTAREA
+====================================================== */
 
-function createWelcome(){
+function resizeInput(element) {
 
-  const div =
-    document.createElement("div");
+  element.style.height =
+    "auto";
 
-  div.className =
-    "welcome";
-
-  div.innerHTML = `
-    <div class="welcome-logo">N</div>
-    <h1>How can I help you?</h1>
-    <p>Ask NOVA AI anything.</p>
-  `;
-
-  return div;
+  element.style.height =
+    Math.min(
+      element.scrollHeight,
+      150
+    ) + "px";
 
 }
 
+function handleEnter(event) {
 
-/* =====================================================
-   MESSAGE UI
-===================================================== */
+  if (
+    event.key === "Enter" &&
+    !event.shiftKey
+  ) {
 
-function addMessageToDOM(
-  role,
-  text,
-  save=true,
-  file=null
-){
+    event.preventDefault();
 
-  const message =
-    document.createElement("div");
-
-  message.className =
-    "message " + role;
-
-  const avatar =
-    document.createElement("div");
-
-  avatar.className =
-    "avatar";
-
-  avatar.textContent =
-    role === "user" ? "You" : "N";
-
-  const body =
-    document.createElement("div");
-
-  body.className =
-    "message-body";
-
-  const messageText =
-    document.createElement("div");
-
-  messageText.className =
-    "message-text";
-
-  messageText.textContent =
-    text;
-
-  body.appendChild(
-    messageText
-  );
-
-
-  if(file){
-
-    const card =
-      document.createElement("div");
-
-    card.className =
-      "file-card";
-
-    card.innerHTML = `
-      <div class="file-icon">
-        ${getFileIcon(file.type)}
-      </div>
-
-      <div class="file-info">
-        <div class="file-name">
-          ${escapeHTML(file.name)}
-        </div>
-
-        <div class="file-size">
-          ${formatBytes(file.size)}
-        </div>
-      </div>
-    `;
-
-    body.appendChild(card);
-
-  }
-
-
-  if(role === "assistant"){
-
-    const tools =
-      document.createElement("div");
-
-    tools.className =
-      "message-tools";
-
-    const copy =
-      document.createElement("button");
-
-    copy.textContent =
-      "Copy";
-
-    copy.onclick = () => {
-
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-
-          showToast(
-            "Copied"
-          );
-
-        });
-
-    };
-
-
-    const speak =
-      document.createElement("button");
-
-    speak.textContent =
-      "🔊 Read";
-
-    speak.onclick = () => {
-
-      speakText(text);
-
-    };
-
-
-    const regenerate =
-      document.createElement("button");
-
-    regenerate.textContent =
-      "↻ Regenerate";
-
-    regenerate.onclick = () => {
-
-      regenerateLastAnswer();
-
-    };
-
-
-    tools.appendChild(copy);
-    tools.appendChild(speak);
-    tools.appendChild(regenerate);
-
-    body.appendChild(tools);
-
-  }
-
-
-  message.appendChild(
-    avatar
-  );
-
-  message.appendChild(
-    body
-  );
-
-  chatInner.appendChild(
-    message
-  );
-
-  if(save){
-
-    const current =
-      getCurrentChat();
-
-    if(!current)
-      return;
-
-    current.messages.push({
-
-      role:role,
-
-      text:text,
-
-      file:file || null,
-
-      timestamp:
-        new Date().toISOString()
-
-    });
-
-    current.updatedAt =
-      new Date().toISOString();
-
-    saveChats();
+    sendMessage();
 
   }
 
 }
 
+/* ======================================================
+   VOICE
+====================================================== */
 
-/* =====================================================
-   SEND MESSAGE
-===================================================== */
+let recognition = null;
 
-async function sendMessage(){
-
-  const question =
-    messageInput.value.trim();
-
-  if(!question &&
-     selectedFiles.length === 0){
-
-    return;
-
-  }
-
-
-  const usage =
-    getUsage();
-
-  if(usage.count >= DAILY_LIMIT){
-
-    showLimitModal();
-
-    return;
-
-  }
-
-
-  if(!currentChatId){
-
-    createChat();
-
-  }
-
-
-  const current =
-    getCurrentChat();
-
-  if(!current)
-    return;
-
-
-  if(
-    current.messages.length === 0 &&
-    question
-  ){
-
-    current.title =
-      question.length > 45
-      ? question.slice(0,45) + "..."
-      : question;
-
-    saveChats();
-
-    renderHistory();
-
-  }
-
-
-  const filesForMessage =
-    selectedFiles.length
-    ? selectedFiles[0]
-    : null;
-
-
-  addMessageToDOM(
-    "user",
-    question ||
-    "Please help me with this file.",
-    true,
-    filesForMessage
-  );
-
-
-  messageInput.value = "";
-
-  autoResize();
-
-
-  selectedFiles = [];
-
-  updateFileButton();
-
-
-  scrollBottom();
-
-
-  const typing =
-    showTyping();
-
-
-  sendBtn.disabled =
-    true;
-
-
-  try{
-
-    /*
-      Your current server.js expects:
-
-      {
-        "question": "..."
-      }
-
-      File binary data is not sent yet.
-      We keep the selected file visible
-      in the conversation.
-    */
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-            question:
-              question ||
-              "Please help me with the uploaded file."
-          })
-        }
-      );
-
-
-    const data =
-      await response.json()
-        .catch(() => ({}));
-
-
-    typing.remove();
-
-
-    if(response.status === 429 ||
-       data.limitReached){
-
-      showLimitModal();
-
-      return;
-
-    }
-
-
-    if(!response.ok){
-
-      throw new Error(
-        data.error ||
-        "The AI request failed."
-      );
-
-    }
-
-
-    if(!data.success){
-
-      throw new Error(
-        data.error ||
-        "NOVA AI could not answer."
-      );
-
-    }
-
-
-    const answer =
-      data.answer ||
-      "I couldn't generate an answer.";
-
-
-    addMessageToDOM(
-      "assistant",
-      answer,
-      true
-    );
-
-
-    /*
-      Count successful response.
-    */
-
-    const latestUsage =
-      getUsage();
-
-    saveUsage(
-      Math.min(
-        latestUsage.count + 1,
-        DAILY_LIMIT
-      )
-    );
-
-
-    updateLimitUI();
-
-    scrollBottom();
-
-
-  }catch(error){
-
-    typing.remove();
-
-    addMessageToDOM(
-      "assistant",
-      "I'm having trouble connecting right now. Please try again.",
-      true
-    );
-
-    console.error(
-      "NOVA AI error:",
-      error
-    );
-
-  }finally{
-
-    sendBtn.disabled =
-      false;
-
-  }
-
-}
-
-
-/* =====================================================
-   TYPING
-===================================================== */
-
-function showTyping(){
-
-  const message =
-    document.createElement("div");
-
-  message.className =
-    "message assistant";
-
-  message.innerHTML = `
-    <div class="avatar">N</div>
-
-    <div class="message-body">
-
-      <div class="typing">
-
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-
-      </div>
-
-    </div>
-  `;
-
-  chatInner.appendChild(
-    message
-  );
-
-  scrollBottom();
-
-  return message;
-
-}
-
-
-/* =====================================================
-   REGENERATE
-===================================================== */
-
-async function regenerateLastAnswer(){
-
-  const current =
-    getCurrentChat();
-
-  if(!current ||
-     current.messages.length < 2){
-
-    return;
-
-  }
-
-
-  let lastUser = null;
-
-
-  for(
-    let i =
-      current.messages.length - 1;
-    i >= 0;
-    i--
-  ){
-
-    if(
-      current.messages[i].role ===
-      "user"
-    ){
-
-      lastUser =
-        current.messages[i];
-
-      break;
-
-    }
-
-  }
-
-
-  if(!lastUser)
-    return;
-
-
-  /*
-    Remove previous assistant
-    messages after the last user.
-  */
-
-  const index =
-    current.messages.indexOf(
-      lastUser
-    );
-
-  current.messages =
-    current.messages.slice(
-      0,
-      index + 1
-    );
-
-  saveChats();
-
-  renderCurrentChat();
-
-
-  messageInput.value =
-    lastUser.text;
-
-  await sendMessage();
-
-}
-
-
-/* =====================================================
-   VOICE INPUT
-===================================================== */
-
-function setupVoice(){
+function startVoice() {
 
   const SpeechRecognition =
     window.SpeechRecognition ||
     window.webkitSpeechRecognition;
 
-  if(!SpeechRecognition){
+  if (!SpeechRecognition) {
 
-    document
-      .getElementById("voiceBtn")
-      .title =
-      "Voice input is not supported by this browser";
+    showToast(
+      "Voice input isn't supported by this browser."
+    );
 
     return;
-
   }
 
+  if (recognition) {
+
+    recognition.stop();
+
+    recognition = null;
+
+    return;
+  }
 
   recognition =
     new SpeechRecognition();
 
   recognition.lang =
-    "en-US";
-
-  recognition.continuous =
-    false;
+    "en-NG";
 
   recognition.interimResults =
     true;
 
+  recognition.continuous =
+    false;
 
-  recognition.onstart =
-    () => {
+  const input =
+    document.getElementById("question");
 
-      listening = true;
+  recognition.onstart = () => {
 
-      const btn =
-        document.getElementById(
-          "voiceBtn"
-        );
+    document
+      .getElementById("voiceBtn")
+      .textContent = "🔴";
 
-      btn.classList.add(
-        "voice-active"
-      );
+    showToast(
+      "Listening..."
+    );
 
-      btn.textContent =
-        "⏹";
-
-      showToast(
-        "Listening..."
-      );
-
-    };
-
+  };
 
   recognition.onresult =
     event => {
 
       let transcript = "";
 
-      for(
-        let i =
-          event.resultIndex;
+      for (
+        let i = event.resultIndex;
         i < event.results.length;
         i++
-      ){
+      ) {
 
         transcript +=
           event.results[i][0].transcript;
 
       }
 
-      messageInput.value =
+      input.value =
         transcript;
 
-      autoResize();
+      resizeInput(input);
 
     };
-
 
   recognition.onerror =
-    event => {
-
-      console.log(
-        "Voice error:",
-        event.error
-      );
+    () => {
 
       showToast(
-        "Voice input couldn't start."
+        "Voice input stopped."
       );
 
     };
-
 
   recognition.onend =
     () => {
 
-      listening = false;
+      document
+        .getElementById("voiceBtn")
+        .textContent = "🎙";
 
-      const btn =
-        document.getElementById(
-          "voiceBtn"
-        );
-
-      btn.classList.remove(
-        "voice-active"
-      );
-
-      btn.textContent =
-        "🎙";
+      recognition = null;
 
     };
 
+  recognition.start();
+
 }
 
+/* ======================================================
+   FILES
+====================================================== */
 
-function toggleVoice(){
+function handleFiles(event) {
 
-  if(!recognition){
-
-    showToast(
-      "Voice input isn't supported on this browser."
+  const files =
+    Array.from(
+      event.target.files || []
     );
 
-    return;
+  files.forEach(file => {
 
-  }
+    attachments.push({
+      name: file.name,
+      type: file.type,
+      size: file.size
+    });
 
+  });
 
-  if(listening){
+  renderAttachments();
 
-    recognition.stop();
-
-  }else{
-
-    try{
-
-      recognition.start();
-
-    }catch(error){
-
-      console.log(error);
-
-    }
-
-  }
-
+  event.target.value = "";
 }
 
+function renderAttachments() {
 
-/* =====================================================
-   TEXT TO SPEECH
-===================================================== */
-
-function speakText(text){
-
-  if(!("speechSynthesis" in window)){
-
-    showToast(
-      "Text-to-speech isn't supported."
-    );
-
-    return;
-
-  }
-
-
-  speechSynthesis.cancel();
-
-
-  const utterance =
-    new SpeechSynthesisUtterance(
-      text
-    );
-
-  utterance.rate =
-    1;
-
-  utterance.pitch =
-    1;
-
-  speechSynthesis.speak(
-    utterance
-  );
-
-}
-
-
-/* =====================================================
-   FILE UPLOAD
-===================================================== */
-
-function openFilePicker(){
-
-  fileInput.click();
-
-}
-
-
-fileInput.addEventListener(
-  "change",
-  event => {
-
-    selectedFiles =
-      Array.from(
-        event.target.files
-      );
-
-    updateFileButton();
-
-
-    if(
-      selectedFiles.length
-    ){
-
-      const names =
-        selectedFiles
-          .map(file => file.name)
-          .join(", ");
-
-
-      messageInput.placeholder =
-        "File selected: " +
-        names;
-
-    }
-
-  }
-);
-
-
-function updateFileButton(){
-
-  const btn =
+  const box =
     document.getElementById(
-      "attachBtn"
+      "attachments"
     );
 
-  if(selectedFiles.length){
+  box.innerHTML = "";
 
-    btn.textContent =
-      "📎" +
-      selectedFiles.length;
+  if (!attachments.length) {
 
-  }else{
+    box.style.display =
+      "none";
 
-    btn.textContent =
-      "＋";
+    return;
+  }
 
-    messageInput.placeholder =
-      "Message NOVA AI...";
+  box.style.display =
+    "flex";
 
+  attachments.forEach(
+    (file, index) => {
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+      item.className =
+        "attachment";
+
+      item.textContent =
+        "📎 " +
+        file.name +
+        " ×";
+
+      item.onclick = () => {
+
+        attachments.splice(
+          index,
+          1
+        );
+
+        renderAttachments();
+
+      };
+
+      box.appendChild(item);
+
+    }
+  );
+}
+
+/* ======================================================
+   UI
+====================================================== */
+
+function hideWelcome() {
+
+  const welcome =
+    document.getElementById(
+      "welcome"
+    );
+
+  if (welcome) {
+    welcome.remove();
   }
 
 }
 
+function scrollBottom() {
 
-function getFileIcon(type){
-
-  if(type.startsWith("image/"))
-    return "🖼️";
-
-  if(type.startsWith("video/"))
-    return "🎬";
-
-  if(type.includes("pdf"))
-    return "📕";
-
-  if(type.includes("word") ||
-     type.includes("document"))
-    return "📄";
-
-  if(type.includes("spreadsheet") ||
-     type.includes("excel") ||
-     type.includes("csv"))
-    return "📊";
-
-  if(type.includes("presentation"))
-    return "📊";
-
-  return "📎";
-
-}
-
-
-function formatBytes(bytes){
-
-  if(!bytes)
-    return "0 B";
-
-  const units =
-    [
-      "B",
-      "KB",
-      "MB",
-      "GB"
-    ];
-
-  const i =
-    Math.floor(
-      Math.log(bytes) /
-      Math.log(1024)
-    );
-
-  return (
-    bytes /
-    Math.pow(1024,i)
-  ).toFixed(1) +
-  " " +
-  units[i];
-
-}
-
-
-/* =====================================================
-   UTILITIES
-===================================================== */
-
-function scrollBottom(){
+  const chat =
+    document.getElementById("chat");
 
   setTimeout(() => {
 
     chat.scrollTop =
       chat.scrollHeight;
 
-  },30);
+  }, 50);
 
 }
 
+function toggleSidebar() {
 
-function autoResize(){
-
-  messageInput.style.height =
-    "auto";
-
-  messageInput.style.height =
-    Math.min(
-      messageInput.scrollHeight,
-      180
-    ) + "px";
+  document
+    .getElementById("sidebar")
+    .classList.toggle("open");
 
 }
 
+/* ======================================================
+   UPGRADE
+====================================================== */
 
-function escapeHTML(text){
+function openUpgrade() {
 
-  return String(text)
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
+  document
+    .getElementById("upgradeModal")
+    .classList.add("show");
+
+}
+
+function closeUpgrade() {
+
+  document
+    .getElementById("upgradeModal")
+    .classList.remove("show");
+
+}
+
+function selectPlan(plan) {
+
+  /*
+    Payment is not connected yet.
+    This button is ready for the payment
+    system to be connected later.
+  */
+
+  showToast(
+    plan +
+    " selected. Payment setup is coming next."
+  );
+
+}
+
+/* ======================================================
+   LIMIT
+====================================================== */
+
+function openLimit() {
+
+  document
+    .getElementById("limitModal")
+    .classList.add("show");
+
+}
+
+function closeLimit() {
+
+  document
+    .getElementById("limitModal")
+    .classList.remove("show");
+
+}
+
+/* ======================================================
+   TOAST
+====================================================== */
+
+let toastTimer;
+
+function showToast(message) {
+
+  const toast =
+    document.getElementById(
+      "toast"
     );
 
-}
-
-
-function showToast(text){
-
   toast.textContent =
-    text;
+    message;
 
   toast.classList.add(
     "show"
   );
 
-  setTimeout(() => {
-
-    toast.classList.remove(
-      "show"
-    );
-
-  },2200);
-
-}
-
-
-/* =====================================================
-   UPGRADE
-===================================================== */
-
-function showUpgrade(){
-
-  upgradeModal.classList.add(
-    "show"
+  clearTimeout(
+    toastTimer
   );
 
-}
+  toastTimer =
+    setTimeout(() => {
 
-
-function hideUpgrade(){
-
-  upgradeModal.classList.remove(
-    "show"
-  );
-
-}
-
-
-function showLimitModal(){
-
-  limitModal.classList.add(
-    "show"
-  );
-
-}
-
-
-function hideLimitModal(){
-
-  limitModal.classList.remove(
-    "show"
-  );
-
-}
-
-
-function selectPlan(plan){
-
-  /*
-    This is currently the UI action.
-
-    Real payments must be connected
-    to a payment provider/backend.
-  */
-
-  showToast(
-    plan +
-    " selected. Payment setup is next."
-  );
-
-}
-
-
-/* =====================================================
-   NEW CHAT
-===================================================== */
-
-document
-  .getElementById("newChatBtn")
-  .addEventListener(
-    "click",
-    () => {
-
-      createChat();
-
-      closeMobileSidebar();
-
-    }
-  );
-
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-searchInput.addEventListener(
-  "input",
-  () => {
-
-    renderHistory(
-      searchInput.value
-    );
-
-  }
-);
-
-
-/* =====================================================
-   CLEAR HISTORY
-===================================================== */
-
-document
-  .getElementById(
-    "clearHistoryBtn"
-  )
-  .addEventListener(
-    "click",
-    () => {
-
-      if(
-        !confirm(
-          "Delete all NOVA AI chat history?"
-        )
-      ){
-
-        return;
-
-      }
-
-      chats = [];
-
-      currentChatId =
-        null;
-
-      saveChats();
-
-      renderHistory();
-
-      renderCurrentChat();
-
-      showToast(
-        "Chat history cleared."
+      toast.classList.remove(
+        "show"
       );
 
+    }, 2500);
+
+}
+
+/* ======================================================
+   CLOSE MODALS BY CLICKING OUTSIDE
+====================================================== */
+
+document
+  .getElementById("upgradeModal")
+  .addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target.id ===
+        "upgradeModal"
+      ) {
+        closeUpgrade();
+      }
+
     }
   );
 
-
-/* =====================================================
-   UPGRADE BUTTONS
-===================================================== */
-
 document
-  .getElementById(
-    "upgradeBtn"
-  )
-  .onclick =
-  showUpgrade;
+  .getElementById("limitModal")
+  .addEventListener(
+    "click",
+    event => {
 
-
-document
-  .getElementById(
-    "topUpgrade"
-  )
-  .onclick =
-  showUpgrade;
-
-
-document
-  .getElementById(
-    "smallUpgrade"
-  )
-  .onclick =
-  showUpgrade;
-
-
-document
-  .getElementById(
-    "limitUpgrade"
-  )
-  .onclick =
-  () => {
-
-    hideLimitModal();
-
-    showUpgrade();
-
-  };
-
-
-document
-  .getElementById(
-    "closeUpgrade"
-  )
-  .onclick =
-  hideUpgrade;
-
-
-document
-  .getElementById(
-    "closeLimit"
-  )
-  .onclick =
-  hideLimitModal;
-
-
-/* =====================================================
-   FILE BUTTON
-===================================================== */
-
-document
-  .getElementById(
-    "attachBtn"
-  )
-  .onclick =
-  openFilePicker;
-
-
-document
-  .getElementById(
-    "imageBtn"
-  )
-  .onclick =
-  openFilePicker;
-
-
-/* =====================================================
-   VOICE BUTTON
-===================================================== */
-
-document
-  .getElementById(
-    "voiceBtn"
-  )
-  .onclick =
-  toggleVoice;
-
-
-/* =====================================================
-   SEND
-===================================================== */
-
-sendBtn.onclick =
-  sendMessage;
-
-
-messageInput.addEventListener(
-  "keydown",
-  event => {
-
-    if(
-      event.key === "Enter" &&
-      !event.shiftKey
-    ){
-
-      event.preventDefault();
-
-      sendMessage();
+      if (
+        event.target.id ===
+        "limitModal"
+      ) {
+        closeLimit();
+      }
 
     }
-
-  }
-);
-
-
-messageInput.addEventListener(
-  "input",
-  autoResize
-);
-
-
-/* =====================================================
-   THEME
-===================================================== */
-
-function updateThemeButton(){
-
-  const dark =
-    document.body.classList.contains(
-      "dark"
-    );
-
-  document
-    .getElementById(
-      "themeBtn"
-    )
-    .textContent =
-    dark
-    ? "☀️ Light mode"
-    : "🌙 Dark mode";
-
-}
-
-
-function toggleTheme(){
-
-  document.body.classList.toggle(
-    "dark"
   );
 
-  const dark =
-    document.body.classList.contains(
-      "dark"
-    );
+/* ======================================================
+   INITIALIZE
+====================================================== */
 
-  localStorage.setItem(
-    "nova_theme",
-    dark ? "dark" : "light"
-  );
+renderHistory();
 
-  updateThemeButton();
+renderMessages();
 
-}
-
+updateLimitUI();
 
 document
-  .getElementById(
-    "themeBtn"
-  )
-  .onclick =
-  toggleTheme;
-
-
-document
-  .getElementById(
-    "topTheme"
-  )
-  .onclick =
-  toggleTheme;
-
-
-/* =====================================================
-   MOBILE SIDEBAR
-===================================================== */
-
-function openMobileSidebar(){
-
-  sidebar.classList.add(
-    "open"
-  );
-
-  mobileOverlay.classList.add(
-    "show"
-  );
-
-}
-
-
-function closeMobileSidebar(){
-
-  sidebar.classList.remove(
-    "open"
-  );
-
-  mobileOverlay.classList.remove(
-    "show"
-  );
-
-}
-
-
-document
-  .getElementById(
-    "menuBtn"
-  )
-  .onclick =
-  openMobileSidebar;
-
-
-mobileOverlay.onclick =
-  closeMobileSidebar;
-
-
-/* =====================================================
-   MODAL OUTSIDE CLICK
-===================================================== */
-
-upgradeModal.addEventListener(
-  "click",
-  event => {
-
-    if(
-      event.target ===
-      upgradeModal
-    ){
-
-      hideUpgrade();
-
-    }
-
-  }
-);
-
-
-limitModal.addEventListener(
-  "click",
-  event => {
-
-    if(
-      event.target ===
-      limitModal
-    ){
-
-      hideLimitModal();
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   INITIALIZATION
-===================================================== */
-
-function init(){
-
-  loadChats();
-
-  const savedTheme =
-    localStorage.getItem(
-      "nova_theme"
-    );
-
-  if(savedTheme === "dark"){
-
-    document.body.classList.add(
-      "dark"
-    );
-
-  }
-
-  updateThemeButton();
-
-  updateLimitUI();
-
-  renderHistory();
-
-
-  /*
-    Restore latest chat automatically.
-  */
-
-  if(chats.length){
-
-    currentChatId =
-      chats[0].id;
-
-    renderCurrentChat();
-
-  }else{
-
-    currentChatId =
-      null;
-
-    chatInner.innerHTML = "";
-
-    chatInner.appendChild(
-      createWelcome()
-    );
-
-  }
-
-
-  setupVoice();
-
-}
-
-
-init();
+  .getElementById("question")
+  .focus();
 
 </script>
 
 </body>
-  </html>
+      </html>
