@@ -69,19 +69,13 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* =========================
-       APP
-    ========================= */
-
     .app {
       display: flex;
       width: 100%;
       height: 100vh;
     }
 
-    /* =========================
-       SIDEBAR
-    ========================= */
+    /* SIDEBAR */
 
     .sidebar {
       width: 260px;
@@ -105,7 +99,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       margin-bottom: 18px;
     }
 
@@ -144,7 +137,6 @@
 
     .tagline {
       margin-top: 2px;
-
       color: var(--muted);
       font-size: 10px;
     }
@@ -260,9 +252,7 @@
       background: var(--input);
     }
 
-    /* =========================
-       MAIN
-    ========================= */
+    /* MAIN */
 
     .main {
       flex: 1;
@@ -276,9 +266,7 @@
       position: relative;
     }
 
-    /* =========================
-       TOPBAR
-    ========================= */
+    /* TOPBAR */
 
     .topbar {
       height: 58px;
@@ -341,9 +329,7 @@
       background: var(--input);
     }
 
-    /* =========================
-       CHAT
-    ========================= */
+    /* CHAT */
 
     .chat {
       flex: 1;
@@ -388,13 +374,11 @@
 
     .welcome h1 {
       font-size: 30px;
-
       margin-bottom: 9px;
     }
 
     .welcome p {
       color: var(--muted);
-
       font-size: 15px;
     }
 
@@ -481,13 +465,11 @@
 
     .message-content {
       max-width: 78%;
-
       min-width: 0;
     }
 
     .bubble {
       white-space: pre-wrap;
-
       overflow-wrap: anywhere;
     }
 
@@ -529,13 +511,10 @@
 
     .message-action:hover {
       background: var(--hover);
-
       color: var(--text);
     }
 
-    /* =========================
-       SCROLL BUTTON
-    ========================= */
+    /* SCROLL */
 
     .scroll-bottom {
       position: absolute;
@@ -576,13 +555,7 @@
       display: flex;
     }
 
-    .scroll-bottom:hover {
-      background: var(--input);
-    }
-
-    /* =========================
-       COMPOSER
-    ========================= */
+    /* COMPOSER */
 
     .composer-wrapper {
       position: absolute;
@@ -718,7 +691,6 @@
 
     .send-btn:disabled {
       opacity: 0.35;
-
       cursor: not-allowed;
     }
 
@@ -758,9 +730,7 @@
       margin-top: 8px;
     }
 
-    /* =========================
-       MODAL
-    ========================= */
+    /* PREMIUM */
 
     .modal {
       display: none;
@@ -777,6 +747,8 @@
       justify-content: center;
 
       padding: 20px;
+
+      overflow-y: auto;
     }
 
     .modal.active {
@@ -875,7 +847,7 @@
     }
 
     .coming-soon {
-      margin-top: 18px;
+      margin-top: 10px;
 
       width: 100%;
 
@@ -893,9 +865,7 @@
       cursor: pointer;
     }
 
-    /* =========================
-       TOAST
-    ========================= */
+    /* TOAST */
 
     .toast {
       position: fixed;
@@ -934,9 +904,7 @@
         translate(-50%, 0);
     }
 
-    /* =========================
-       MOBILE
-    ========================= */
+    /* MOBILE */
 
     @media (max-width: 700px) {
 
@@ -1013,7 +981,6 @@
         <div class="logo">E</div>
 
         <div>
-
           <div class="brand">
             EduNova AI
           </div>
@@ -1021,13 +988,11 @@
           <div class="tagline">
             Learn. Understand. Excel.
           </div>
-
         </div>
 
       </div>
 
     </div>
-
 
     <button
       class="new-chat"
@@ -1036,17 +1001,14 @@
       ＋ New chat
     </button>
 
-
     <div class="sidebar-title">
       Recent chats
     </div>
-
 
     <div
       class="history"
       id="history"
     ></div>
-
 
     <div class="sidebar-bottom">
 
@@ -1054,9 +1016,8 @@
         class="premium-small"
         onclick="openPremium()"
       >
-        ✦ Nexa Plus
+        ✦ Upgrade
       </button>
-
 
       <button
         class="settings-btn"
@@ -1068,7 +1029,6 @@
     </div>
 
   </aside>
-
 
   <!-- MAIN -->
 
@@ -1092,7 +1052,6 @@
 
       </div>
 
-
       <button
         class="premium-btn"
         onclick="openPremium()"
@@ -1101,7 +1060,6 @@
       </button>
 
     </header>
-
 
     <!-- CHAT -->
 
@@ -1119,16 +1077,13 @@
           E
         </div>
 
-
         <h1>
           What do you want to learn?
         </h1>
 
-
         <p>
           Ask EduNova AI anything about your studies.
         </p>
-
 
         <div class="suggestions">
 
@@ -1139,7 +1094,6 @@
             📚 Explain a topic
           </button>
 
-
           <button
             class="suggestion"
             onclick="useSuggestion('Give me 5 practice questions and answers on this topic.')"
@@ -1147,14 +1101,12 @@
             📝 Practice questions
           </button>
 
-
           <button
             class="suggestion"
             onclick="useSuggestion('Help me understand this difficult calculation step by step.')"
           >
             🧮 Solve a calculation
           </button>
-
 
           <button
             class="suggestion"
@@ -1167,14 +1119,10 @@
 
       </div>
 
-
       <div
         class="messages"
         id="messages"
       ></div>
-
-
-      <!-- JUMP TO BOTTOM -->
 
       <button
         class="scroll-bottom"
@@ -1187,7 +1135,6 @@
       </button>
 
     </section>
-
 
     <!-- COMPOSER -->
 
@@ -1208,10 +1155,7 @@
             aria-label="Message EduNova AI"
           ></textarea>
 
-
           <div class="composer-tools">
-
-            <!-- VOICE -->
 
             <button
               class="tool-btn"
@@ -1224,9 +1168,6 @@
               🎤
             </button>
 
-
-            <!-- STOP -->
-
             <button
               class="stop-btn"
               id="stopBtn"
@@ -1237,9 +1178,6 @@
             >
               ■
             </button>
-
-
-            <!-- SEND -->
 
             <button
               class="send-btn"
@@ -1256,7 +1194,6 @@
 
         </form>
 
-
         <div
           class="limit"
           id="limitText"
@@ -1271,7 +1208,6 @@
   </main>
 
 </div>
-
 
 <!-- PREMIUM MODAL -->
 
@@ -1290,34 +1226,51 @@
       ×
     </button>
 
-
     <h2>
-      ✦ Nexa Plus
+      ✦ EduNova Premium
     </h2>
 
-
     <p>
-      Unlock a better EduNova AI study experience.
+      Choose the plan that fits your learning needs.
     </p>
 
+    <!-- ₦7,000 PLAN -->
 
     <div class="plan">
 
       <strong>
-        Free
+        EduNova Plus
       </strong>
 
+      <div class="price">
+        ₦7,000
+      </div>
+
       <span>
-        10 AI messages every day
+        Premium study access
       </span>
+
+      <ul class="premium-features">
+        <li>More AI messages</li>
+        <li>Advanced study assistance</li>
+        <li>Better learning support</li>
+      </ul>
+
+      <button
+        class="coming-soon"
+        onclick="premiumComingSoon()"
+      >
+        Coming soon
+      </button>
 
     </div>
 
+    <!-- ₦20,000 PLAN -->
 
     <div class="plan">
 
       <strong>
-        Nexa Plus
+        EduNova Pro
       </strong>
 
       <div class="price">
@@ -1325,31 +1278,28 @@
       </div>
 
       <span>
-        Premium access
+        Full premium experience
       </span>
 
       <ul class="premium-features">
-        <li>More AI messages</li>
+        <li>Higher AI message allowance</li>
         <li>Advanced study tools</li>
-        <li>Better learning assistance</li>
-        <li>Priority premium features</li>
+        <li>Priority features</li>
         <li>Future EduNova AI upgrades</li>
       </ul>
 
+      <button
+        class="coming-soon"
+        onclick="premiumComingSoon()"
+      >
+        Coming soon
+      </button>
+
     </div>
-
-
-    <button
-      class="coming-soon"
-      onclick="premiumComingSoon()"
-    >
-      Nexa Plus coming soon
-    </button>
 
   </div>
 
 </div>
-
 
 <!-- TOAST -->
 
@@ -1358,14 +1308,15 @@
   id="toast"
 ></div>
 
-
 <script>
 
   /* =========================
      CONFIGURATION
   ========================= */
 
-  const API_URL = "/api/ask";
+  // IMPORTANT:
+  // server.js uses /api/chat
+  const API_URL = "/api/chat";
 
   const DAILY_LIMIT = 10;
 
@@ -1437,12 +1388,10 @@
     10
   );
 
-
   let savedDate =
     localStorage.getItem(
       "edunova_message_date"
     );
-
 
   const today =
     new Date().toISOString().split("T")[0];
@@ -1501,11 +1450,10 @@
         DAILY_LIMIT - messagesUsed
       );
 
-
     if (remaining === 0) {
 
       limitText.textContent =
-        "Daily free limit reached. Upgrade to Nexa Plus.";
+        "Daily free limit reached. Upgrade for more.";
 
       input.disabled = true;
 
@@ -1518,16 +1466,13 @@
 
     }
 
-
     limitText.textContent =
       `${remaining} free message${remaining === 1 ? "" : "s"} remaining today`;
-
 
     input.disabled = false;
 
     input.placeholder =
       "Message EduNova AI...";
-
 
     updateSendButton();
 
@@ -1586,9 +1531,7 @@
         event.preventDefault();
 
         if (!sendBtn.disabled) {
-
           form.requestSubmit();
-
         }
 
       }
@@ -1632,14 +1575,11 @@
     welcome.style.display =
       "none";
 
-
     const message =
       document.createElement("div");
 
-
     message.className =
       `message ${type}`;
-
 
     if (type === "assistant") {
 
@@ -1681,24 +1621,14 @@
 
     }
 
-
     const bubble =
-      message.querySelector(
-        ".bubble"
-      );
+      message.querySelector(".bubble");
 
+    bubble.textContent = text;
 
-    bubble.textContent =
-      text;
-
-
-    messages.appendChild(
-      message
-    );
-
+    messages.appendChild(message);
 
     scrollToBottom(true);
-
 
     return message;
 
@@ -1714,14 +1644,11 @@
     welcome.style.display =
       "none";
 
-
     const message =
       document.createElement("div");
 
-
     message.className =
       "message assistant";
-
 
     message.innerHTML = `
       <div class="avatar">E</div>
@@ -1735,14 +1662,9 @@
       </div>
     `;
 
-
-    messages.appendChild(
-      message
-    );
-
+    messages.appendChild(message);
 
     scrollToBottom(true);
-
 
     return message;
 
@@ -1766,7 +1688,6 @@
 
     }
 
-
     chat.scrollTop =
       chat.scrollHeight;
 
@@ -1781,7 +1702,6 @@
         chat.scrollHeight -
         chat.scrollTop -
         chat.clientHeight;
-
 
       if (distance > 250) {
 
@@ -1802,7 +1722,7 @@
 
 
   /* =========================
-     COPY MESSAGE
+     COPY
   ========================= */
 
   async function copyMessage(button) {
@@ -1812,7 +1732,6 @@
         .closest(".message-content")
         .querySelector(".bubble")
         .textContent;
-
 
     try {
 
@@ -1851,15 +1770,12 @@
 
       event.preventDefault();
 
-
       const text =
         input.value.trim();
-
 
       if (!text) {
         return;
       }
-
 
       if (
         messagesUsed >=
@@ -1872,57 +1788,25 @@
 
       }
 
-
       if (isGenerating) {
         return;
       }
 
-
       lastQuestion =
         text;
-
-
-      /* USER MESSAGE */
 
       addMessage(
         text,
         "user"
       );
 
-
-      /* CLEAR INPUT */
-
       input.value = "";
 
       input.style.height =
         "auto";
 
-
-      /* COUNT MESSAGE */
-
-      messagesUsed++;
-
-
-      localStorage.setItem(
-        "edunova_messages_used",
-        messagesUsed.toString()
-      );
-
-
-      localStorage.setItem(
-        "edunova_message_date",
-        today
-      );
-
-
-      updateLimit();
-
-
-      /* SHOW TYPING */
-
       const typing =
         showTyping();
-
 
       isGenerating = true;
 
@@ -1932,10 +1816,8 @@
         "show"
       );
 
-
       controller =
         new AbortController();
-
 
       try {
 
@@ -1959,9 +1841,7 @@
             }
           );
 
-
         let data;
-
 
         try {
 
@@ -1976,14 +1856,13 @@
 
         }
 
-
         typing.remove();
-
 
         if (!response.ok) {
 
           addMessage(
             data.error ||
+            data.message ||
             "Something went wrong. Please try again.",
             "assistant"
           );
@@ -1992,20 +1871,33 @@
 
         }
 
-
         const reply =
           data.answer ||
           "I couldn't generate a response.";
-
 
         addMessage(
           reply,
           "assistant"
         );
 
+        /*
+          Count only after the server
+          successfully generates an answer.
+        */
+
+        messagesUsed++;
+
+        localStorage.setItem(
+          "edunova_messages_used",
+          messagesUsed.toString()
+        );
+
+        localStorage.setItem(
+          "edunova_message_date",
+          today
+        );
 
         saveHistory(text);
-
 
       } catch (error) {
 
@@ -2014,9 +1906,7 @@
           error
         );
 
-
         typing.remove();
-
 
         if (
           error.name ===
@@ -2058,15 +1948,13 @@
 
 
   /* =========================
-     STOP RESPONSE
+     STOP
   ========================= */
 
   function stopResponse() {
 
     if (controller) {
-
       controller.abort();
-
     }
 
   }
@@ -2088,7 +1976,6 @@
 
     }
 
-
     if (
       messagesUsed >=
       DAILY_LIMIT
@@ -2102,7 +1989,6 @@
 
     }
 
-
     input.value =
       lastQuestion;
 
@@ -2114,13 +2000,12 @@
 
 
   /* =========================
-     CHAT HISTORY
+     HISTORY
   ========================= */
 
   function saveHistory(text) {
 
     let history;
-
 
     try {
 
@@ -2137,26 +2022,18 @@
 
     }
 
-
     history.unshift(text);
-
 
     history =
       [...new Set(history)];
 
-
     history =
-      history.slice(
-        0,
-        15
-      );
-
+      history.slice(0, 15);
 
     localStorage.setItem(
       "edunova_history",
       JSON.stringify(history)
     );
-
 
     renderHistory();
 
@@ -2170,13 +2047,10 @@
         "history"
       );
 
-
     historyContainer.innerHTML =
       "";
 
-
     let history;
-
 
     try {
 
@@ -2193,7 +2067,6 @@
 
     }
 
-
     history.forEach(
       item => {
 
@@ -2202,14 +2075,11 @@
             "div"
           );
 
-
         div.className =
           "history-item";
 
-
         div.textContent =
           item;
-
 
         div.onclick =
           () => {
@@ -2224,7 +2094,6 @@
             closeSidebar();
 
           };
-
 
         historyContainer.appendChild(
           div
@@ -2245,22 +2114,17 @@
     messages.innerHTML =
       "";
 
-
     welcome.style.display =
       "block";
-
 
     input.value =
       "";
 
-
     input.style.height =
       "auto";
 
-
     lastQuestion =
       "";
-
 
     updateSendButton();
 
@@ -2274,7 +2138,7 @@
 
 
   /* =========================
-     VOICE INPUT
+     VOICE
   ========================= */
 
   function setupVoice() {
@@ -2282,7 +2146,6 @@
     const SpeechRecognition =
       window.SpeechRecognition ||
       window.webkitSpeechRecognition;
-
 
     if (!SpeechRecognition) {
 
@@ -2296,22 +2159,17 @@
 
     }
 
-
     recognition =
       new SpeechRecognition();
-
 
     recognition.continuous =
       false;
 
-
     recognition.interimResults =
       true;
 
-
     recognition.lang =
       "en-US";
-
 
     recognition.onstart =
       () => {
@@ -2329,12 +2187,10 @@
 
       };
 
-
     recognition.onresult =
       event => {
 
         let transcript = "";
-
 
         for (
           let i = event.resultIndex;
@@ -2347,14 +2203,11 @@
 
         }
 
-
         input.value =
           transcript;
 
-
         input.style.height =
           "auto";
-
 
         input.style.height =
           Math.min(
@@ -2362,11 +2215,9 @@
             150
           ) + "px";
 
-
         updateSendButton();
 
       };
-
 
     recognition.onerror =
       event => {
@@ -2376,13 +2227,11 @@
           event.error
         );
 
-
         showToast(
           "Voice input could not be used."
         );
 
       };
-
 
     recognition.onend =
       () => {
@@ -2411,7 +2260,6 @@
 
     }
 
-
     if (isListening) {
 
       recognition.stop();
@@ -2419,7 +2267,6 @@
       return;
 
     }
-
 
     try {
 
@@ -2467,7 +2314,7 @@
   function premiumComingSoon() {
 
     showToast(
-      "Nexa Plus payment will be added soon."
+      "Premium payment will be added soon."
     );
 
   }
@@ -2495,7 +2342,7 @@
 
 
   /* =========================
-     ESCAPE KEY
+     ESCAPE
   ========================= */
 
   document.addEventListener(
@@ -2526,7 +2373,6 @@
     document.body.classList.toggle(
       "dark"
     );
-
 
     localStorage.setItem(
       "edunova_dark",
