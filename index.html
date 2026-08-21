@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+
   <title>EduNova AI — Learn. Understand. Excel.</title>
 
   <style>
@@ -19,8 +21,8 @@
       --muted: #6b7280;
       --border: #e5e7eb;
       --input: #f7f7f8;
-      --accent: #111827;
       --user: #f3f4f6;
+      --hover: #eeeeef;
     }
 
     body.dark {
@@ -30,20 +32,43 @@
       --muted: #a1a1aa;
       --border: #333333;
       --input: #2f2f2f;
-      --accent: #ffffff;
-      --user: #2f2f2f;
+      --user: #343434;
+      --hover: #3a3a3a;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, Helvetica, Arial, sans-serif;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
       background: var(--bg);
       color: var(--text);
-      height: 100vh;
       overflow: hidden;
     }
 
-    /* APP */
+    button,
+    textarea {
+      font-family: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* =========================
+       APP
+    ========================= */
 
     .app {
       display: flex;
@@ -51,23 +76,32 @@
       height: 100vh;
     }
 
-    /* SIDEBAR */
+    /* =========================
+       SIDEBAR
+    ========================= */
 
     .sidebar {
       width: 260px;
+      min-width: 260px;
+      height: 100vh;
+
       background: var(--sidebar);
       border-right: 1px solid var(--border);
+
       display: flex;
       flex-direction: column;
+
       padding: 14px;
-      transition: 0.25s ease;
-      z-index: 20;
+
+      transition: left 0.25s ease;
+      z-index: 50;
     }
 
     .sidebar-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       margin-bottom: 18px;
     }
 
@@ -80,19 +114,23 @@
     .logo {
       width: 36px;
       height: 36px;
+
       border-radius: 11px;
+
       background: #111827;
       color: white;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-weight: 800;
       font-size: 17px;
     }
 
     body.dark .logo {
       background: white;
-      color: #111;
+      color: #111111;
     }
 
     .brand {
@@ -101,23 +139,31 @@
     }
 
     .tagline {
-      font-size: 10px;
-      color: var(--muted);
       margin-top: 2px;
+
+      color: var(--muted);
+      font-size: 10px;
     }
 
     .new-chat {
       width: 100%;
+
       border: 1px solid var(--border);
       background: var(--bg);
       color: var(--text);
+
       padding: 11px 13px;
+
       border-radius: 10px;
+
       cursor: pointer;
       text-align: left;
+
       font-size: 14px;
+
       margin-bottom: 18px;
-      transition: 0.2s;
+
+      transition: background 0.2s;
     }
 
     .new-chat:hover {
@@ -125,28 +171,41 @@
     }
 
     .sidebar-title {
+      margin: 8px 4px;
+
+      color: var(--muted);
+
       font-size: 11px;
       font-weight: 600;
-      color: var(--muted);
-      margin: 8px 4px;
+
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .history {
       flex: 1;
+
       overflow-y: auto;
+
+      scrollbar-width: thin;
     }
 
     .history-item {
       padding: 10px;
+
       border-radius: 8px;
+
       cursor: pointer;
+
       font-size: 13px;
+
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+
       margin-bottom: 2px;
+
+      transition: background 0.15s;
     }
 
     .history-item:hover {
@@ -155,29 +214,43 @@
 
     .sidebar-bottom {
       border-top: 1px solid var(--border);
+
       padding-top: 12px;
     }
 
     .premium-small {
       width: 100%;
+
       border: none;
+
       background: var(--text);
       color: var(--bg);
+
       border-radius: 10px;
+
       padding: 11px;
+
       font-weight: 700;
+
       cursor: pointer;
+
       margin-bottom: 9px;
     }
 
     .settings-btn {
       width: 100%;
+
       border: none;
+
       background: transparent;
       color: var(--text);
+
       text-align: left;
+
       padding: 9px;
+
       cursor: pointer;
+
       border-radius: 8px;
     }
 
@@ -185,32 +258,55 @@
       background: var(--input);
     }
 
-    /* MAIN */
+    /* =========================
+       MAIN
+    ========================= */
 
     .main {
       flex: 1;
+
       display: flex;
       flex-direction: column;
+
       min-width: 0;
+      height: 100vh;
+
       position: relative;
     }
 
+    /* =========================
+       TOPBAR
+    ========================= */
+
     .topbar {
       height: 58px;
+      min-height: 58px;
+
       border-bottom: 1px solid var(--border);
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       padding: 0 18px;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
     }
 
     .mobile-menu {
       display: none;
+
       border: none;
       background: transparent;
       color: var(--text);
+
       font-size: 22px;
+
       cursor: pointer;
+
       margin-right: 10px;
     }
 
@@ -221,11 +317,16 @@
 
     .premium-btn {
       border: 1px solid var(--border);
+
       background: var(--bg);
       color: var(--text);
+
       padding: 8px 13px;
+
       border-radius: 8px;
+
       cursor: pointer;
+
       font-weight: 600;
       font-size: 13px;
     }
@@ -234,56 +335,78 @@
       background: var(--input);
     }
 
-    /* CHAT */
+    /* =========================
+       CHAT
+    ========================= */
 
     .chat {
       flex: 1;
+
       overflow-y: auto;
+
       padding-bottom: 170px;
+
+      scroll-behavior: smooth;
     }
 
     .welcome {
       max-width: 760px;
+
       margin: 100px auto 0;
+
       padding: 20px;
+
       text-align: center;
     }
 
     .welcome-logo {
       width: 58px;
       height: 58px;
+
       background: var(--text);
       color: var(--bg);
+
       border-radius: 17px;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: auto auto 20px;
+
+      margin: 0 auto 20px;
+
       font-weight: 800;
       font-size: 24px;
     }
 
     .welcome h1 {
       font-size: 30px;
+
       margin-bottom: 9px;
     }
 
     .welcome p {
       color: var(--muted);
+
       font-size: 15px;
     }
 
     .messages {
       max-width: 850px;
+
       margin: auto;
+
       padding: 20px;
     }
 
     .message {
       display: flex;
+
       margin: 20px 0;
+
       gap: 13px;
+
       line-height: 1.6;
+
       font-size: 15px;
     }
 
@@ -294,13 +417,18 @@
     .avatar {
       width: 30px;
       height: 30px;
+
       min-width: 30px;
+
       border-radius: 9px;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 11px;
       font-weight: 800;
+
       background: var(--text);
       color: var(--bg);
     }
@@ -311,62 +439,89 @@
 
     .bubble {
       max-width: 75%;
+
       white-space: pre-wrap;
+
+      overflow-wrap: anywhere;
     }
 
     .message.user .bubble {
       background: var(--user);
+
       padding: 10px 14px;
+
       border-radius: 15px;
     }
 
     .typing {
       color: var(--muted);
-      font-size: 14px;
     }
 
-    /* INPUT AREA */
+    /* =========================
+       COMPOSER
+    ========================= */
 
     .composer-wrapper {
       position: absolute;
+
       bottom: 0;
       left: 0;
       right: 0;
+
       padding: 20px 20px 12px;
-      background: linear-gradient(
-        transparent,
-        var(--bg) 28%
-      );
+
+      background:
+        linear-gradient(
+          transparent,
+          var(--bg) 28%
+        );
     }
 
     .composer {
       max-width: 820px;
+
       margin: auto;
+
       position: relative;
     }
 
     .input-box {
       display: flex;
+
       align-items: flex-end;
+
       background: var(--input);
+
       border: 1px solid var(--border);
+
       border-radius: 17px;
+
       padding: 9px 10px 9px 15px;
-      box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+
+      box-shadow:
+        0 1px 5px rgba(0, 0, 0, 0.05);
     }
 
     textarea {
       flex: 1;
+
       border: none;
       outline: none;
+
       resize: none;
+
       background: transparent;
       color: var(--text);
-      font-family: inherit;
+
       font-size: 15px;
+
       line-height: 22px;
+
       max-height: 150px;
+
       padding: 7px 5px;
+
+      overflow-y: auto;
     }
 
     textarea::placeholder {
@@ -376,12 +531,20 @@
     .send-btn {
       width: 36px;
       height: 36px;
+
+      min-width: 36px;
+
       border: none;
+
       border-radius: 10px;
+
       background: var(--text);
       color: var(--bg);
+
       cursor: pointer;
+
       font-size: 18px;
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -389,26 +552,38 @@
 
     .send-btn:disabled {
       opacity: 0.35;
+
       cursor: not-allowed;
     }
 
     .limit {
       text-align: center;
+
       font-size: 11px;
+
       color: var(--muted);
+
       margin-top: 8px;
     }
 
-    /* PREMIUM MODAL */
+    /* =========================
+       PREMIUM MODAL
+    ========================= */
 
     .modal {
       display: none;
+
       position: fixed;
+
       inset: 0;
-      background: rgba(0,0,0,0.55);
+
+      background: rgba(0, 0, 0, 0.55);
+
       z-index: 100;
+
       align-items: center;
       justify-content: center;
+
       padding: 20px;
     }
 
@@ -418,75 +593,107 @@
 
     .premium-card {
       width: 100%;
+
       max-width: 440px;
+
       background: var(--bg);
       color: var(--text);
+
       border-radius: 20px;
+
       padding: 28px;
+
       position: relative;
-      box-shadow: 0 20px 70px rgba(0,0,0,0.25);
+
+      box-shadow:
+        0 20px 70px rgba(0, 0, 0, 0.25);
     }
 
     .close {
       position: absolute;
+
       right: 16px;
       top: 14px;
+
       border: none;
+
       background: transparent;
+
       color: var(--muted);
+
       font-size: 22px;
+
       cursor: pointer;
     }
 
     .premium-card h2 {
       font-size: 24px;
+
       margin-bottom: 8px;
     }
 
     .premium-card > p {
       color: var(--muted);
+
       font-size: 14px;
+
       margin-bottom: 20px;
     }
 
     .plan {
       border: 1px solid var(--border);
+
       padding: 16px;
+
       border-radius: 13px;
+
       margin: 10px 0;
     }
 
     .plan strong {
       display: block;
+
       margin-bottom: 5px;
     }
 
     .plan span {
       color: var(--muted);
+
       font-size: 13px;
     }
 
     .coming-soon {
       margin-top: 18px;
+
       width: 100%;
+
       border: none;
+
       background: var(--text);
       color: var(--bg);
+
       padding: 12px;
+
       border-radius: 10px;
+
       font-weight: 700;
     }
 
-    /* MOBILE */
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 700px) {
 
       .sidebar {
         position: fixed;
+
         left: -270px;
         top: 0;
         bottom: 0;
-        box-shadow: 10px 0 30px rgba(0,0,0,0.15);
+
+        box-shadow:
+          10px 0 30px rgba(0, 0, 0, 0.15);
       }
 
       .sidebar.open {
@@ -528,36 +735,65 @@
 
 <div class="app">
 
-  <!-- SIDEBAR -->
+  <!-- =========================
+       SIDEBAR
+  ========================= -->
 
   <aside class="sidebar" id="sidebar">
 
     <div class="sidebar-top">
+
       <div class="logo-area">
-        <div class="logo">E</div>
+
+        <div class="logo">
+          E
+        </div>
 
         <div>
-          <div class="brand">EduNova AI</div>
-          <div class="tagline">Learn. Understand. Excel.</div>
+
+          <div class="brand">
+            EduNova AI
+          </div>
+
+          <div class="tagline">
+            Learn. Understand. Excel.
+          </div>
+
         </div>
+
       </div>
+
     </div>
 
-    <button class="new-chat" onclick="newChat()">
+    <button
+      class="new-chat"
+      onclick="newChat()"
+    >
       ＋ New chat
     </button>
 
-    <div class="sidebar-title">Recent chats</div>
+    <div class="sidebar-title">
+      Recent chats
+    </div>
 
-    <div class="history" id="history"></div>
+    <div
+      class="history"
+      id="history"
+    ></div>
 
     <div class="sidebar-bottom">
 
-      <button class="premium-small" onclick="openPremium()">
+      <button
+        class="premium-small"
+        onclick="openPremium()"
+      >
         ✦ Upgrade to Premium
       </button>
 
-      <button class="settings-btn" onclick="toggleDarkMode()">
+      <button
+        class="settings-btn"
+        onclick="toggleDarkMode()"
+      >
         ◐ Appearance
       </button>
 
@@ -566,40 +802,61 @@
   </aside>
 
 
-  <!-- MAIN -->
+  <!-- =========================
+       MAIN
+  ========================= -->
 
   <main class="main">
 
     <header class="topbar">
 
-      <div style="display:flex;align-items:center;">
-        <button class="mobile-menu" onclick="toggleSidebar()">
+      <div class="topbar-left">
+
+        <button
+          class="mobile-menu"
+          onclick="toggleSidebar()"
+          aria-label="Open menu"
+        >
           ☰
         </button>
 
         <span class="model-name">
           EduNova AI
         </span>
+
       </div>
 
-      <button class="premium-btn" onclick="openPremium()">
+      <button
+        class="premium-btn"
+        onclick="openPremium()"
+      >
         Upgrade
       </button>
 
     </header>
 
 
-    <!-- CHAT -->
+    <!-- =========================
+         CHAT
+    ========================= -->
 
-    <section class="chat" id="chat">
+    <section
+      class="chat"
+      id="chat"
+    >
 
-      <div class="welcome" id="welcome">
+      <div
+        class="welcome"
+        id="welcome"
+      >
 
         <div class="welcome-logo">
           E
         </div>
 
-        <h1>What do you want to learn?</h1>
+        <h1>
+          What do you want to learn?
+        </h1>
 
         <p>
           Ask EduNova AI anything about your studies.
@@ -607,24 +864,33 @@
 
       </div>
 
-      <div class="messages" id="messages"></div>
+      <div
+        class="messages"
+        id="messages"
+      ></div>
 
     </section>
 
 
-    <!-- COMPOSER -->
+    <!-- =========================
+         COMPOSER
+    ========================= -->
 
     <div class="composer-wrapper">
 
       <div class="composer">
 
-        <form class="input-box" id="chatForm">
+        <form
+          class="input-box"
+          id="chatForm"
+        >
 
           <textarea
             id="messageInput"
             rows="1"
             placeholder="Message EduNova AI..."
             autocomplete="off"
+            aria-label="Message EduNova AI"
           ></textarea>
 
           <button
@@ -632,13 +898,17 @@
             id="sendBtn"
             type="submit"
             disabled
+            aria-label="Send message"
           >
             ↑
           </button>
 
         </form>
 
-        <div class="limit" id="limitText">
+        <div
+          class="limit"
+          id="limitText"
+        >
           10 free messages per day
         </div>
 
@@ -651,33 +921,56 @@
 </div>
 
 
-<!-- PREMIUM MODAL -->
+<!-- =========================
+     PREMIUM MODAL
+========================= -->
 
-<div class="modal" id="premiumModal">
+<div
+  class="modal"
+  id="premiumModal"
+>
 
   <div class="premium-card">
 
-    <button class="close" onclick="closePremium()">
+    <button
+      class="close"
+      onclick="closePremium()"
+      aria-label="Close"
+    >
       ×
     </button>
 
-    <h2>EduNova Premium</h2>
+    <h2>
+      EduNova Premium
+    </h2>
 
     <p>
       Unlock more powerful studying with EduNova AI.
     </p>
 
     <div class="plan">
-      <strong>Free</strong>
-      <span>10 AI messages every day</span>
+
+      <strong>
+        Free
+      </strong>
+
+      <span>
+        10 AI messages every day
+      </span>
+
     </div>
 
     <div class="plan">
-      <strong>Premium</strong>
+
+      <strong>
+        Premium
+      </strong>
+
       <span>
         More messages, advanced study tools and future
         premium features.
       </span>
+
     </div>
 
     <button class="coming-soon">
@@ -692,23 +985,52 @@
 <script>
 
   /* =========================
-     SETTINGS
+     CONFIGURATION
+
+     IMPORTANT:
+     This MUST match server.js
+
+     server.js:
+     POST /api/ask
+
+     body:
+     {
+       question: "..."
+     }
+
+     response:
+     {
+       answer: "..."
+     }
   ========================= */
 
-  const API_URL = "/api/chat";
+  const API_URL = "/api/ask";
 
   const DAILY_LIMIT = 10;
 
-  let messagesUsed =
-    parseInt(localStorage.getItem("edunova_messages_used") || "0");
+
+  /* =========================
+     DAILY MESSAGE LIMIT
+  ========================= */
+
+  let messagesUsed = parseInt(
+    localStorage.getItem(
+      "edunova_messages_used"
+    ) || "0",
+    10
+  );
 
   let savedDate =
-    localStorage.getItem("edunova_message_date");
+    localStorage.getItem(
+      "edunova_message_date"
+    );
 
   const today =
     new Date().toISOString().split("T")[0];
 
+
   if (savedDate !== today) {
+
     messagesUsed = 0;
 
     localStorage.setItem(
@@ -720,6 +1042,7 @@
       "edunova_message_date",
       today
     );
+
   }
 
 
@@ -748,15 +1071,22 @@
   const sidebar =
     document.getElementById("sidebar");
 
+  const chat =
+    document.getElementById("chat");
+
 
   /* =========================
-     LIMIT DISPLAY
+     UPDATE LIMIT
   ========================= */
 
   function updateLimit() {
 
     const remaining =
-      Math.max(0, DAILY_LIMIT - messagesUsed);
+      Math.max(
+        0,
+        DAILY_LIMIT - messagesUsed
+      );
+
 
     if (remaining === 0) {
 
@@ -770,18 +1100,20 @@
 
       sendBtn.disabled = true;
 
-    } else {
-
-      limitText.textContent =
-        `${remaining} free message${remaining === 1 ? "" : "s"} remaining today`;
-
-      input.disabled = false;
-
-      input.placeholder =
-        "Message EduNova AI...";
-
-      updateSendButton();
+      return;
     }
+
+
+    limitText.textContent =
+      `${remaining} free message${remaining === 1 ? "" : "s"} remaining today`;
+
+    input.disabled = false;
+
+    input.placeholder =
+      "Message EduNova AI...";
+
+    updateSendButton();
+
   }
 
 
@@ -798,6 +1130,10 @@
   }
 
 
+  /* =========================
+     TEXTAREA
+  ========================= */
+
   input.addEventListener(
     "input",
     () => {
@@ -805,7 +1141,10 @@
       input.style.height = "auto";
 
       input.style.height =
-        Math.min(input.scrollHeight, 150) + "px";
+        Math.min(
+          input.scrollHeight,
+          150
+        ) + "px";
 
       updateSendButton();
 
@@ -847,13 +1186,16 @@
     type
   ) {
 
-    welcome.style.display = "none";
+    welcome.style.display =
+      "none";
+
 
     const message =
       document.createElement("div");
 
     message.className =
       `message ${type}`;
+
 
     if (type === "assistant") {
 
@@ -862,43 +1204,51 @@
         <div class="bubble"></div>
       `;
 
-      message
-        .querySelector(".bubble")
-        .textContent = text;
-
     } else {
 
       message.innerHTML = `
         <div class="bubble"></div>
       `;
 
-      message
-        .querySelector(".bubble")
-        .textContent = text;
-
     }
 
-    messages.appendChild(message);
+
+    const bubble =
+      message.querySelector(
+        ".bubble"
+      );
+
+    bubble.textContent =
+      text;
+
+
+    messages.appendChild(
+      message
+    );
 
     scrollToBottom();
 
     return message;
+
   }
 
 
   /* =========================
-     TYPING INDICATOR
+     TYPING
   ========================= */
 
   function showTyping() {
 
-    welcome.style.display = "none";
+    welcome.style.display =
+      "none";
+
 
     const message =
       document.createElement("div");
 
     message.className =
       "message assistant";
+
 
     message.innerHTML = `
       <div class="avatar">E</div>
@@ -907,11 +1257,15 @@
       </div>
     `;
 
-    messages.appendChild(message);
+
+    messages.appendChild(
+      message
+    );
 
     scrollToBottom();
 
     return message;
+
   }
 
 
@@ -920,9 +1274,6 @@
   ========================= */
 
   function scrollToBottom() {
-
-    const chat =
-      document.getElementById("chat");
 
     chat.scrollTo({
       top: chat.scrollHeight,
@@ -942,12 +1293,20 @@
 
       event.preventDefault();
 
+
       const text =
         input.value.trim();
 
-      if (!text) return;
 
-      if (messagesUsed >= DAILY_LIMIT) {
+      if (!text) {
+        return;
+      }
+
+
+      if (
+        messagesUsed >=
+        DAILY_LIMIT
+      ) {
 
         updateLimit();
 
@@ -964,16 +1323,26 @@
       );
 
 
+      /* CLEAR INPUT */
+
       input.value = "";
 
-      input.style.height = "auto";
+      input.style.height =
+        "auto";
 
-      sendBtn.disabled = true;
+      sendBtn.disabled =
+        true;
 
 
-      /* INCREASE LIMIT */
+      /*
+      IMPORTANT:
+
+      Count the message when
+      it is sent.
+      */
 
       messagesUsed++;
+
 
       localStorage.setItem(
         "edunova_messages_used",
@@ -985,10 +1354,11 @@
         today
       );
 
+
       updateLimit();
 
 
-      /* TYPING */
+      /* TYPING INDICATOR */
 
       const typing =
         showTyping();
@@ -996,23 +1366,40 @@
 
       try {
 
+        /*
+        =========================
+        CALL SERVER
+        =========================
+
+        server.js expects:
+
+        POST /api/ask
+
+        {
+          question: text
+        }
+        */
+
         const response =
-          await fetch(API_URL, {
+          await fetch(
+            API_URL,
+            {
+              method: "POST",
 
-            method: "POST",
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
 
-            headers: {
-              "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-              message: text
-            })
-
-          });
+              body: JSON.stringify({
+                question: text
+              })
+            }
+          );
 
 
         let data;
+
 
         try {
 
@@ -1028,8 +1415,12 @@
         }
 
 
+        /* REMOVE TYPING */
+
         typing.remove();
 
+
+        /* SERVER ERROR */
 
         if (!response.ok) {
 
@@ -1044,10 +1435,20 @@
         }
 
 
+        /*
+        =========================
+        GET AI ANSWER
+        =========================
+
+        server.js returns:
+
+        {
+          answer: "..."
+        }
+        */
+
         const reply =
-          data.reply ||
-          data.response ||
-          data.message ||
+          data.answer ||
           "I couldn't generate a response.";
 
 
@@ -1057,21 +1458,29 @@
         );
 
 
+        /* SAVE HISTORY */
+
         saveHistory(text);
 
 
       } catch (error) {
 
+        console.error(
+          "EduNova connection error:",
+          error
+        );
+
+
         typing.remove();
+
 
         addMessage(
           "I'm having trouble connecting right now. Please try again.",
           "assistant"
         );
 
-        console.error(error);
-
       }
+
 
       updateLimit();
 
@@ -1085,43 +1494,67 @@
 
   function newChat() {
 
-    messages.innerHTML = "";
+    messages.innerHTML =
+      "";
 
-    welcome.style.display = "block";
+    welcome.style.display =
+      "block";
 
-    input.value = "";
+    input.value =
+      "";
 
-    input.style.height = "auto";
+    input.style.height =
+      "auto";
 
     updateSendButton();
 
     closeSidebar();
 
+    input.focus();
+
   }
 
 
   /* =========================
-     HISTORY
+     CHAT HISTORY
   ========================= */
 
   function saveHistory(text) {
 
-    let history =
-      JSON.parse(
-        localStorage.getItem(
-          "edunova_history"
-        ) || "[]"
-      );
+    let history;
+
+
+    try {
+
+      history =
+        JSON.parse(
+          localStorage.getItem(
+            "edunova_history"
+          ) || "[]"
+        );
+
+    } catch {
+
+      history = [];
+
+    }
+
 
     history.unshift(text);
 
+
     history =
-      history.slice(0, 15);
+      history.slice(
+        0,
+        15
+      );
+
 
     localStorage.setItem(
       "edunova_history",
       JSON.stringify(history)
     );
+
 
     renderHistory();
 
@@ -1131,43 +1564,72 @@
   function renderHistory() {
 
     const historyContainer =
-      document.getElementById("history");
-
-    historyContainer.innerHTML = "";
-
-    const history =
-      JSON.parse(
-        localStorage.getItem(
-          "edunova_history"
-        ) || "[]"
+      document.getElementById(
+        "history"
       );
 
-    history.forEach(item => {
 
-      const div =
-        document.createElement("div");
+    historyContainer.innerHTML =
+      "";
 
-      div.className =
-        "history-item";
 
-      div.textContent =
-        item;
+    let history;
 
-      div.onclick = () => {
 
-        input.value = item;
+    try {
 
-        input.focus();
+      history =
+        JSON.parse(
+          localStorage.getItem(
+            "edunova_history"
+          ) || "[]"
+        );
 
-        updateSendButton();
+    } catch {
 
-        closeSidebar();
+      history = [];
 
-      };
+    }
 
-      historyContainer.appendChild(div);
 
-    });
+    history.forEach(
+      item => {
+
+        const div =
+          document.createElement(
+            "div"
+          );
+
+
+        div.className =
+          "history-item";
+
+
+        div.textContent =
+          item;
+
+
+        div.onclick =
+          () => {
+
+            input.value =
+              item;
+
+            input.focus();
+
+            updateSendButton();
+
+            closeSidebar();
+
+          };
+
+
+        historyContainer.appendChild(
+          div
+        );
+
+      }
+    );
 
   }
 
@@ -1179,8 +1641,12 @@
   function openPremium() {
 
     document
-      .getElementById("premiumModal")
-      .classList.add("active");
+      .getElementById(
+        "premiumModal"
+      )
+      .classList.add(
+        "active"
+      );
 
   }
 
@@ -1188,14 +1654,20 @@
   function closePremium() {
 
     document
-      .getElementById("premiumModal")
-      .classList.remove("active");
+      .getElementById(
+        "premiumModal"
+      )
+      .classList.remove(
+        "active"
+      );
 
   }
 
 
   document
-    .getElementById("premiumModal")
+    .getElementById(
+      "premiumModal"
+    )
     .addEventListener(
       "click",
       event => {
@@ -1219,11 +1691,16 @@
 
   function toggleDarkMode() {
 
-    document.body.classList.toggle("dark");
+    document.body.classList.toggle(
+      "dark"
+    );
+
 
     localStorage.setItem(
       "edunova_dark",
-      document.body.classList.contains("dark")
+      document.body.classList.contains(
+        "dark"
+      )
     );
 
   }
@@ -1235,7 +1712,9 @@
     ) === "true"
   ) {
 
-    document.body.classList.add("dark");
+    document.body.classList.add(
+      "dark"
+    );
 
   }
 
@@ -1246,14 +1725,18 @@
 
   function toggleSidebar() {
 
-    sidebar.classList.toggle("open");
+    sidebar.classList.toggle(
+      "open"
+    );
 
   }
 
 
   function closeSidebar() {
 
-    sidebar.classList.remove("open");
+    sidebar.classList.remove(
+      "open"
+    );
 
   }
 
