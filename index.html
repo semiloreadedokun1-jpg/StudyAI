@@ -1665,13 +1665,21 @@ function scrollBottom() {
 }
 
 function toggleSidebar() {
-
-
-  document
-    .getElementById("sidebar")
-    .classList.toggle("open");
-
+  const sidebar = document.getElementById("sidebar");
+  if (!sidebar) return;
+  sidebar.classList.toggle("open");
 }
+
+function closeSidebarOutside(event) {
+  const sidebar = document.getElementById("sidebar");
+  if (!sidebar) return;
+  if (!sidebar.classList.contains("open")) return;
+  if (event.target.closest("#sidebar")) return;
+  if (event.target.closest(".menu-btn")) return;
+  sidebar.classList.remove("open");
+}
+
+document.addEventListener("click", closeSidebarOutside);
 
 /* ======================================================
    UPGRADE
