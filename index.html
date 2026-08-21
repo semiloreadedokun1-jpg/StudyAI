@@ -947,7 +947,7 @@ function renderHistory() {
       item.textContent =
         chat.title || "New chat";
 
-      item.onclick = () => loadChat(chat.id);
+      item.onclick = () => { loadChat(chat.id); document.getElementById("sidebar").classList.remove("open"); };
 
       container.appendChild(item);
     });
