@@ -48,6 +48,7 @@ body {
 ========================= */
 
 .sidebar {
+  transition: left 0.25s ease;
   width: 270px;
   background: #0e0e13;
   border-right: 1px solid var(--border);
@@ -554,6 +555,7 @@ textarea {
 @media(max-width: 700px) {
 
   .sidebar {
+  transition: left 0.25s ease;
     position: fixed;
     z-index: 50;
     left: -280px;
@@ -1663,6 +1665,7 @@ function scrollBottom() {
 }
 
 function toggleSidebar() {
+
 
   document
     .getElementById("sidebar")
