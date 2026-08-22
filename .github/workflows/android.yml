@@ -21,7 +21,7 @@ jobs:
           java-version: "21"
           cache: gradle
 
-      - name: Install Node.js
+      - name: Node 22
         uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -29,6 +29,11 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Prepare web assets
+        run: |
+          mkdir -p www
+          cp index.html www/index.html
 
       - name: Sync Capacitor Android
         run: npx cap sync android
